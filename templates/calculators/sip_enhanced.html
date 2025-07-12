@@ -1,0 +1,683 @@
+{% extends "base.html" %}
+
+{% block title %}SIP Calculator - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  .sip-calculator-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    background-color: var(--secondary-bg);
+  }
+
+  .calculator-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeInDown 1s ease-out;
+  }
+
+  .calculator-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .calculator-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .calculator-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .input-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    animation: fadeInLeft 1s ease-out;
+  }
+
+  .results-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    animation: fadeInRight 1s ease-out;
+  }
+
+  .input-group {
+    margin-bottom: 2rem;
+  }
+
+  .input-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    display: block;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #F9FAFB;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .input-field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(0,166,237,0.1);
+    outline: none;
+    background-color: #fff;
+  }
+
+  .range-input {
+    width: 100%;
+    margin: 1rem 0;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #E5E7EB;
+    outline: none;
+  }
+
+  .range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .range-input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .input-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .calculate-btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .calculate-btn:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,166,237,0.3);
+  }
+
+  .calculate-btn:active {
+    transform: scale(0.98);
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .result-card {
+    background: linear-gradient(135deg, #F8FAFC, #F1F5F9);
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+    transition: all 0.3s ease;
+  }
+
+  .result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .result-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .result-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .result-gain {
+    color: var(--success);
+  }
+
+  .chart-container {
+    position: relative;
+    height: 300px;
+    margin-top: 2rem;
+  }
+
+  .breakdown-table {
+    margin-top: 2rem;
+    overflow-x: auto;
+  }
+
+  .breakdown-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .breakdown-table th,
+  .breakdown-table td {
+    padding: 12px;
+    text-align: right;
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+  .breakdown-table th {
+    background-color: #F9FAFB;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .breakdown-table td {
+    color: var(--text-light);
+  }
+
+  /* Animations */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .slide-in {
+    animation: slideIn 0.6s ease-out;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .calculator-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .calculator-title {
+      font-size: 2rem;
+    }
+
+    .input-section,
+    .results-section {
+      padding: 1.5rem;
+    }
+
+    .results-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-container {
+      height: 250px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sip-calculator-container {
+      padding: 1rem;
+    }
+
+    .calculator-title {
+      font-size: 1.8rem;
+    }
+
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="sip-calculator-container">
+  <!-- Header -->
+  <div class="calculator-header">
+    <h1 class="calculator-title">SIP Growth Simulator</h1>
+    <p class="calculator-subtitle">
+      Calculate the potential returns from your Systematic Investment Plan and see how regular investing can help you build wealth over time
+    </p>
+  </div>
+
+  <!-- Calculator Layout -->
+  <div class="calculator-layout">
+    <!-- Input Section -->
+    <div class="input-section">
+      <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.3rem;">Investment Parameters</h3>
+      
+      <div class="input-group">
+        <label class="input-label" for="monthlyInvestment">Monthly Investment Amount</label>
+        <input 
+          type="number" 
+          id="monthlyInvestment" 
+          class="input-field" 
+          value="5000" 
+          min="500" 
+          max="1000000"
+          step="500"
+        />
+        <input 
+          type="range" 
+          id="monthlyRange" 
+          class="range-input" 
+          min="500" 
+          max="50000" 
+          value="5000" 
+          step="500"
+        />
+        <div class="input-value" id="monthlyValue">₹5,000</div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="investmentYears">Investment Duration</label>
+        <input 
+          type="number" 
+          id="investmentYears" 
+          class="input-field" 
+          value="10" 
+          min="1" 
+          max="40"
+        />
+        <input 
+          type="range" 
+          id="yearsRange" 
+          class="range-input" 
+          min="1" 
+          max="40" 
+          value="10"
+        />
+        <div class="input-value" id="yearsValue">10 Years</div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="expectedReturn">Expected Annual Return</label>
+        <input 
+          type="number" 
+          id="expectedReturn" 
+          class="input-field" 
+          value="12" 
+          min="1" 
+          max="30"
+          step="0.5"
+        />
+        <input 
+          type="range" 
+          id="returnRange" 
+          class="range-input" 
+          min="1" 
+          max="30" 
+          value="12" 
+          step="0.5"
+        />
+        <div class="input-value" id="returnValue">12.0%</div>
+      </div>
+
+      <button class="calculate-btn" onclick="simulateSIP()">
+        <i class="fas fa-calculator" style="margin-right: 8px;"></i>
+        Calculate SIP Returns
+      </button>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-section">
+      <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.3rem;">Investment Results</h3>
+      
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-label">Total Investment</div>
+          <div class="result-value" id="totalInvestment">₹6,00,000</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">Future Value</div>
+          <div class="result-value result-gain" id="futureValue">₹11,61,695</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">Total Gains</div>
+          <div class="result-value result-gain" id="totalGains">₹5,61,695</div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-container">
+        <canvas id="sipChart"></canvas>
+      </div>
+
+      <!-- Year-wise Breakdown -->
+      <div class="breakdown-table">
+        <h4 style="color: var(--primary); margin-bottom: 1rem;">Year-wise Breakdown</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Investment</th>
+              <th>Value</th>
+              <th>Gains</th>
+            </tr>
+          </thead>
+          <tbody id="breakdownTableBody">
+            <!-- Table rows will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Global variables
+const ctx = document.getElementById('sipChart').getContext('2d');
+let sipChart;
+
+// DOM elements
+const monthlyInvestment = document.getElementById('monthlyInvestment');
+const monthlyRange = document.getElementById('monthlyRange');
+const monthlyValue = document.getElementById('monthlyValue');
+
+const investmentYears = document.getElementById('investmentYears');
+const yearsRange = document.getElementById('yearsRange');
+const yearsValue = document.getElementById('yearsValue');
+
+const expectedReturn = document.getElementById('expectedReturn');
+const returnRange = document.getElementById('returnRange');
+const returnValue = document.getElementById('returnValue');
+
+// Sync input fields with range sliders
+monthlyInvestment.addEventListener('input', () => {
+  monthlyRange.value = monthlyInvestment.value;
+  monthlyValue.textContent = formatCurrency(monthlyInvestment.value);
+  simulateSIP();
+});
+
+monthlyRange.addEventListener('input', () => {
+  monthlyInvestment.value = monthlyRange.value;
+  monthlyValue.textContent = formatCurrency(monthlyRange.value);
+  simulateSIP();
+});
+
+investmentYears.addEventListener('input', () => {
+  yearsRange.value = investmentYears.value;
+  yearsValue.textContent = investmentYears.value + ' Years';
+  simulateSIP();
+});
+
+yearsRange.addEventListener('input', () => {
+  investmentYears.value = yearsRange.value;
+  yearsValue.textContent = yearsRange.value + ' Years';
+  simulateSIP();
+});
+
+expectedReturn.addEventListener('input', () => {
+  returnRange.value = expectedReturn.value;
+  returnValue.textContent = parseFloat(expectedReturn.value).toFixed(1) + '%';
+  simulateSIP();
+});
+
+returnRange.addEventListener('input', () => {
+  expectedReturn.value = returnRange.value;
+  returnValue.textContent = parseFloat(returnRange.value).toFixed(1) + '%';
+  simulateSIP();
+});
+
+// Utility functions
+function formatCurrency(amount) {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(amount);
+}
+
+function calculateSIP(monthlyAmt, annualReturn, years) {
+  const monthlyRate = annualReturn / 12 / 100;
+  const totalMonths = years * 12;
+  
+  if (monthlyRate === 0) {
+    return monthlyAmt * totalMonths;
+  }
+  
+  return monthlyAmt * (((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate));
+}
+
+function calculateYearlyBreakdown(monthlyAmt, annualReturn, years) {
+  const breakdown = [];
+  const monthlyRate = annualReturn / 12 / 100;
+  
+  for (let year = 1; year <= years; year++) {
+    const months = year * 12;
+    const investment = monthlyAmt * months;
+    const value = calculateSIP(monthlyAmt, annualReturn, year);
+    const gains = value - investment;
+    
+    breakdown.push({
+      year,
+      investment,
+      value,
+      gains
+    });
+  }
+  
+  return breakdown;
+}
+
+function animateValue(element, start, end, duration) {
+  const startTimestamp = performance.now();
+  
+  const step = (timestamp) => {
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    const current = progress * (end - start) + start;
+    element.textContent = formatCurrency(current);
+    
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  };
+  
+  requestAnimationFrame(step);
+}
+
+function simulateSIP() {
+  const amount = parseFloat(monthlyInvestment.value);
+  const years = parseFloat(investmentYears.value);
+  const rate = parseFloat(expectedReturn.value);
+
+  const invested = amount * years * 12;
+  const maturity = calculateSIP(amount, rate, years);
+  const gain = maturity - invested;
+
+  // Animate result values
+  animateValue(document.getElementById('totalInvestment'), 0, invested, 1000);
+  animateValue(document.getElementById('futureValue'), 0, maturity, 1200);
+  animateValue(document.getElementById('totalGains'), 0, gain, 1400);
+
+  // Chart data
+  const data = {
+    labels: ['Total Investment', 'Total Gains'],
+    datasets: [{
+      label: 'SIP Result',
+      data: [invested, gain],
+      backgroundColor: [
+        'rgba(0, 52, 89, 0.8)',
+        'rgba(0, 166, 237, 0.8)'
+      ],
+      borderColor: [
+        'rgba(0, 52, 89, 1)',
+        'rgba(0, 166, 237, 1)'
+      ],
+      borderWidth: 2,
+      hoverOffset: 4
+    }]
+  };
+
+  // Destroy existing chart
+  if (sipChart) {
+    sipChart.destroy();
+  }
+
+  // Create new chart with animation
+  sipChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            padding: 20,
+            font: {
+              family: 'Poppins',
+              size: 12,
+              weight: '500'
+            }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          titleFont: {
+            family: 'Poppins',
+            size: 14,
+            weight: '600'
+          },
+          bodyFont: {
+            family: 'Poppins',
+            size: 12
+          },
+          callbacks: {
+            label: function(context) {
+              return context.label + ': ' + formatCurrency(context.parsed);
+            }
+          }
+        }
+      },
+      animation: {
+        animateRotate: true,
+        animateScale: true,
+        duration: 1500,
+        easing: 'easeOutQuart'
+      }
+    }
+  });
+
+  // Update yearly breakdown table
+  updateBreakdownTable(amount, rate, years);
+}
+
+function updateBreakdownTable(monthlyAmt, annualReturn, years) {
+  const breakdown = calculateYearlyBreakdown(monthlyAmt, annualReturn, years);
+  const tableBody = document.getElementById('breakdownTableBody');
+  
+  tableBody.innerHTML = '';
+  
+  breakdown.forEach((row, index) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="font-weight: 600;">${row.year}</td>
+      <td>${formatCurrency(row.investment)}</td>
+      <td style="color: var(--success); font-weight: 600;">${formatCurrency(row.value)}</td>
+      <td style="color: var(--success); font-weight: 600;">${formatCurrency(row.gains)}</td>
+    `;
+    
+    // Add slide-in animation with delay
+    tr.style.opacity = '0';
+    tr.style.transform = 'translateY(10px)';
+    tableBody.appendChild(tr);
+    
+    setTimeout(() => {
+      tr.style.transition = 'all 0.3s ease';
+      tr.style.opacity = '1';
+      tr.style.transform = 'translateY(0)';
+    }, index * 50);
+  });
+}
+
+// Initialize calculator on page load
+document.addEventListener('DOMContentLoaded', function() {
+  simulateSIP();
+});
+</script>
+{% endblock %}

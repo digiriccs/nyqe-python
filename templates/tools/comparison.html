@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+
+{% block title %}Investment Comparison Tool - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<style>
+  .comparison-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    background-color: var(--secondary-bg);
+  }
+
+  .comparison-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeInDown 1s ease-out;
+  }
+
+  .comparison-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .comparison-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .investment-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .investment-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .investment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .investment-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+  }
+
+  .investment-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin: 0;
+  }
+
+  .investment-category {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 0.2rem;
+  }
+
+  .investment-metrics {
+    margin: 1.5rem 0;
+  }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #F3F4F6;
+  }
+
+  .metric-row:last-child {
+    border-bottom: none;
+  }
+
+  .metric-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  .metric-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .risk-low {
+    color: var(--success);
+  }
+
+  .risk-moderate {
+    color: #F59E0B;
+  }
+
+  .risk-high {
+    color: #EF4444;
+  }
+
+  .investment-description {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+
+  .compare-btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .compare-btn:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,166,237,0.3);
+  }
+
+  .no-investments {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .no-investments-icon {
+    font-size: 4rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+
+  .no-investments-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .no-investments-text {
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  /* Animations */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .comparison-container {
+      padding: 1rem;
+    }
+
+    .comparison-title {
+      font-size: 2rem;
+    }
+
+    .comparison-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .investment-card {
+      padding: 1.5rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="comparison-container">
+  <!-- Header -->
+  <div class="comparison-header">
+    <h1 class="comparison-title">Investment Comparison Tool</h1>
+    <p class="comparison-subtitle">
+      Compare different investment options to make informed decisions based on risk, returns, and your financial goals
+    </p>
+  </div>
+
+  <!-- Investment Comparison Grid -->
+  {% if investments %}
+  <div class="comparison-grid">
+    {% for investment in investments %}
+    <div class="investment-card">
+      <div class="investment-header">
+        <div class="investment-icon">
+          {% if investment.category == 'mutual_funds' %}
+            <i class="fas fa-chart-pie"></i>
+          {% elif investment.category == 'fixed_income' %}
+            <i class="fas fa-university"></i>
+          {% elif investment.category == 'equity' %}
+            <i class="fas fa-chart-line"></i>
+          {% elif investment.category == 'alternative' %}
+            <i class="fas fa-coins"></i>
+          {% elif investment.category == 'bonds' %}
+            <i class="fas fa-file-invoice-dollar"></i>
+          {% else %}
+            <i class="fas fa-wallet"></i>
+          {% endif %}
+        </div>
+        <div>
+          <h3 class="investment-title">{{ investment.name }}</h3>
+          <div class="investment-category">{{ investment.category.replace('_', ' ').title() }}</div>
+        </div>
+      </div>
+
+      <div class="investment-metrics">
+        <div class="metric-row">
+          <span class="metric-label">Risk Level</span>
+          <span class="metric-value risk-{{ investment.risk_level }}">
+            {{ investment.risk_level.title() }}
+          </span>
+        </div>
+        
+        {% if investment.expected_returns %}
+        <div class="metric-row">
+          <span class="metric-label">Expected Returns</span>
+          <span class="metric-value">{{ investment.expected_returns }}</span>
+        </div>
+        {% endif %}
+        
+        {% if investment.min_investment %}
+        <div class="metric-row">
+          <span class="metric-label">Min. Investment</span>
+          <span class="metric-value">
+            ₹{{ "{:,.0f}".format(investment.min_investment) }}
+          </span>
+        </div>
+        {% endif %}
+        
+        {% if investment.lock_in_period %}
+        <div class="metric-row">
+          <span class="metric-label">Lock-in Period</span>
+          <span class="metric-value">{{ investment.lock_in_period }}</span>
+        </div>
+        {% endif %}
+        
+        {% if investment.liquidity %}
+        <div class="metric-row">
+          <span class="metric-label">Liquidity</span>
+          <span class="metric-value">{{ investment.liquidity.title() }}</span>
+        </div>
+        {% endif %}
+        
+        <div class="metric-row">
+          <span class="metric-label">Tax Benefits</span>
+          <span class="metric-value">
+            {% if investment.tax_benefits %}
+              <i class="fas fa-check text-success"></i> Available
+            {% else %}
+              <i class="fas fa-times text-muted"></i> Not Available
+            {% endif %}
+          </span>
+        </div>
+      </div>
+
+      {% if investment.description %}
+      <p class="investment-description">{{ investment.description[:120] }}{% if investment.description|length > 120 %}...{% endif %}</p>
+      {% endif %}
+
+      <button class="compare-btn" onclick="learnMore('{{ investment.slug }}')">
+        <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+        Learn More
+      </button>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="no-investments">
+    <div class="no-investments-icon">
+      <i class="fas fa-chart-bar"></i>
+    </div>
+    <h3 class="no-investments-title">No Investment Options Available</h3>
+    <p class="no-investments-text">
+      We're currently updating our investment portfolio. Please check back soon or contact our team for personalized investment recommendations.
+    </p>
+    <div style="margin-top: 2rem;">
+      <a href="{{ url_for('modern_contact') }}" class="compare-btn" style="display: inline-block; text-decoration: none; width: auto; padding: 12px 32px;">
+        <i class="fas fa-phone" style="margin-right: 8px;"></i>
+        Contact Our Team
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+function learnMore(slug) {
+  // Redirect to investment detail page
+  window.location.href = `/investments/${slug}`;
+}
+
+// Add some interactive features
+document.addEventListener('DOMContentLoaded', function() {
+  // Add staggered animation to cards
+  const cards = document.querySelectorAll('.investment-card');
+  cards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+  
+  // Add hover effect enhancements
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.borderLeft = '4px solid var(--accent)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      this.style.borderLeft = 'none';
+    });
+  });
+});
+</script>
+{% endblock %}

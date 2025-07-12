@@ -1,0 +1,527 @@
+{% extends "base.html" %}
+
+{% block title %}Market Dashboard - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.market-dashboard {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.market-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.market-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+}
+
+.market-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.market-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.market-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.market-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.refresh-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+    transform: scale(1.05);
+}
+
+.market-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.market-item:last-child {
+    border-bottom: none;
+}
+
+.stock-info {
+    flex: 1;
+}
+
+.stock-symbol {
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.stock-name {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.stock-price {
+    text-align: right;
+}
+
+.price {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+}
+
+.change {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.positive {
+    color: #10b981;
+}
+
+.negative {
+    color: #ef4444;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.search-container {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.search-box {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.search-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    transform: translateY(-1px);
+}
+
+.error-message {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.success-message {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.last-updated {
+    text-align: center;
+    color: #666;
+    font-size: 0.875rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .market-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-box {
+        flex-direction: column;
+    }
+    
+    .market-header h1 {
+        font-size: 2rem;
+    }
+    
+    .market-card {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="market-dashboard">
+    <div class="market-container">
+        <div class="market-header">
+            <h1>Live Market Dashboard</h1>
+            <p>Real-time stock prices and market data</p>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-container">
+            <h3 style="margin-bottom: 1rem;">Search Stocks</h3>
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Enter stock symbol (e.g., RELIANCE.NS, TCS.NS)">
+                <button class="search-btn" onclick="searchStock()">Search</button>
+            </div>
+            <div id="searchResult"></div>
+        </div>
+
+        <div class="market-grid">
+            <!-- Market Indices -->
+            <div class="market-card">
+                <div class="card-header">
+                    <h3 class="card-title">Market Indices</h3>
+                    <button class="refresh-btn" onclick="loadMarketOverview()">Refresh</button>
+                </div>
+                <div id="marketIndices">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <div>Loading market data...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Stocks -->
+            <div class="market-card">
+                <div class="card-header">
+                    <h3 class="card-title">Popular Stocks</h3>
+                    <button class="refresh-btn" onclick="loadPopularStocks()">Refresh</button>
+                </div>
+                <div id="popularStocks">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <div>Loading stock data...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Watchlist -->
+            <div class="market-card">
+                <div class="card-header">
+                    <h3 class="card-title">My Watchlist</h3>
+                    <button class="refresh-btn" onclick="loadWatchlist()">Refresh</button>
+                </div>
+                <div id="watchlist">
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <p>No stocks in watchlist</p>
+                        <p style="font-size: 0.875rem;">Search and add stocks to your watchlist</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="last-updated" id="lastUpdated"></div>
+    </div>
+</div>
+
+<script>
+// Market data functionality
+let watchlistSymbols = JSON.parse(localStorage.getItem('watchlist') || '[]');
+
+function formatPrice(price) {
+    return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        minimumFractionDigits: 2
+    }).format(price);
+}
+
+function formatChange(change, changePercent) {
+    const isPositive = change >= 0;
+    const symbol = isPositive ? '+' : '';
+    const className = isPositive ? 'positive' : 'negative';
+    
+    return `<span class="${className}">${symbol}${change.toFixed(2)} (${changePercent})</span>`;
+}
+
+function createMarketItem(data, symbol) {
+    const name = symbol.replace('.NS', '').replace('.BO', '');
+    
+    return `
+        <div class="market-item">
+            <div class="stock-info">
+                <div class="stock-symbol">${symbol}</div>
+                <div class="stock-name">${name}</div>
+            </div>
+            <div class="stock-price">
+                <div class="price">${formatPrice(data.price || 0)}</div>
+                <div class="change">${formatChange(data.change || 0, data.change_percent || '0%')}</div>
+            </div>
+        </div>
+    `;
+}
+
+async function loadMarketOverview() {
+    try {
+        const response = await fetch('/api/market/overview');
+        const result = await response.json();
+        
+        if (result.success) {
+            let html = '';
+            Object.entries(result.data).forEach(([name, data]) => {
+                html += createMarketItem(data, name);
+            });
+            
+            document.getElementById('marketIndices').innerHTML = html || '<div class="loading">No data available</div>';
+        } else {
+            document.getElementById('marketIndices').innerHTML = `<div class="error-message">Error: ${result.error}</div>`;
+        }
+    } catch (error) {
+        document.getElementById('marketIndices').innerHTML = `<div class="error-message">Failed to load market data: ${error.message}</div>`;
+    }
+}
+
+async function loadPopularStocks() {
+    try {
+        const response = await fetch('/api/market/popular-stocks');
+        const result = await response.json();
+        
+        if (result.success) {
+            let html = '';
+            Object.entries(result.data).forEach(([symbol, data]) => {
+                html += createMarketItem(data, symbol);
+            });
+            
+            document.getElementById('popularStocks').innerHTML = html || '<div class="loading">No data available</div>';
+        } else {
+            document.getElementById('popularStocks').innerHTML = `<div class="error-message">Error: ${result.error}</div>`;
+        }
+    } catch (error) {
+        document.getElementById('popularStocks').innerHTML = `<div class="error-message">Failed to load stock data: ${error.message}</div>`;
+    }
+}
+
+async function searchStock() {
+    const symbol = document.getElementById('searchInput').value.trim().toUpperCase();
+    const resultDiv = document.getElementById('searchResult');
+    
+    if (!symbol) {
+        resultDiv.innerHTML = '<div class="error-message">Please enter a stock symbol</div>';
+        return;
+    }
+    
+    resultDiv.innerHTML = '<div class="loading"><div class="loading-spinner"></div>Searching...</div>';
+    
+    try {
+        const response = await fetch(`/api/market/quote/${symbol}`);
+        const result = await response.json();
+        
+        if (result.success) {
+            const data = result.data;
+            const addToWatchlistBtn = watchlistSymbols.includes(symbol) 
+                ? `<button style="background: #6b7280; cursor: not-allowed;" disabled>Already in Watchlist</button>`
+                : `<button class="search-btn" onclick="addToWatchlist('${symbol}')">Add to Watchlist</button>`;
+            
+            resultDiv.innerHTML = `
+                <div class="success-message">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${symbol}</strong><br>
+                            Price: ${formatPrice(data.price || 0)}<br>
+                            Change: ${formatChange(data.change || 0, data.change_percent || '0%')}
+                        </div>
+                        <div>
+                            ${addToWatchlistBtn}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `<div class="error-message">Stock not found or data unavailable</div>`;
+        }
+    } catch (error) {
+        resultDiv.innerHTML = `<div class="error-message">Search failed: ${error.message}</div>`;
+    }
+}
+
+function addToWatchlist(symbol) {
+    if (!watchlistSymbols.includes(symbol)) {
+        watchlistSymbols.push(symbol);
+        localStorage.setItem('watchlist', JSON.stringify(watchlistSymbols));
+        loadWatchlist();
+        
+        // Update the search result to show it's added
+        searchStock();
+    }
+}
+
+function removeFromWatchlist(symbol) {
+    watchlistSymbols = watchlistSymbols.filter(s => s !== symbol);
+    localStorage.setItem('watchlist', JSON.stringify(watchlistSymbols));
+    loadWatchlist();
+}
+
+async function loadWatchlist() {
+    const watchlistDiv = document.getElementById('watchlist');
+    
+    if (watchlistSymbols.length === 0) {
+        watchlistDiv.innerHTML = `
+            <div style="text-align: center; padding: 2rem; color: #666;">
+                <p>No stocks in watchlist</p>
+                <p style="font-size: 0.875rem;">Search and add stocks to your watchlist</p>
+            </div>
+        `;
+        return;
+    }
+    
+    watchlistDiv.innerHTML = '<div class="loading"><div class="loading-spinner"></div>Loading watchlist...</div>';
+    
+    let html = '';
+    for (const symbol of watchlistSymbols) {
+        try {
+            const response = await fetch(`/api/market/quote/${symbol}`);
+            const result = await response.json();
+            
+            if (result.success) {
+                const data = result.data;
+                html += `
+                    <div class="market-item">
+                        <div class="stock-info">
+                            <div class="stock-symbol">${symbol}</div>
+                            <div class="stock-name">${symbol.replace('.NS', '').replace('.BO', '')}</div>
+                        </div>
+                        <div class="stock-price">
+                            <div class="price">${formatPrice(data.price || 0)}</div>
+                            <div class="change">${formatChange(data.change || 0, data.change_percent || '0%')}</div>
+                            <button onclick="removeFromWatchlist('${symbol}')" style="background: #ef4444; color: white; border: none; border-radius: 4px; padding: 0.25rem 0.5rem; font-size: 0.75rem; margin-top: 0.25rem; cursor: pointer;">Remove</button>
+                        </div>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error(`Failed to load ${symbol}:`, error);
+        }
+    }
+    
+    watchlistDiv.innerHTML = html || '<div class="error-message">Failed to load watchlist data</div>';
+}
+
+function updateLastUpdated() {
+    const now = new Date();
+    document.getElementById('lastUpdated').textContent = `Last updated: ${now.toLocaleString()}`;
+}
+
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+    loadMarketOverview();
+    loadPopularStocks();
+    loadWatchlist();
+    updateLastUpdated();
+    
+    // Auto-refresh every 60 seconds
+    setInterval(() => {
+        loadMarketOverview();
+        loadPopularStocks();
+        loadWatchlist();
+        updateLastUpdated();
+    }, 60000);
+});
+
+// Allow enter key for search
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        searchStock();
+    }
+});
+</script>
+{% endblock %}

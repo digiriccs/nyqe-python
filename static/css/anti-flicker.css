@@ -1,0 +1,187 @@
+/* Anti-Flicker Optimizations */
+
+/* Prevent layout shifts during page load */
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Disable AOS animations on mobile for performance */
+@media (max-width: 768px) {
+    [data-aos] {
+        opacity: 1 !important;
+        transform: translate(0) scale(1) !important;
+        transition: none !important;
+    }
+    
+    .aos-animate {
+        transition: none !important;
+    }
+}
+
+/* Reduce animation intensity and disable on load */
+[data-aos] {
+    transition-duration: 600ms !important;
+    transition-timing-function: ease-out !important;
+}
+
+/* Disable AOS until page fully loads */
+html:not(.aos-ready) [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+.no-fouc {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.fouc-ready {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Stabilize hero section */
+.hero-section,
+.hero-enhanced {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Prevent text reflow */
+.hero-title,
+.hero-subtitle {
+    min-height: 1em;
+    display: block;
+}
+
+/* Reduce complex animations */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* Optimize glowing effects */
+.glow-text,
+.hero-title .text-warning {
+    text-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+    animation: none;
+}
+
+/* Smooth loading for images */
+img {
+    loading: lazy;
+    decoding: async;
+}
+
+/* Prevent button jump on hover */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-hero-primary,
+.btn-hero-secondary {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+    will-change: transform;
+}
+
+/* Stabilize floating elements */
+.floating,
+.float-animation {
+    animation: gentleFloat 6s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Prevent widget flicker */
+.hero-widget,
+.preview-widget {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Optimize transitions */
+* {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Prevent navbar flicker */
+.navbar {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+/* Stabilize modals and overlays */
+.modal,
+.walkthrough-overlay {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* GPU acceleration for smooth animations */
+.hero-bg-gradient,
+.gradient-overlay {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Reduce paint areas */
+.card,
+.product-card,
+.calculator-card {
+    contain: layout style paint;
+}
+
+/* Optimize scroll performance */
+.container-fluid,
+.container {
+    contain: layout;
+}
+
+/* Fix z-index stacking issues */
+.hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+.hero-visual {
+    position: relative;
+    z-index: 5;
+}
+
+/* Prevent content jump on load */
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Smooth font loading */
+@font-face {
+    font-display: swap;
+}
+
+/* Optimize Lottie animations */
+.lottie-container {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
+}

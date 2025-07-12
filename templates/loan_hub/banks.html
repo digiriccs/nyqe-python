@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Partner Banks - NYQE Wealth Management{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loan-hub.css') }}">
+<style>
+    /* Bank styles are now in loan-hub.css */
+    
+    .bank-actions {
+        padding: 20px;
+        background: #f8f9fa;
+        text-align: center;
+    }
+    
+    .contact-info {
+        background: #e8f4ff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+    }
+    
+    .bank-summary {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+        margin-bottom: 40px;
+        border-radius: 12px;
+    }
+    
+    .summary-stats {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+    
+    .summary-stat {
+        text-align: center;
+    }
+    
+    .summary-number {
+        font-size: 3rem;
+        font-weight: 700;
+        display: block;
+    }
+    
+    .summary-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="loan-hub-container">
+    <h1 class="text-center mb-5" style="color: var(--primary-blue);">Our Partner Banks</h1>
+    
+    <!-- Banks Summary -->
+    <div class="bank-summary">
+        <h2>Partnered with India's Leading Banks</h2>
+        <p class="lead mt-3">Access loan products from top banks with competitive rates and flexible terms</p>
+        
+        <div class="summary-stats">
+            <div class="summary-stat">
+                <span class="summary-number">{{ banks|length }}</span>
+                <span class="summary-label">Partner Banks</span>
+            </div>
+            <div class="summary-stat">
+                <span class="summary-number">{{ bank_stats.values()|sum }}</span>
+                <span class="summary-label">Total Loan Products</span>
+            </div>
+            <div class="summary-stat">
+                <span class="summary-number">24/7</span>
+                <span class="summary-label">Customer Support</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Banks Grid -->
+    <div class="banks-grid">
+        {% for bank in banks %}
+        <div class="bank-card">
+            <div class="bank-header">
+                <div class="bank-name">{{ bank.name }}</div>
+                <div class="bank-code">{{ bank.code }}</div>
+            </div>
+            
+            <div class="bank-details">
+                {% if bank.description %}
+                <p class="text-muted mb-3">{{ bank.description }}</p>
+                {% endif %}
+                
+                <div class="detail-row">
+                    <span class="detail-label">Customer Rating</span>
+                    <span class="detail-value">
+                        <span class="rating-stars">
+                            {% for i in range(5) %}
+                                {% if i < bank.rating|int %}
+                                    <i class="fas fa-star"></i>
+                                {% elif i < bank.rating %}
+                                    <i class="fas fa-star-half-alt"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                        {{ "%.1f"|format(bank.rating) }}/5
+                    </span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Branch Network</span>
+                    <span class="detail-value">{{ "{:,}".format(bank.branch_count) }} branches</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Loan Products</span>
+                    <span class="detail-value">{{ bank_stats.get(bank.id, 0) }} products</span>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h6 class="mb-2">Contact Information</h6>
+                    {% if bank.customer_care %}
+                    <div class="contact-item">
+                        <i class="fas fa-phone text-primary"></i>
+                        <span>{{ bank.customer_care }}</span>
+                    </div>
+                    {% endif %}
+                    {% if bank.website %}
+                    <div class="contact-item">
+                        <i class="fas fa-globe text-primary"></i>
+                        <a href="{{ bank.website }}" target="_blank">Visit Website</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="bank-stats">
+                <div class="stat-item">
+                    <span class="stat-number">{{ bank_stats.get(bank.id, 0) }}</span>
+                    <span class="stat-label">Loan Products</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">
+                        {% set min_rate = 100 %}
+                        {% for product in bank.loan_products %}
+                            {% if product.interest_rate_min < min_rate %}
+                                {% set min_rate = product.interest_rate_min %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if min_rate < 100 %}
+                            {{ "%.1f"|format(min_rate) }}%
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </span>
+                    <span class="stat-label">Starting Rate</span>
+                </div>
+            </div>
+            
+            <div class="bank-actions">
+                <a href="{{ url_for('loan_hub.index', bank_id=bank.id) }}" class="btn btn-primary">
+                    <i class="fas fa-search me-2"></i>View Loan Products
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Bank Selection Tips -->
+    <div class="mt-5 p-4 bg-light rounded">
+        <h3 class="mb-3">How to Choose the Right Bank</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <h5><i class="fas fa-percentage text-primary me-2"></i>Interest Rates</h5>
+                <p>Compare interest rates across banks. Even a 0.5% difference can save thousands over the loan tenure.</p>
+            </div>
+            <div class="col-md-4">
+                <h5><i class="fas fa-users text-primary me-2"></i>Customer Service</h5>
+                <p>Check customer ratings and reviews. Good service makes the loan journey smooth and hassle-free.</p>
+            </div>
+            <div class="col-md-4">
+                <h5><i class="fas fa-map-marker-alt text-primary me-2"></i>Branch Network</h5>
+                <p>Consider banks with branches near you for easy document submission and support when needed.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

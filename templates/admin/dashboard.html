@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - NYQE Wealth Management{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2">
+            <div class="bg-light p-3 rounded">
+                <h6 class="mb-3">Admin Menu</h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('admin.dashboard') }}">
+                            <i class="fas fa-chart-bar"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin.content_management') }}">
+                            <i class="fas fa-edit"></i> Content Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin.services') }}">
+                            <i class="fas fa-briefcase"></i> Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin.investments') }}">
+                            <i class="fas fa-chart-line"></i> Investments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin.leads') }}">
+                            <i class="fas fa-users"></i> Leads
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin.settings') }}">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Content Management System</h1>
+                <div class="text-muted">
+                    Welcome, {{ current_user.first_name or current_user.username }}
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>{{ stats.total_users }}</h4>
+                                    <small>Total Users</small>
+                                </div>
+                                <i class="fas fa-users fa-2x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>{{ stats.total_leads }}</h4>
+                                    <small>Total Leads</small>
+                                </div>
+                                <i class="fas fa-user-plus fa-2x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>{{ stats.new_leads }}</h4>
+                                    <small>New Leads</small>
+                                </div>
+                                <i class="fas fa-exclamation-circle fa-2x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>{{ stats.active_services }}</h4>
+                                    <small>Active Services</small>
+                                </div>
+                                <i class="fas fa-briefcase fa-2x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Management Quick Actions -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Content Management</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-4">Manage website content, services, investments, and settings from here.</p>
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <div class="card border-primary">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
+                                            <h6>Services</h6>
+                                            <p class="small text-muted">Manage service offerings and descriptions</p>
+                                            <a href="{{ url_for('admin.services') }}" class="btn btn-primary btn-sm">Manage Services</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card border-success">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                                            <h6>Investments</h6>
+                                            <p class="small text-muted">Edit investment products and information</p>
+                                            <a href="{{ url_for('admin.investments') }}" class="btn btn-success btn-sm">Manage Investments</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card border-warning">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-users fa-3x text-warning mb-3"></i>
+                                            <h6>Leads</h6>
+                                            <p class="small text-muted">View and manage customer leads</p>
+                                            <a href="{{ url_for('admin.leads') }}" class="btn btn-warning btn-sm">View Leads</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card border-info">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-cog fa-3x text-info mb-3"></i>
+                                            <h6>Settings</h6>
+                                            <p class="small text-muted">Configure site settings and content</p>
+                                            <a href="{{ url_for('admin.settings') }}" class="btn btn-info btn-sm">Site Settings</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Recent Leads</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if recent_leads %}
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Service Interest</th>
+                                                <th>Investment Amount</th>
+                                                <th>Status</th>
+                                                <th>Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for lead in recent_leads %}
+                                            <tr>
+                                                <td>{{ lead.name }}</td>
+                                                <td>{{ lead.email }}</td>
+                                                <td>{{ lead.service_interest or 'N/A' }}</td>
+                                                <td>
+                                                    {% if lead.investment_amount %}
+                                                        ₹{{ "{:,.0f}".format(lead.investment_amount) }}
+                                                    {% else %}
+                                                        N/A
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-{{ 'success' if lead.status == 'converted' else 'warning' if lead.status == 'new' else 'info' }}">
+                                                        {{ lead.status.title() }}
+                                                    </span>
+                                                </td>
+                                                <td>{{ lead.created_at.strftime('%m/%d/%Y') }}</td>
+                                                <td>
+                                                    <a href="{{ url_for('admin.lead_detail', id=lead.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="{{ url_for('admin.leads') }}" class="btn btn-outline-primary">View All Leads</a>
+                                </div>
+                            {% else %}
+                                <div class="text-center py-4">
+                                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">No recent leads found.</p>
+                                    <small class="text-muted">New customer inquiries will appear here.</small>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

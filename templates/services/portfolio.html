@@ -1,0 +1,1017 @@
+{% extends "base.html" %}
+
+{% block title %}Portfolio Management Services - NYQE Wealth Management{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1>Portfolio Management</h1>
+                <p class="lead">Professional portfolio management with active monitoring, strategic rebalancing, and performance optimization for consistent wealth growth.</p>
+                <div class="portfolio-stats mt-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <h3>₹100Cr+</h3>
+                                <p>Assets Under Management</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <h3>14%+</h3>
+                                <p>Average Performance</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <h3>200+</h3>
+                                <p>Active Portfolios</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg mt-4">
+                    <i class="fas fa-briefcase"></i> Start Portfolio Management
+                </a>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="portfolio-visual">
+                    <div class="portfolio-dashboard">
+                        <div class="dashboard-header">
+                            <h6>Portfolio Performance Dashboard</h6>
+                        </div>
+                        <div class="performance-chart">
+                            <canvas id="portfolio-performance-chart"></canvas>
+                        </div>
+                        <div class="dashboard-metrics">
+                            <div class="metric">
+                                <span class="metric-value">+14.2%</span>
+                                <span class="metric-label">YTD Return</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">0.8</span>
+                                <span class="metric-label">Sharpe Ratio</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">12.5%</span>
+                                <span class="metric-label">Volatility</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Management Approach -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Portfolio Management Approach</h2>
+            <p class="lead">Systematic and disciplined approach to wealth creation and preservation</p>
+        </div>
+        
+        <div class="approach-grid">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="approach-card">
+                        <div class="approach-icon">
+                            <i class="fas fa-search-dollar"></i>
+                        </div>
+                        <h5>Research Driven</h5>
+                        <p>In-depth fundamental and technical analysis for informed investment decisions</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="approach-card">
+                        <div class="approach-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h5>Risk Balanced</h5>
+                        <p>Optimal risk-return balance through strategic asset allocation and diversification</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="approach-card">
+                        <div class="approach-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h5>Dynamic Rebalancing</h5>
+                        <p>Regular portfolio rebalancing based on market conditions and performance metrics</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="approach-card">
+                        <div class="approach-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h5>Performance Focus</h5>
+                        <p>Continuous monitoring and optimization for consistent outperformance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Services -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Comprehensive Portfolio Services</h2>
+            <p class="lead">End-to-end portfolio management solutions for every investor</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card service-card h-100">
+                    <div class="card-header">
+                        <div class="service-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h5>Portfolio Construction</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Strategic portfolio design based on your risk profile, investment goals, and time horizon.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Asset allocation strategy</li>
+                            <li><i class="fas fa-check"></i> Security selection process</li>
+                            <li><i class="fas fa-check"></i> Diversification planning</li>
+                            <li><i class="fas fa-check"></i> Risk budgeting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card service-card h-100">
+                    <div class="card-header">
+                        <div class="service-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h5>Active Monitoring</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Real-time portfolio monitoring with proactive adjustments to market changes and opportunities.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Daily performance tracking</li>
+                            <li><i class="fas fa-check"></i> Risk metric monitoring</li>
+                            <li><i class="fas fa-check"></i> Market opportunity alerts</li>
+                            <li><i class="fas fa-check"></i> Compliance oversight</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card service-card h-100">
+                    <div class="card-header">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h5>Performance Reporting</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Comprehensive performance reports with detailed analytics and actionable insights.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Monthly performance reports</li>
+                            <li><i class="fas fa-check"></i> Benchmark comparison</li>
+                            <li><i class="fas fa-check"></i> Risk-adjusted returns</li>
+                            <li><i class="fas fa-check"></i> Attribution analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Types -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Portfolio Solutions for Every Need</h2>
+            <p class="lead">Customized portfolio strategies based on your investment objectives</p>
+        </div>
+        
+        <div class="portfolio-types">
+            <div class="row">
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-type-card">
+                        <div class="type-header">
+                            <h5>Growth Portfolio</h5>
+                            <span class="risk-badge high-risk">High Growth</span>
+                        </div>
+                        <div class="type-body">
+                            <div class="allocation-pie">
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #1a365d;"></div>
+                                    <span>Equity - 80%</span>
+                                </div>
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #00d4aa;"></div>
+                                    <span>Debt - 15%</span>
+                                </div>
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #ffd700;"></div>
+                                    <span>Alternatives - 5%</span>
+                                </div>
+                            </div>
+                            <div class="type-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">Expected Return:</span>
+                                    <span class="metric-value">15-18% p.a.</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Risk Level:</span>
+                                    <span class="metric-value">High</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Time Horizon:</span>
+                                    <span class="metric-value">7+ Years</span>
+                                </div>
+                            </div>
+                            <p><strong>Ideal for:</strong> Young investors seeking maximum wealth creation with high risk tolerance.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-type-card">
+                        <div class="type-header">
+                            <h5>Balanced Portfolio</h5>
+                            <span class="risk-badge moderate-risk">Moderate Growth</span>
+                        </div>
+                        <div class="type-body">
+                            <div class="allocation-pie">
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #1a365d;"></div>
+                                    <span>Equity - 60%</span>
+                                </div>
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #00d4aa;"></div>
+                                    <span>Debt - 35%</span>
+                                </div>
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #ffd700;"></div>
+                                    <span>Alternatives - 5%</span>
+                                </div>
+                            </div>
+                            <div class="type-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">Expected Return:</span>
+                                    <span class="metric-value">12-15% p.a.</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Risk Level:</span>
+                                    <span class="metric-value">Moderate</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Time Horizon:</span>
+                                    <span class="metric-value">5-7 Years</span>
+                                </div>
+                            </div>
+                            <p><strong>Ideal for:</strong> Investors seeking balanced growth and stability with moderate risk appetite.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="portfolio-type-card">
+                        <div class="type-header">
+                            <h5>Conservative Portfolio</h5>
+                            <span class="risk-badge low-risk">Capital Preservation</span>
+                        </div>
+                        <div class="type-body">
+                            <div class="allocation-pie">
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #1a365d;"></div>
+                                    <span>Equity - 30%</span>
+                                </div>
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #00d4aa;"></div>
+                                    <span>Debt - 65%</span>
+                                </div>
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #ffd700;"></div>
+                                    <span>Cash/Gold - 5%</span>
+                                </div>
+                            </div>
+                            <div class="type-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">Expected Return:</span>
+                                    <span class="metric-value">8-12% p.a.</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Risk Level:</span>
+                                    <span class="metric-value">Low</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Time Horizon:</span>
+                                    <span class="metric-value">3-5 Years</span>
+                                </div>
+                            </div>
+                            <p><strong>Ideal for:</strong> Risk-averse investors or those nearing retirement seeking capital preservation.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="portfolio-type-card">
+                        <div class="type-header">
+                            <h5>Income Portfolio</h5>
+                            <span class="risk-badge income-focus">Income Generation</span>
+                        </div>
+                        <div class="type-body">
+                            <div class="allocation-pie">
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #1a365d;"></div>
+                                    <span>Dividend Stocks - 40%</span>
+                                </div>
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #00d4aa;"></div>
+                                    <span>Debt - 50%</span>
+                                </div>
+                                <div class="allocation-item">
+                                    <div class="allocation-color" style="background: #ffd700;"></div>
+                                    <span>REITs - 10%</span>
+                                </div>
+                            </div>
+                            <div class="type-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">Expected Return:</span>
+                                    <span class="metric-value">9-13% p.a.</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Yield:</span>
+                                    <span class="metric-value">6-8% p.a.</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Time Horizon:</span>
+                                    <span class="metric-value">3+ Years</span>
+                                </div>
+                            </div>
+                            <p><strong>Ideal for:</strong> Retirees or investors seeking regular income with moderate growth.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Management Process -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Portfolio Management Process</h2>
+            <p class="lead">Systematic approach to building and managing winning portfolios</p>
+        </div>
+        
+        <div class="process-timeline">
+            <div class="timeline-container">
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+                    <div class="timeline-content">
+                        <div class="timeline-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h5>Client Profiling</h5>
+                        <p>Comprehensive assessment of risk tolerance, investment goals, time horizon, and financial situation.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="200">
+                    <div class="timeline-content">
+                        <div class="timeline-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h5>Asset Allocation</h5>
+                        <p>Strategic allocation across asset classes based on modern portfolio theory and risk-return optimization.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+                    <div class="timeline-content">
+                        <div class="timeline-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h5>Security Selection</h5>
+                        <p>Rigorous research and analysis to select best-in-class securities within each asset category.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="400">
+                    <div class="timeline-content">
+                        <div class="timeline-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <h5>Implementation</h5>
+                        <p>Systematic portfolio construction with optimal timing and cost-efficient execution.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500">
+                    <div class="timeline-content">
+                        <div class="timeline-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h5>Monitoring & Rebalancing</h5>
+                        <p>Continuous monitoring with periodic rebalancing to maintain optimal asset allocation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Performance Metrics -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Track Record</h2>
+            <p class="lead">Consistent performance across market cycles</p>
+        </div>
+        
+        <div class="performance-dashboard">
+            <div class="row">
+                <div class="col-lg-8 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card performance-chart-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-line me-2"></i>Portfolio Performance vs Benchmark</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="performance-comparison-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="performance-metrics">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="metric-data">
+                                <h3>14.2%</h3>
+                                <p>Average Annual Return</p>
+                                <small>vs 11.8% benchmark</small>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="metric-data">
+                                <h3>0.85</h3>
+                                <p>Sharpe Ratio</p>
+                                <small>Risk-adjusted performance</small>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="metric-data">
+                                <h3>12.5%</h3>
+                                <p>Portfolio Volatility</p>
+                                <small>vs 15.2% benchmark</small>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-trending-up"></i>
+                            </div>
+                            <div class="metric-data">
+                                <h3>78%</h3>
+                                <p>Win Rate</p>
+                                <small>Positive return years</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div data-aos="fade-up">
+            <h2>Ready to Optimize Your Portfolio?</h2>
+            <p class="lead">Let our experts build and manage a portfolio tailored to your financial goals</p>
+            
+            <div class="cta-benefits mt-4 mb-4">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <i class="fas fa-user-tie fa-2x mb-2"></i>
+                        <p>Expert Management</p>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <i class="fas fa-chart-line fa-2x mb-2"></i>
+                        <p>Superior Returns</p>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                        <p>Risk Management</p>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <i class="fas fa-eye fa-2x mb-2"></i>
+                        <p>Full Transparency</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary btn-lg me-3">
+                    <i class="fas fa-calendar-check"></i> Start Portfolio Management
+                </a>
+                <a href="{{ url_for('comparison_tool') }}" class="btn btn-outline btn-lg">
+                    <i class="fas fa-balance-scale"></i> Compare Portfolios
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.stat-item {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.stat-item h3 {
+    color: var(--accent-color);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.portfolio-visual {
+    padding: 2rem;
+}
+
+.portfolio-dashboard {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.dashboard-header h6 {
+    color: white;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.performance-chart {
+    height: 200px;
+    background: white;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.metric {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.approach-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.approach-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.approach-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin: 0 auto 1.5rem;
+}
+
+.service-card {
+    border: none;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.service-card .card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    border: none;
+    padding: 2rem;
+    text-align: center;
+}
+
+.service-card .service-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin: 0 auto 1rem;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.service-features i {
+    color: var(--success-color);
+}
+
+.portfolio-type-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.portfolio-type-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.type-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.risk-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.high-risk { background: #fef3c7; color: #d97706; }
+.moderate-risk { background: #dbeafe; color: #2563eb; }
+.low-risk { background: #d1fae5; color: #059669; }
+.income-focus { background: #ede9fe; color: #7c3aed; }
+
+.type-body {
+    padding: 2rem;
+}
+
+.allocation-pie {
+    background: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+}
+
+.allocation-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.allocation-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.type-metrics {
+    background: var(--bg-light);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+}
+
+.type-metrics .metric {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    background: none;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--secondary-color), var(--secondary-light));
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.timeline-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-light);
+    width: 45%;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.timeline-icon {
+    position: absolute;
+    left: 50%;
+    top: 2rem;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+.performance-chart-card {
+    border: none;
+    box-shadow: var(--shadow-light);
+}
+
+.performance-chart-card .card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    border: none;
+}
+
+.chart-container {
+    height: 300px;
+    position: relative;
+}
+
+.performance-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.metric-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-light);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.metric-card .metric-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.metric-card .metric-data h3 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.metric-card .metric-data p {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.metric-card .metric-data small {
+    color: var(--text-light);
+}
+
+.cta-benefits {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cta-benefits i {
+    color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    .dashboard-metrics {
+        grid-template-columns: 1fr;
+    }
+    
+    .timeline-container::before {
+        left: 30px;
+    }
+    
+    .timeline-content {
+        width: calc(100% - 80px);
+        margin-left: 80px !important;
+    }
+    
+    .timeline-icon {
+        left: 30px;
+    }
+    
+    .performance-metrics {
+        gap: 0.5rem;
+    }
+    
+    .metric-card {
+        padding: 1rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Portfolio Performance Chart
+    const performanceCtx = document.getElementById('portfolio-performance-chart');
+    if (performanceCtx) {
+        new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Portfolio Value',
+                    data: [100, 102, 105, 103, 108, 114],
+                    borderColor: '#00d4aa',
+                    backgroundColor: 'rgba(0, 212, 170, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        display: false
+                    },
+                    x: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+    
+    // Performance Comparison Chart
+    const comparisonCtx = document.getElementById('performance-comparison-chart');
+    if (comparisonCtx) {
+        new Chart(comparisonCtx, {
+            type: 'line',
+            data: {
+                labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                datasets: [{
+                    label: 'NYQE Portfolio',
+                    data: [100, 112, 128, 135, 148, 168],
+                    borderColor: '#00d4aa',
+                    backgroundColor: 'rgba(0, 212, 170, 0.1)',
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.4
+                }, {
+                    label: 'Benchmark (Nifty 50)',
+                    data: [100, 108, 120, 125, 135, 148],
+                    borderColor: '#1a365d',
+                    backgroundColor: 'rgba(26, 54, 93, 0.1)',
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ₹' + context.raw;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + value;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

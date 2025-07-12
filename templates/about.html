@@ -1,0 +1,543 @@
+{% extends "base.html" %}
+
+{% block title %}About NYQE Wealth Management - Your Trusted Financial Partner{% endblock %}
+
+{% block extra_head %}
+<style>
+  .about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .about-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    animation: fadeInDown 1s ease-out;
+  }
+
+  .about-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .about-hero p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .about-content {
+    display: grid;
+    gap: 4rem;
+    margin-top: 4rem;
+  }
+
+  .content-section {
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .content-section h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+
+  .content-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .value-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .value-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+  }
+
+  .value-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .value-description {
+    color: var(--text-light);
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .stats-section {
+    background: var(--secondary-bg);
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    margin: 4rem 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .stat-item {
+    padding: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  .team-section {
+    text-align: center;
+    margin: 4rem 0;
+  }
+
+  .team-section h2 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 3rem;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .team-member {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .team-member:hover {
+    transform: translateY(-4px);
+  }
+
+  .member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem;
+  }
+
+  .member-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .member-role {
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .member-bio {
+    color: var(--text-light);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .cta-section {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  .cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .cta-section p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-button {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .cta-button:hover {
+    background: white;
+    color: var(--primary);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  /* Animations */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .about-container {
+      padding: 1rem;
+    }
+
+    .about-hero h1 {
+      font-size: 2.2rem;
+    }
+
+    .about-hero p {
+      font-size: 1.1rem;
+    }
+
+    .content-section h2 {
+      font-size: 1.8rem;
+    }
+
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-container">
+  <!-- Hero Section -->
+  <div class="about-hero">
+    <h1>About NYQE Wealth Management</h1>
+    <p>
+      Empowering your financial future through expert guidance, innovative solutions, 
+      and unwavering commitment to your success. Your wealth, our expertise.
+    </p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="about-content">
+    <!-- Mission Section -->
+    <div class="content-section">
+      <h2>Our Mission</h2>
+      <p>
+        At NYQE Wealth Management, we believe that everyone deserves access to professional financial guidance 
+        and the opportunity to build lasting wealth. Our mission is to democratize financial advisory services 
+        by combining cutting-edge technology with personalized expertise, making professional wealth management 
+        accessible to individuals and families at every stage of their financial journey.
+      </p>
+      <p>
+        We're committed to empowering our clients with the knowledge, tools, and strategies they need to make 
+        informed financial decisions and achieve their long-term goals. Whether you're just starting your 
+        investment journey or looking to optimize an existing portfolio, we're here to guide you every step of the way.
+      </p>
+    </div>
+
+    <!-- Values Section -->
+    <div class="content-section">
+      <h2>Our Core Values</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3 class="value-title">Trust & Transparency</h3>
+          <p class="value-description">
+            We build lasting relationships through honest communication, transparent pricing, 
+            and always putting our clients' interests first.
+          </p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="value-title">Education First</h3>
+          <p class="value-description">
+            We believe in empowering our clients through education, helping them understand 
+            their investments and make confident financial decisions.
+          </p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="value-title">Innovation & Excellence</h3>
+          <p class="value-description">
+            We leverage the latest technology and proven strategies to deliver exceptional 
+            results and stay ahead of market trends.
+          </p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="value-title">Personalized Service</h3>
+          <p class="value-description">
+            Every client is unique. We provide tailored solutions that align with your 
+            specific goals, risk tolerance, and life circumstances.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Happy Clients</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">₹50Cr+</span>
+          <span class="stat-label">Assets Under Management</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">15%</span>
+          <span class="stat-label">Average Annual Returns</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">5+</span>
+          <span class="stat-label">Years of Excellence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Our Story Section -->
+    <div class="content-section">
+      <h2>Our Story</h2>
+      <p>
+        Founded with a vision to transform the wealth management landscape in India, NYQE Wealth Management 
+        was born from the understanding that traditional financial advisory services were often inaccessible, 
+        complex, and expensive for the average investor.
+      </p>
+      <p>
+        Our founders, with decades of combined experience in finance, technology, and client service, 
+        recognized the need for a modern approach to wealth management—one that combines the personal 
+        touch of traditional advisory with the efficiency and accessibility of modern technology.
+      </p>
+      <p>
+        Today, we're proud to serve hundreds of clients across India, helping them navigate their financial 
+        journeys with confidence and achieve their wealth creation goals through disciplined investing and 
+        strategic planning.
+      </p>
+    </div>
+
+    <!-- Team Section -->
+    <div class="team-section">
+      <h2>Meet Our Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-photo">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Rajesh Kumar</h3>
+          <p class="member-role">Founder & CEO</p>
+          <p class="member-bio">
+            Chartered Financial Analyst with 15+ years in wealth management. 
+            Passionate about making financial planning accessible to all.
+          </p>
+        </div>
+
+        <div class="team-member">
+          <div class="member-photo">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Priya Sharma</h3>
+          <p class="member-role">Head of Investment Strategy</p>
+          <p class="member-bio">
+            Expert in portfolio management with MBA in Finance. 
+            Specializes in creating diversified investment strategies.
+          </p>
+        </div>
+
+        <div class="team-member">
+          <div class="member-photo">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Anil Gupta</h3>
+          <p class="member-role">Senior Financial Advisor</p>
+          <p class="member-bio">
+            Certified Financial Planner with expertise in retirement planning 
+            and tax optimization strategies.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why Choose Us Section -->
+    <div class="content-section">
+      <h2>Why Choose NYQE Wealth Management?</h2>
+      <p>
+        <strong>Comprehensive Solutions:</strong> From investment advisory to retirement planning, 
+        we offer a full spectrum of wealth management services under one roof.
+      </p>
+      <p>
+        <strong>Technology-Driven:</strong> Our advanced portfolio tracking tools and real-time 
+        market data ensure you're always informed about your investments.
+      </p>
+      <p>
+        <strong>Regulatory Compliance:</strong> We adhere to all SEBI guidelines and maintain 
+        the highest standards of regulatory compliance and client protection.
+      </p>
+      <p>
+        <strong>No Hidden Fees:</strong> Transparent fee structure with no hidden charges. 
+        You know exactly what you're paying for and why.
+      </p>
+      <p>
+        <strong>24/7 Support:</strong> Our dedicated client support team is always available 
+        to assist you with your queries and concerns.
+      </p>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="cta-section">
+    <h2>Ready to Begin Your Wealth Journey?</h2>
+    <p>
+      Join hundreds of satisfied clients who trust NYQE Wealth Management with their financial future. 
+      Schedule your free consultation today and discover how we can help you achieve your financial goals.
+    </p>
+    <a href="{{ url_for('modern_contact') }}" class="cta-button">
+      <i class="fas fa-calendar" style="margin-right: 8px;"></i>
+      Schedule Free Consultation
+    </a>
+  </div>
+</div>
+
+<script>
+// Add staggered animation to elements
+document.addEventListener('DOMContentLoaded', function() {
+  const sections = document.querySelectorAll('.content-section');
+  sections.forEach((section, index) => {
+    section.style.animationDelay = `${index * 0.2}s`;
+  });
+
+  const valueCards = document.querySelectorAll('.value-card');
+  valueCards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+    card.style.animation = 'fadeInUp 1s ease-out forwards';
+  });
+
+  const teamMembers = document.querySelectorAll('.team-member');
+  teamMembers.forEach((member, index) => {
+    member.style.animationDelay = `${index * 0.15}s`;
+    member.style.animation = 'fadeInUp 1s ease-out forwards';
+  });
+
+  // Counter animation for stats
+  const stats = document.querySelectorAll('.stat-number');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = entry.target;
+        const finalText = target.textContent;
+        const isNumber = /^\d+/.test(finalText);
+        
+        if (isNumber) {
+          const finalNumber = parseInt(finalText.replace(/\D/g, ''));
+          const suffix = finalText.replace(/^\d+/, '');
+          
+          let current = 0;
+          const increment = finalNumber / 50;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= finalNumber) {
+              current = finalNumber;
+              clearInterval(timer);
+            }
+            target.textContent = Math.floor(current) + suffix;
+          }, 30);
+        }
+        
+        observer.unobserve(target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  stats.forEach(stat => observer.observe(stat));
+});
+</script>
+{% endblock %}

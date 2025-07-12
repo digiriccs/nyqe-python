@@ -1,0 +1,26 @@
+<svg width="300" height="120" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="120" fill="white"/>
+  
+  <!-- NYQE Text -->
+  <text x="25" y="50" font-family="Arial, sans-serif" font-size="42" font-weight="900" fill="#1E40AF">
+    <tspan font-style="italic">N</tspan><tspan>YQE</tspan>
+  </text>
+  
+  <!-- Stylized "1" at the end -->
+  <rect x="220" y="15" width="8" height="35" fill="#1E40AF" rx="2"/>
+  <rect x="230" y="10" width="12" height="8" fill="#1E40AF" rx="4"/>
+  <rect x="230" y="22" width="12" height="8" fill="#1E40AF" rx="4"/>
+  <rect x="230" y="34" width="12" height="8" fill="#1E40AF" rx="4"/>
+  <rect x="250" y="5" width="8" height="45" fill="#1E40AF" rx="4"/>
+  
+  <!-- WEALTH MANAGEMENT Text -->
+  <text x="25" y="75" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#1E40AF" letter-spacing="2px">
+    WEALTH MANAGEMENT
+  </text>
+  
+  <!-- Strategy. Security. Success. -->
+  <text x="25" y="100" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#1E40AF" letter-spacing="1px">
+    Strategy. Security. Success.
+  </text>
+</svg>

@@ -1,0 +1,87 @@
+You are a senior UI/UX designer and frontend expert. Analyze and redesign the entire NYQE Wealth Management website from scratch with a deep focus on UI aesthetics, UX flow, and user behavior psychology. Your output must include a detailed design audit report and recommendations across the following components:
+
+⸻
+
+🎯 Website Objectives:
+	•	Communicate trust, credibility, and financial expertise
+	•	Simplify investment & wealth management decisions for users
+	•	Drive conversions via appointments, consultations, and calculator usage
+
+⸻
+
+🔍 Perform Deep UX/UI Audit On:
+
+1. Navigation & Structure
+	•	Evaluate all header/nav items: Are they minimal, logical, mobile-friendly?
+	•	Recommend hamburger, sticky headers, back-to-top CTA, breadcrumbs if needed
+
+2. Buttons & CTAs
+	•	Audit all CTA buttons across homepage, calculators, booking forms
+	•	Are they visually prominent? Emotionally motivating?
+	•	Suggest hover effects, color choices, placement improvements
+
+3. Forms
+	•	Inspect every form: Book Appointment, SIP calculator, contact
+	•	Simplify where possible: show/hide fields, smart defaults, inline validation
+	•	Recommend step forms vs single-page
+
+4. Visual Hierarchy
+	•	Evaluate section flow, H1/H2 usage, content blocks
+	•	Ensure primary content is above-the-fold
+	•	Recommend redesign of banner, illustrations, icon placement, and whitespace
+
+5. Typography
+	•	Evaluate font pairings, readability, sizing across devices
+	•	Suggest heading/body/font-weight system
+
+6. Color Scheme
+	•	Provide expert palette recommendation
+	•	Trust-inducing (blue tones), accent (wealth gold), backgrounds (off-white)
+	•	Audit contrast accessibility (WCAG AA or better)
+
+7. Mobile Optimization
+	•	Perform mobile-first UX check
+	•	Suggest layout changes, hidden elements, or collapsibles for mobile
+
+8. Walkthrough Animation
+	•	Suggest animation timings, Lottie flow, and CTA placement
+	•	Add skip functionality and localStorage logic check
+
+9. Calculator UX
+	•	Review SIP/Retirement calculators for:
+	•	Field grouping
+	•	Result rendering
+	•	Save/share/print/export UX
+	•	Suggest slider inputs, real-time output, and chart animation
+
+10. Performance & Accessibility
+	•	Audit loading speed, DOM layout shifts, font fallback
+	•	Add alt-text for all images, keyboard navigation for forms
+
+⸻
+
+📑 Deliverables Required:
+	•	A section-wise PDF UX/UI Redesign Report
+	•	Color palette and typography recommendations
+	•	Before/After Figma frame reference (optional)
+	•	Recommendations for:
+	•	Buttons
+	•	Form layouts
+	•	Animation sequences
+	•	Font hierarchy
+	•	Hero section
+	•	Sticky nav / footer / contact options
+
+⸻
+
+Optional Enhancements to Consider:
+	•	Add floating action CTA (WhatsApp / Book Now)
+	•	Sticky portfolio performance bar
+	•	AI-based portfolio health score display
+	•	Video or carousel in hero section
+	•	Dynamic testimonial sliders
+	•	Footer redesign with trust badges, SEBI/IRDA compliance logos
+
+⸻
+
+This audit should result in a complete UI/UX overhaul plan that maximizes conversions, trust, and engagement — specific to financial users in India.

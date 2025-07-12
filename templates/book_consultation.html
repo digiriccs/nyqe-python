@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Free Wealth Consultation - NYQE Wealth Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003459 0%, #007ea7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 52, 89, 0.2);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #00a6ed, #ffd700);
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #003459;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            color: #003459;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #00a6ed;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 166, 237, 0.1);
+        }
+
+        .form-group input.error {
+            border-color: #e74c3c;
+            background: #fef5f5;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #003459 0%, #00a6ed 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 52, 89, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .error-alert {
+            display: none;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .back-link {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #00a6ed;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #003459;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+            padding: 20px 0;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00a6ed, #003459);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 18px;
+        }
+
+        .feature-text {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .form-group input {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                padding: 14px;
+                font-size: 14px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .feature-item {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                gap: 10px;
+            }
+
+            .feature-icon {
+                margin: 0;
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Book a Free Wealth Consultation</h1>
+            <p>Connect with our financial experts and start your wealth building journey today</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">📞</div>
+                <div class="feature-text">Free Call</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">⭐</div>
+                <div class="feature-text">Expert Advice</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-text">Personalized Plan</div>
+            </div>
+        </div>
+
+        <form id="appointmentForm">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                <div class="error-message" id="nameError">Please enter your full name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number *</label>
+                <input type="tel" id="mobile" name="mobile" required placeholder="Enter 10-digit mobile number" maxlength="10">
+                <div class="error-message" id="mobileError">Please enter a valid 10-digit mobile number</div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="loading-spinner" id="loadingSpinner"></span>
+                <span id="btnText">Book Free Consultation</span>
+            </button>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            ✅ Thank you, we'll get in touch shortly.
+        </div>
+
+        <div class="error-alert" id="errorAlert">
+            An error occurred. Please try again.
+        </div>
+
+        <div class="back-link">
+            <a href="{{ url_for('index') }}">← Back to Homepage</a>
+        </div>
+    </div>
+
+    <script>
+        // Form handling with validation and AJAX submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('appointmentForm');
+            const nameInput = document.getElementById('name');
+            const mobileInput = document.getElementById('mobile');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const btnText = document.getElementById('btnText');
+            const successMessage = document.getElementById('successMessage');
+            const errorAlert = document.getElementById('errorAlert');
+
+            // Mobile number input - only allow digits
+            mobileInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value.length > 10) {
+                    this.value = this.value.slice(0, 10);
+                }
+                clearError('mobile');
+            });
+
+            // Name input - clear error on typing
+            nameInput.addEventListener('input', function() {
+                clearError('name');
+            });
+
+            // Form validation functions
+            function validateName() {
+                const name = nameInput.value.trim();
+                if (!name || name.length < 2) {
+                    showError('name', 'Please enter your full name (at least 2 characters)');
+                    return false;
+                }
+                return true;
+            }
+
+            function validateMobile() {
+                const mobile = mobileInput.value.trim();
+                if (!mobile || mobile.length !== 10 || !/^[0-9]{10}$/.test(mobile)) {
+                    showError('mobile', 'Please enter a valid 10-digit mobile number');
+                    return false;
+                }
+                return true;
+            }
+
+            function showError(field, message) {
+                const input = document.getElementById(field);
+                const errorDiv = document.getElementById(field + 'Error');
+                input.classList.add('error');
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+            }
+
+            function clearError(field) {
+                const input = document.getElementById(field);
+                const errorDiv = document.getElementById(field + 'Error');
+                input.classList.remove('error');
+                errorDiv.style.display = 'none';
+            }
+
+            function showLoading() {
+                submitBtn.disabled = true;
+                loadingSpinner.style.display = 'inline-block';
+                btnText.textContent = 'Booking...';
+            }
+
+            function hideLoading() {
+                submitBtn.disabled = false;
+                loadingSpinner.style.display = 'none';
+                btnText.textContent = 'Book Free Consultation';
+            }
+
+            function showSuccess(message) {
+                successMessage.textContent = message;
+                successMessage.style.display = 'block';
+                errorAlert.style.display = 'none';
+                form.style.display = 'none';
+            }
+
+            function showErrorAlert(message) {
+                errorAlert.textContent = message;
+                errorAlert.style.display = 'block';
+                successMessage.style.display = 'none';
+            }
+
+            // Form submission
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Clear previous messages
+                errorAlert.style.display = 'none';
+                successMessage.style.display = 'none';
+
+                // Validate form
+                const isNameValid = validateName();
+                const isMobileValid = validateMobile();
+
+                if (!isNameValid || !isMobileValid) {
+                    return;
+                }
+
+                // Show loading state
+                showLoading();
+
+                try {
+                    const formData = {
+                        name: nameInput.value.trim(),
+                        mobile: mobileInput.value.trim(),
+                        source_page: 'book-consultation'
+                    };
+
+                    const response = await fetch('/api/appointments', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showSuccess(result.message);
+                        
+                        // Optional: Redirect after 3 seconds
+                        setTimeout(() => {
+                            window.location.href = '{{ url_for("index") }}';
+                        }, 3000);
+                    } else {
+                        showErrorAlert(result.message || 'An error occurred. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    showErrorAlert('Network error. Please check your connection and try again.');
+                } finally {
+                    hideLoading();
+                }
+            });
+
+            // Real-time validation on blur
+            nameInput.addEventListener('blur', validateName);
+            mobileInput.addEventListener('blur', validateMobile);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+{% extends "base.html" %}
+
+{% block title %}Comprehensive Loan Hub - NYQE Wealth Management{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loan-hub.css') }}">
+<style>
+    /* Loan hub styles are now in loan-hub.css */
+    
+    .actions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+    
+    .action-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .action-card:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px);
+    }
+    
+    .action-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .action-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .action-desc {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+    
+    .advanced-filters {
+        background: white;
+        border: 1px solid #e0e0e0;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    
+    .filter-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .product-card.bank-highlight {
+        border: 2px solid var(--primary-blue);
+    }
+    
+    .bank-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--primary-blue);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    
+    .comparison-cta {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin: 30px 0;
+    }
+    
+    .comparison-cta h3 {
+        color: #856404;
+        margin-bottom: 10px;
+    }
+    
+    .loan-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+    
+    .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+    }
+    
+    .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Quick Stats -->
+<section class="loan-hub-hero">
+    <div class="loan-hub-container">
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">India's Most Comprehensive Loan Hub</h1>
+            <p class="hero-subtitle">
+                Compare loans from 10+ leading banks. Find the perfect match for your needs with our intelligent loan finder.
+            </p>
+            
+            <!-- Hero CTA Buttons -->
+            <div class="hero-cta">
+                <a href="{{ url_for('loan_hub.compare_loans') }}" class="btn-primary">
+                    <i class="fas fa-chart-bar"></i> Compare Loans
+                </a>
+                <a href="{{ url_for('loan_hub.loan_selection_guide') }}" class="btn-secondary">
+                    <i class="fas fa-compass"></i> Loan Guide
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="stats-section loan-hub-container">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number">{{ banks|length }}</div>
+            <div class="stat-label">Partner Banks</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">{{ products.total }}</div>
+            <div class="stat-label">Loan Products</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">7</div>
+            <div class="stat-label">Loan Categories</div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Actions Section -->
+<section class="loan-hub-container">
+    <div class="quick-actions">
+        <h2 class="text-center text-white">Quick Actions</h2>
+        <div class="actions-grid">
+            <a href="{{ url_for('loan_hub.compare_loans') }}" class="action-card text-white text-decoration-none">
+                <div class="action-icon">📊</div>
+                <div class="action-title">Compare Loans</div>
+                <div class="action-desc">Bank-wise comparison</div>
+            </a>
+            <a href="{{ url_for('loan_hub.loan_selection_guide') }}" class="action-card text-white text-decoration-none">
+                <div class="action-icon">🎯</div>
+                <div class="action-title">Loan Guide</div>
+                <div class="action-desc">Find perfect loan</div>
+            </a>
+            <a href="{{ url_for('loan_hub.calculate_emi') }}" class="action-card text-white text-decoration-none">
+                <div class="action-icon">🧮</div>
+                <div class="action-title">EMI Calculator</div>
+                <div class="action-desc">Calculate monthly EMI</div>
+            </a>
+            <a href="{{ url_for('loan_hub.bank_directory') }}" class="action-card text-white text-decoration-none">
+                <div class="action-icon">🏦</div>
+                <div class="action-title">Bank Directory</div>
+                <div class="action-desc">All partner banks</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Loan Categories Grid -->
+<section class="loan-hub-container">
+    <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 40px; font-size: 2rem; font-weight: 700;">
+        Browse by Loan Category
+    </h2>
+    <div class="loan-categories-grid">
+        <a href="?category=home" class="category-card text-decoration-none {% if current_filters.category == 'home' %}active{% endif %}">
+            <div class="category-icon">🏠</div>
+            <div class="category-name">Home Loans</div>
+            <div class="category-stats">{{ category_stats.home.count }} products • From {{ "%.1f"|format(category_stats.home.min_rate) }}%</div>
+        </a>
+        
+        <a href="?category=personal" class="category-card text-decoration-none {% if current_filters.category == 'personal' %}active{% endif %}">
+            <div class="category-icon">👤</div>
+            <div class="category-name">Personal Loans</div>
+            <div class="category-stats">{{ category_stats.personal.count }} products • From {{ "%.1f"|format(category_stats.personal.min_rate) }}%</div>
+        </a>
+        
+        <a href="?category=business" class="category-card text-decoration-none {% if current_filters.category == 'business' %}active{% endif %}">
+            <div class="category-icon">💼</div>
+            <div class="category-name">Business Loans</div>
+            <div class="category-stats">{{ category_stats.business.count }} products • From {{ "%.1f"|format(category_stats.business.min_rate) }}%</div>
+        </a>
+        
+        <a href="?category=education" class="category-card text-decoration-none {% if current_filters.category == 'education' %}active{% endif %}">
+            <div class="category-icon">🎓</div>
+            <div class="category-name">Education Loans</div>
+            <div class="category-stats">{{ category_stats.education.count }} products • From {{ "%.1f"|format(category_stats.education.min_rate) }}%</div>
+        </a>
+        
+        <a href="?category=auto" class="category-card text-decoration-none {% if current_filters.category == 'auto' %}active{% endif %}">
+            <div class="category-icon">🚗</div>
+            <div class="category-name">Auto Loans</div>
+            <div class="category-stats">{{ category_stats.auto.count }} products • From {{ "%.1f"|format(category_stats.auto.min_rate) }}%</div>
+        </a>
+        
+        <a href="?category=gold" class="category-card text-decoration-none {% if current_filters.category == 'gold' %}active{% endif %}">
+            <div class="category-icon">🏆</div>
+            <div class="category-name">Gold Loans</div>
+            <div class="category-stats">{{ category_stats.gold.count }} products • From {{ "%.1f"|format(category_stats.gold.min_rate) }}%</div>
+        </a>
+        
+        <a href="?category=property" class="category-card text-decoration-none {% if current_filters.category == 'property' %}active{% endif %}">
+            <div class="category-icon">🏢</div>
+            <div class="category-name">Property Loans</div>
+            <div class="category-stats">{{ category_stats.property.count }} products • From {{ "%.1f"|format(category_stats.property.min_rate) }}%</div>
+        </a>
+    </div>
+</section>
+
+<!-- Bank Filter Section -->
+<section class="loan-hub-container">
+    <div class="bank-filter-section">
+        <h3 class="text-center mb-4">Filter by Bank</h3>
+        <div class="bank-logos">
+            <a href="?" class="bank-logo-item text-decoration-none {% if not current_filters.bank_id %}active{% endif %}">
+                <div class="bank-name">All Banks</div>
+            </a>
+            {% for bank in banks %}
+            <a href="?bank_id={{ bank.id }}&{{ request.query_string.decode() }}" 
+               class="bank-logo-item text-decoration-none {% if current_filters.bank_id == bank.id %}active{% endif %}">
+                <div>
+                    <div class="bank-name">{{ bank.name }}</div>
+                    <div class="bank-rating">
+                        <i class="fas fa-star text-warning"></i>
+                        {{ "%.1f"|format(bank.rating) }}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Comparison CTA -->
+<section class="loan-hub-container">
+    <div class="comparison-cta">
+        <h3>Not sure which loan to choose?</h3>
+        <p>Use our intelligent comparison tool to find the best loan for your needs</p>
+        <a href="{{ url_for('loan_hub.compare_loans') }}" class="btn btn-warning btn-lg mt-3">
+            <i class="fas fa-balance-scale me-2"></i>Compare Loans Now
+        </a>
+    </div>
+</section>
+
+<!-- Advanced Filters -->
+<section class="loan-hub-container">
+    <div class="advanced-filters">
+        <h3 class="mb-4">Advanced Filters</h3>
+        <form method="GET" action="{{ url_for('loan_hub.index') }}">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label class="filter-label">Loan Amount</label>
+                    <div class="d-flex gap-2">
+                        <input type="number" name="min_amount" class="form-control" 
+                               placeholder="Min Amount" value="{{ current_filters.min_amount or '' }}">
+                        <input type="number" name="max_amount" class="form-control" 
+                               placeholder="Max Amount" value="{{ current_filters.max_amount or '' }}">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Max Interest Rate</label>
+                    <input type="number" name="interest_rate_max" class="form-control" 
+                           placeholder="e.g., 12.5" step="0.1" value="{{ current_filters.interest_rate_max or '' }}">
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Loan Type</label>
+                    <select name="loan_type" class="form-control">
+                        <option value="">All Types</option>
+                        <option value="secured" {% if current_filters.loan_type == 'secured' %}selected{% endif %}>Secured</option>
+                        <option value="unsecured" {% if current_filters.loan_type == 'unsecured' %}selected{% endif %}>Unsecured</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Risk Category</label>
+                    <select name="risk_category" class="form-control">
+                        <option value="">All Risk Levels</option>
+                        {% for risk in risk_categories %}
+                        <option value="{{ risk }}" {% if current_filters.risk_category == risk %}selected{% endif %}>
+                            {{ risk.title() }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="text-end mt-3">
+                <a href="{{ url_for('loan_hub.index') }}" class="btn btn-secondary me-2">Clear Filters</a>
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+{% if featured_products %}
+<section class="loan-hub-container">
+    <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 40px; font-size: 2rem; font-weight: 700;">
+        Featured Loan Products
+    </h2>
+    <div class="product-grid">
+        {% for product in featured_products %}
+        <div class="product-card featured slide-up">
+            <span class="bank-badge">{{ product.bank.name }}</span>
+            <div class="product-header">
+                <h3 class="product-title">{{ product.name }}</h3>
+                <span class="product-category">{{ product.category.replace('_', ' ').title() }}</span>
+                {% if product.amfi_registered %}
+                <span class="amfi-badge">AMFI Registered</span>
+                {% endif %}
+            </div>
+            
+            <div class="product-details">
+                <div class="detail-row">
+                    <span class="detail-label">Interest Rate</span>
+                    <span class="detail-value interest-rate">
+                        {{ "%.2f"|format(product.interest_rate_min) }}% - {{ "%.2f"|format(product.interest_rate_max) }}%
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Loan Amount</span>
+                    <span class="detail-value loan-amount">
+                        ₹{{ "{:,.0f}".format(product.min_amount) }} - ₹{{ "{:,.0f}".format(product.max_amount) }}
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tenure</span>
+                    <span class="detail-value">{{ product.tenure_display }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Processing Fee</span>
+                    <span class="detail-value">
+                        {% if product.processing_fee %}{{ "%.2f"|format(product.processing_fee) }}%{% else %}Nil{% endif %}
+                    </span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; display: flex; gap: 12px;">
+                <a href="{{ url_for('loan_hub.product_detail', product_id=product.id) }}" 
+                   class="btn-primary" style="flex: 1; text-align: center;">
+                    View Details
+                </a>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('loan_hub.apply_loan', product_id=product.id) }}" 
+                   class="btn-secondary" style="flex: 1; text-align: center;">
+                    Apply Now
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- All Products Section -->
+<section class="loan-hub-container">
+    <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 40px; font-size: 2rem; font-weight: 700;">
+        All Loan Products
+        {% if current_filters.category %}
+        - {{ current_filters.category.replace('_', ' ').title() }}
+        {% endif %}
+        {% if current_filters.bank_id %}
+        {% for bank in banks %}
+            {% if bank.id == current_filters.bank_id %}
+            - {{ bank.name }}
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+    </h2>
+    
+    <div class="product-grid">
+        {% for product in products.items %}
+        <div class="product-card slide-up {% if current_filters.bank_id == product.bank_id %}bank-highlight{% endif %}">
+            <span class="bank-badge">{{ product.bank.name }}</span>
+            <div class="product-header">
+                <h3 class="product-title">{{ product.name }}</h3>
+                <span class="product-category">{{ product.category.replace('_', ' ').title() }}</span>
+                {% if product.amfi_registered %}
+                <span class="amfi-badge">AMFI Registered</span>
+                {% endif %}
+            </div>
+            
+            <div class="product-details">
+                <div class="detail-row">
+                    <span class="detail-label">Interest Rate</span>
+                    <span class="detail-value interest-rate">
+                        {{ "%.2f"|format(product.interest_rate_min) }}% - {{ "%.2f"|format(product.interest_rate_max) }}%
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Loan Amount</span>
+                    <span class="detail-value loan-amount">
+                        ₹{{ "{:,.0f}".format(product.min_amount) }} - ₹{{ "{:,.0f}".format(product.max_amount) }}
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tenure</span>
+                    <span class="detail-value">{{ product.tenure_display }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Risk Level</span>
+                    <span class="risk-indicator risk-{{ product.risk_category }}">
+                        {{ product.risk_category.title() }}
+                    </span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; display: flex; gap: 12px;">
+                <a href="{{ url_for('loan_hub.product_detail', product_id=product.id) }}" 
+                   class="btn-primary" style="flex: 1; text-align: center;">
+                    View Details
+                </a>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('loan_hub.apply_loan', product_id=product.id) }}" 
+                   class="btn-secondary" style="flex: 1; text-align: center;">
+                    Apply Now
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if products.pages > 1 %}
+    <nav aria-label="Page navigation" style="margin-top: 40px;">
+        <ul class="pagination justify-content-center">
+            {% if products.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ products.prev_num }}&{{ request.query_string.decode() }}">Previous</a>
+            </li>
+            {% endif %}
+            
+            {% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    <li class="page-item {% if page_num == products.page %}active{% endif %}">
+                        <a class="page-link" href="?page={{ page_num }}&{{ request.query_string.decode() }}">{{ page_num }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if products.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ products.next_num }}&{{ request.query_string.decode() }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add interactive features
+    document.addEventListener('DOMContentLoaded', function() {
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.slide-up, .fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>
+{% endblock %}

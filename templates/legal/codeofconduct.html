@@ -1,0 +1,752 @@
+{% extends "base.html" %}
+
+{% block title %}Code of Conduct - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced-design-system.css') }}">
+<style>
+.legal-page {
+    background: var(--neutral-50);
+    min-height: 100vh;
+    padding: var(--space-8) 0;
+}
+
+.legal-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.legal-header {
+    background: linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%);
+    color: white;
+    padding: var(--space-8);
+    text-align: center;
+}
+
+.legal-header h1 {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-2);
+    color: white;
+}
+
+.legal-header p {
+    font-size: var(--text-lg);
+    opacity: 0.9;
+    margin: 0;
+}
+
+.ethics-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: rgba(255, 255, 255, 0.2);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-full);
+    margin-top: var(--space-4);
+    backdrop-filter: blur(10px);
+}
+
+.legal-nav {
+    background: var(--neutral-100);
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.nav-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--neutral-600);
+}
+
+.nav-breadcrumb a {
+    color: var(--growth-primary);
+    text-decoration: none;
+    font-weight: var(--font-medium);
+}
+
+.nav-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.legal-content {
+    padding: var(--space-8);
+    line-height: var(--leading-relaxed);
+}
+
+.legal-section {
+    margin-bottom: var(--space-8);
+}
+
+.legal-section h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: #047857;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--neutral-200);
+}
+
+.legal-section h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin: var(--space-6) 0 var(--space-3);
+}
+
+.legal-section p {
+    margin-bottom: var(--space-4);
+    color: var(--neutral-700);
+    text-align: justify;
+}
+
+.legal-section ul, .legal-section ol {
+    margin: var(--space-4) 0;
+    padding-left: var(--space-6);
+    color: var(--neutral-700);
+}
+
+.legal-section li {
+    margin-bottom: var(--space-2);
+}
+
+.ethics-principle {
+    background: #f0fdf4;
+    border: 1px solid #10b981;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin: var(--space-6) 0;
+    position: relative;
+}
+
+.ethics-principle::before {
+    content: '⚖️';
+    position: absolute;
+    top: -15px;
+    left: var(--space-4);
+    background: #10b981;
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xl);
+}
+
+.ethics-principle h4 {
+    color: #047857;
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-3);
+    margin-top: var(--space-3);
+    font-size: var(--text-lg);
+}
+
+.compliance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-6);
+    margin: var(--space-6) 0;
+}
+
+.compliance-card {
+    background: var(--neutral-50);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    transition: all var(--transition-base);
+}
+
+.compliance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: #10b981;
+}
+
+.compliance-card h4 {
+    color: #047857;
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.compliance-card ul {
+    margin: 0;
+    padding-left: var(--space-4);
+}
+
+.compliance-card li {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-1);
+}
+
+.violation-warning {
+    background: #fef2f2;
+    border: 2px solid #dc2626;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin: var(--space-6) 0;
+}
+
+.violation-warning h4 {
+    color: #dc2626;
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.contact-info {
+    background: var(--neutral-50);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-top: var(--space-8);
+}
+
+.legal-footer {
+    background: var(--neutral-100);
+    padding: var(--space-6);
+    text-align: center;
+    border-top: 1px solid var(--neutral-200);
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    background: #047857;
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    width: 48px;
+    height: 48px;
+    font-size: var(--text-lg);
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-base);
+    z-index: var(--z-fixed);
+}
+
+.back-to-top:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+.last-updated {
+    font-size: var(--text-sm);
+    color: var(--neutral-500);
+    text-align: center;
+    margin-bottom: var(--space-6);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .legal-page {
+        padding: var(--space-4) var(--space-4);
+    }
+    
+    .legal-header {
+        padding: var(--space-6) var(--space-4);
+    }
+    
+    .legal-header h1 {
+        font-size: var(--text-2xl);
+    }
+    
+    .legal-content {
+        padding: var(--space-6) var(--space-4);
+    }
+    
+    .legal-section h2 {
+        font-size: var(--text-lg);
+    }
+    
+    .nav-breadcrumb {
+        flex-wrap: wrap;
+    }
+    
+    .compliance-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    
+    .compliance-card {
+        padding: var(--space-4);
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="legal-page">
+    <div class="container">
+        <div class="legal-container">
+            <!-- Header -->
+            <div class="legal-header">
+                <h1>Code of Conduct</h1>
+                <p>Our commitment to ethical business practices and professional integrity</p>
+                <div class="ethics-badge">
+                    <i class="fas fa-handshake"></i>
+                    <span>Ethical Leadership in Financial Services</span>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="legal-nav">
+                <div class="nav-breadcrumb">
+                    <a href="{{ url_for('index') }}">Home</a>
+                    <span>></span>
+                    <span>Code of Conduct</span>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="legal-content">
+                <div class="last-updated">
+                    <strong>Last Updated:</strong> December 29, 2024
+                </div>
+                
+                <div class="legal-section">
+                    <h2>1. Introduction & Commitment</h2>
+                    <p>NYQE Wealth Management Private Limited is committed to conducting business with the highest standards of ethics, integrity, and professionalism. This Code of Conduct outlines the principles and standards that guide our behavior, decision-making, and interactions with clients, regulators, and stakeholders.</p>
+                    
+                    <p>As a SEBI registered Investment Adviser, we recognize our fiduciary responsibility to always act in the best interests of our clients while maintaining transparency, fairness, and accountability in all our activities.</p>
+                    
+                    <div class="ethics-principle">
+                        <h4>Our Core Values</h4>
+                        <ul>
+                            <li><strong>Integrity:</strong> We conduct business honestly and transparently</li>
+                            <li><strong>Fiduciary Duty:</strong> We always prioritize our clients' interests</li>
+                            <li><strong>Professional Excellence:</strong> We maintain the highest standards of competence</li>
+                            <li><strong>Transparency:</strong> We provide clear and honest communication</li>
+                            <li><strong>Compliance:</strong> We adhere to all laws and regulations</li>
+                            <li><strong>Confidentiality:</strong> We protect client information and privacy</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>2. Ethical Principles & Standards</h2>
+                    
+                    <h3>2.1 Fiduciary Responsibility</h3>
+                    <p>As investment advisers, we have a fiduciary duty to our clients, which requires us to:</p>
+                    <ul>
+                        <li><strong>Duty of Care:</strong> Exercise reasonable care, skill, and diligence in providing investment advice</li>
+                        <li><strong>Duty of Loyalty:</strong> Always act in the best interests of our clients, avoiding conflicts of interest</li>
+                        <li><strong>Duty of Good Faith:</strong> Deal honestly and fairly with all clients and stakeholders</li>
+                        <li><strong>Duty of Disclosure:</strong> Provide full and transparent disclosure of all material information</li>
+                        <li><strong>Duty of Confidentiality:</strong> Maintain strict confidentiality of client information</li>
+                        <li><strong>Duty of Competence:</strong> Maintain professional competence and stay current with industry developments</li>
+                    </ul>
+                    
+                    <h3>2.2 Professional Integrity</h3>
+                    <ul>
+                        <li><strong>Honest Communication:</strong> Provide accurate, complete, and timely information to clients</li>
+                        <li><strong>Professional Competence:</strong> Maintain skills and knowledge necessary to provide quality services</li>
+                        <li><strong>Objectivity:</strong> Provide unbiased advice based on professional judgment</li>
+                        <li><strong>Fair Dealing:</strong> Treat all clients fairly and without discrimination</li>
+                        <li><strong>Professional Demeanor:</strong> Maintain dignity and respect in all professional interactions</li>
+                        <li><strong>Continuous Learning:</strong> Commit to ongoing professional development and education</li>
+                    </ul>
+                    
+                    <h3>2.3 Client Service Excellence</h3>
+                    <ul>
+                        <li><strong>Client-Centric Approach:</strong> Focus on understanding and meeting client needs and objectives</li>
+                        <li><strong>Personalized Service:</strong> Tailor advice and services to individual client circumstances</li>
+                        <li><strong>Responsive Communication:</strong> Provide timely responses to client inquiries and concerns</li>
+                        <li><strong>Quality Assurance:</strong> Maintain high standards in all service delivery aspects</li>
+                        <li><strong>Feedback Integration:</strong> Actively seek and incorporate client feedback for service improvement</li>
+                        <li><strong>Long-term Relationships:</strong> Build and maintain lasting client relationships based on trust</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>3. Regulatory Compliance Framework</h2>
+                    
+                    <div class="compliance-grid">
+                        <div class="compliance-card">
+                            <h4><i class="fas fa-gavel"></i> SEBI Compliance</h4>
+                            <ul>
+                                <li>Investment Advisers Regulations, 2013</li>
+                                <li>Code of Conduct for Investment Advisers</li>
+                                <li>Disclosure and transparency requirements</li>
+                                <li>Record keeping and reporting obligations</li>
+                                <li>Professional qualification requirements</li>
+                                <li>Ongoing compliance monitoring</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="compliance-card">
+                            <h4><i class="fas fa-shield-alt"></i> AML/KYC Compliance</h4>
+                            <ul>
+                                <li>Prevention of Money Laundering Act (PMLA)</li>
+                                <li>Know Your Customer (KYC) guidelines</li>
+                                <li>Customer Due Diligence (CDD) procedures</li>
+                                <li>Suspicious Transaction Reporting (STR)</li>
+                                <li>Record maintenance requirements</li>
+                                <li>Ongoing monitoring obligations</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="compliance-card">
+                            <h4><i class="fas fa-lock"></i> Data Protection</h4>
+                            <ul>
+                                <li>Information Technology Act, 2000</li>
+                                <li>Data protection and privacy laws</li>
+                                <li>Cybersecurity frameworks</li>
+                                <li>Client confidentiality requirements</li>
+                                <li>Secure data handling practices</li>
+                                <li>Incident reporting procedures</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="compliance-card">
+                            <h4><i class="fas fa-balance-scale"></i> Legal Compliance</h4>
+                            <ul>
+                                <li>Companies Act, 2013</li>
+                                <li>Income Tax Act, 1961</li>
+                                <li>Consumer Protection Act, 2019</li>
+                                <li>Contract law compliance</li>
+                                <li>Employment law adherence</li>
+                                <li>Environmental regulations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>3.1 Compliance Monitoring</h3>
+                    <ul>
+                        <li><strong>Regular Reviews:</strong> Periodic assessment of compliance with all applicable regulations</li>
+                        <li><strong>Internal Audits:</strong> Regular internal audits to ensure adherence to policies and procedures</li>
+                        <li><strong>External Audits:</strong> Annual external audits by qualified professionals</li>
+                        <li><strong>Regulatory Reporting:</strong> Timely submission of all required regulatory reports</li>
+                        <li><strong>Training Programs:</strong> Regular training on regulatory updates and compliance requirements</li>
+                        <li><strong>Documentation:</strong> Comprehensive documentation of all compliance activities</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>4. Conflict of Interest Management</h2>
+                    
+                    <h3>4.1 Identification of Conflicts</h3>
+                    <p>We actively identify and manage potential conflicts of interest, including:</p>
+                    <ul>
+                        <li><strong>Financial Interests:</strong> Personal investments that may conflict with client advice</li>
+                        <li><strong>Business Relationships:</strong> Relationships with product manufacturers or service providers</li>
+                        <li><strong>Multiple Client Conflicts:</strong> Situations where advice to one client may disadvantage another</li>
+                        <li><strong>Outside Activities:</strong> Other business interests or board positions</li>
+                        <li><strong>Family Interests:</strong> Financial interests of family members or related parties</li>
+                        <li><strong>Gift and Entertainment:</strong> Receiving gifts or entertainment from business partners</li>
+                    </ul>
+                    
+                    <h3>4.2 Conflict Management Procedures</h3>
+                    <ul>
+                        <li><strong>Disclosure:</strong> Full and transparent disclosure of all material conflicts to clients</li>
+                        <li><strong>Avoidance:</strong> Avoiding conflicts where possible through policy and procedure design</li>
+                        <li><strong>Mitigation:</strong> Implementing controls to minimize the impact of unavoidable conflicts</li>
+                        <li><strong>Monitoring:</strong> Ongoing monitoring of potential and actual conflicts</li>
+                        <li><strong>Resolution:</strong> Fair and transparent resolution when conflicts arise</li>
+                        <li><strong>Documentation:</strong> Maintaining detailed records of all conflict management activities</li>
+                    </ul>
+                    
+                    <h3>4.3 Personal Trading Policy</h3>
+                    <ul>
+                        <li><strong>Pre-clearance:</strong> All personal trades by employees require pre-approval</li>
+                        <li><strong>Blackout Periods:</strong> Trading restrictions during sensitive periods</li>
+                        <li><strong>Holding Periods:</strong> Minimum holding periods for personal investments</li>
+                        <li><strong>Disclosure Requirements:</strong> Regular disclosure of personal holdings and transactions</li>
+                        <li><strong>Client Priority:</strong> Client orders given priority over personal trades</li>
+                        <li><strong>Monitoring Systems:</strong> Automated systems to monitor and detect violations</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>5. Anti-Fraud & Market Integrity</h2>
+                    
+                    <h3>5.1 Prohibited Practices</h3>
+                    <p>We strictly prohibit the following activities:</p>
+                    
+                    <div class="violation-warning">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Zero Tolerance Violations</h4>
+                        <ul>
+                            <li><strong>Insider Trading:</strong> Trading on material non-public information</li>
+                            <li><strong>Market Manipulation:</strong> Artificial manipulation of security prices</li>
+                            <li><strong>Fraudulent Activities:</strong> Misrepresentation, forgery, or deceptive practices</li>
+                            <li><strong>Money Laundering:</strong> Facilitating illegal money transfers or transactions</li>
+                            <li><strong>Bribery and Corruption:</strong> Offering or accepting bribes or improper payments</li>
+                            <li><strong>Misappropriation:</strong> Unauthorized use of client funds or assets</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>5.2 Market Integrity Measures</h3>
+                    <ul>
+                        <li><strong>Fair Trading:</strong> Ensuring fair and orderly trading practices</li>
+                        <li><strong>Price Discovery:</strong> Contributing to efficient price discovery in markets</li>
+                        <li><strong>Transparency:</strong> Promoting market transparency through proper disclosure</li>
+                        <li><strong>Best Execution:</strong> Seeking best execution for client transactions</li>
+                        <li><strong>Information Barriers:</strong> Maintaining information barriers to prevent misuse</li>
+                        <li><strong>Surveillance:</strong> Implementing surveillance systems to detect irregular activities</li>
+                    </ul>
+                    
+                    <h3>5.3 Fraud Prevention Framework</h3>
+                    <ul>
+                        <li><strong>Risk Assessment:</strong> Regular assessment of fraud risks and vulnerabilities</li>
+                        <li><strong>Internal Controls:</strong> Robust internal controls and segregation of duties</li>
+                        <li><strong>Employee Screening:</strong> Comprehensive background checks for all employees</li>
+                        <li><strong>Monitoring Systems:</strong> Advanced monitoring and detection systems</li>
+                        <li><strong>Incident Response:</strong> Rapid response procedures for suspected fraud</li>
+                        <li><strong>External Reporting:</strong> Reporting suspected violations to appropriate authorities</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>6. Marketing & Communication Ethics</h2>
+                    
+                    <h3>6.1 Ethical Marketing Principles</h3>
+                    <ul>
+                        <li><strong>Truth in Advertising:</strong> All marketing materials must be accurate and not misleading</li>
+                        <li><strong>Fair Representation:</strong> Honest representation of services, fees, and capabilities</li>
+                        <li><strong>Risk Disclosure:</strong> Prominent disclosure of investment risks in all communications</li>
+                        <li><strong>Performance Claims:</strong> Accurate and properly substantiated performance information</li>
+                        <li><strong>Testimonials:</strong> Authentic client testimonials with proper disclosures</li>
+                        <li><strong>Regulatory Compliance:</strong> Compliance with SEBI advertising guidelines</li>
+                    </ul>
+                    
+                    <h3>6.2 Communication Standards</h3>
+                    <ul>
+                        <li><strong>Clear Language:</strong> Use of clear, understandable language in all communications</li>
+                        <li><strong>Balanced Disclosure:</strong> Balanced presentation of benefits and risks</li>
+                        <li><strong>Timely Updates:</strong> Prompt communication of material changes or developments</li>
+                        <li><strong>Professional Tone:</strong> Maintaining professional and respectful communication</li>
+                        <li><strong>Accuracy Verification:</strong> Verification of all facts and figures before publication</li>
+                        <li><strong>Consistency:</strong> Consistent messaging across all communication channels</li>
+                    </ul>
+                    
+                    <h3>6.3 Digital Marketing Ethics</h3>
+                    <ul>
+                        <li><strong>Data Privacy:</strong> Respect for client privacy in digital marketing activities</li>
+                        <li><strong>Consent Management:</strong> Proper consent mechanisms for marketing communications</li>
+                        <li><strong>Opt-out Options:</strong> Easy opt-out mechanisms for all marketing communications</li>
+                        <li><strong>Social Media Guidelines:</strong> Professional conduct on social media platforms</li>
+                        <li><strong>Search Marketing:</strong> Ethical search engine marketing practices</li>
+                        <li><strong>Content Accuracy:</strong> Accurate and up-to-date content on all digital platforms</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>7. Employee Conduct & Professional Standards</h2>
+                    
+                    <h3>7.1 Professional Behavior</h3>
+                    <ul>
+                        <li><strong>Workplace Conduct:</strong> Maintaining respectful and professional behavior</li>
+                        <li><strong>Equal Opportunity:</strong> Commitment to equal opportunity and non-discrimination</li>
+                        <li><strong>Harassment Prevention:</strong> Zero tolerance for harassment or inappropriate behavior</li>
+                        <li><strong>Substance Abuse:</strong> Prohibition of substance abuse that affects job performance</li>
+                        <li><strong>Confidentiality:</strong> Maintaining confidentiality of client and company information</li>
+                        <li><strong>Conflict Disclosure:</strong> Prompt disclosure of personal conflicts of interest</li>
+                    </ul>
+                    
+                    <h3>7.2 Professional Development</h3>
+                    <ul>
+                        <li><strong>Continuing Education:</strong> Commitment to ongoing professional education and development</li>
+                        <li><strong>Certification Maintenance:</strong> Maintaining required professional certifications</li>
+                        <li><strong>Industry Participation:</strong> Active participation in industry associations and events</li>
+                        <li><strong>Knowledge Sharing:</strong> Sharing knowledge and best practices within the organization</li>
+                        <li><strong>Mentorship:</strong> Providing guidance and mentorship to junior colleagues</li>
+                        <li><strong>Innovation:</strong> Contributing to innovation and improvement in service delivery</li>
+                    </ul>
+                    
+                    <h3>7.3 Outside Activities</h3>
+                    <ul>
+                        <li><strong>Disclosure Requirement:</strong> Disclosure of all outside business activities</li>
+                        <li><strong>Conflict Assessment:</strong> Assessment of potential conflicts with outside activities</li>
+                        <li><strong>Time Management:</strong> Ensuring outside activities do not interfere with job responsibilities</li>
+                        <li><strong>Competitive Activities:</strong> Prohibition of activities that compete with company business</li>
+                        <li><strong>Board Positions:</strong> Approval required for external board positions</li>
+                        <li><strong>Investment Activities:</strong> Compliance with personal investment policies</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>8. Environmental & Social Responsibility</h2>
+                    
+                    <h3>8.1 Environmental Stewardship</h3>
+                    <ul>
+                        <li><strong>Green Operations:</strong> Implementing environmentally friendly business practices</li>
+                        <li><strong>Paper Reduction:</strong> Digitization of processes to reduce paper consumption</li>
+                        <li><strong>Energy Efficiency:</strong> Energy-efficient office operations and equipment</li>
+                        <li><strong>Waste Management:</strong> Responsible waste management and recycling practices</li>
+                        <li><strong>Sustainable Investing:</strong> Consideration of ESG factors in investment advice</li>
+                        <li><strong>Carbon Footprint:</strong> Efforts to minimize carbon footprint of operations</li>
+                    </ul>
+                    
+                    <h3>8.2 Social Responsibility</h3>
+                    <ul>
+                        <li><strong>Community Engagement:</strong> Active participation in community development activities</li>
+                        <li><strong>Financial Literacy:</strong> Promoting financial literacy through education programs</li>
+                        <li><strong>Inclusive Finance:</strong> Supporting financial inclusion initiatives</li>
+                        <li><strong>Charitable Activities:</strong> Supporting charitable causes and social initiatives</li>
+                        <li><strong>Employee Volunteering:</strong> Encouraging employee participation in volunteer activities</li>
+                        <li><strong>Stakeholder Engagement:</strong> Regular engagement with all stakeholders</li>
+                    </ul>
+                    
+                    <h3>8.3 Corporate Governance</h3>
+                    <ul>
+                        <li><strong>Board Oversight:</strong> Effective board oversight of business operations</li>
+                        <li><strong>Transparency:</strong> Transparent reporting to stakeholders</li>
+                        <li><strong>Risk Management:</strong> Comprehensive risk management framework</li>
+                        <li><strong>Internal Controls:</strong> Robust internal control systems</li>
+                        <li><strong>Audit Function:</strong> Independent internal and external audit functions</li>
+                        <li><strong>Ethical Leadership:</strong> Ethical leadership at all levels of the organization</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>9. Violation Reporting & Enforcement</h2>
+                    
+                    <h3>9.1 Reporting Mechanisms</h3>
+                    <ul>
+                        <li><strong>Open Door Policy:</strong> Employees can approach any manager with concerns</li>
+                        <li><strong>Ethics Hotline:</strong> Anonymous reporting through dedicated ethics hotline</li>
+                        <li><strong>Email Reporting:</strong> Secure email system for reporting violations</li>
+                        <li><strong>External Reporting:</strong> Option to report to external regulatory authorities</li>
+                        <li><strong>Whistleblower Protection:</strong> Protection for employees reporting in good faith</li>
+                        <li><strong>Third-party Reporting:</strong> Mechanism for clients and external parties to report concerns</li>
+                    </ul>
+                    
+                    <h3>9.2 Investigation Process</h3>
+                    <ul>
+                        <li><strong>Prompt Response:</strong> All reports investigated promptly and thoroughly</li>
+                        <li><strong>Confidentiality:</strong> Maintaining confidentiality throughout investigation process</li>
+                        <li><strong>Fair Process:</strong> Fair and impartial investigation procedures</li>
+                        <li><strong>Documentation:</strong> Comprehensive documentation of investigation findings</li>
+                        <li><strong>External Assistance:</strong> Engaging external experts when necessary</li>
+                        <li><strong>Regulatory Reporting:</strong> Reporting to regulators as required by law</li>
+                    </ul>
+                    
+                    <h3>9.3 Disciplinary Measures</h3>
+                    <ul>
+                        <li><strong>Progressive Discipline:</strong> Graduated disciplinary measures based on severity</li>
+                        <li><strong>Immediate Action:</strong> Immediate action for serious violations</li>
+                        <li><strong>Corrective Measures:</strong> Focus on corrective and preventive measures</li>
+                        <li><strong>Training Requirements:</strong> Additional training for employees involved in violations</li>
+                        <li><strong>Termination:</strong> Termination for serious or repeated violations</li>
+                        <li><strong>Legal Action:</strong> Legal action where appropriate and necessary</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>10. Continuous Improvement & Review</h2>
+                    
+                    <h3>10.1 Regular Assessment</h3>
+                    <ul>
+                        <li><strong>Annual Review:</strong> Comprehensive annual review of code effectiveness</li>
+                        <li><strong>Stakeholder Feedback:</strong> Regular feedback from clients, employees, and stakeholders</li>
+                        <li><strong>Regulatory Updates:</strong> Incorporation of new regulatory requirements</li>
+                        <li><strong>Industry Best Practices:</strong> Adoption of evolving industry best practices</li>
+                        <li><strong>Risk Assessment:</strong> Regular risk assessment and mitigation strategies</li>
+                        <li><strong>Performance Metrics:</strong> Development and monitoring of ethical performance metrics</li>
+                    </ul>
+                    
+                    <h3>10.2 Training & Awareness</h3>
+                    <ul>
+                        <li><strong>Onboarding Training:</strong> Comprehensive ethics training for new employees</li>
+                        <li><strong>Annual Refresher:</strong> Annual refresher training for all employees</li>
+                        <li><strong>Specialized Training:</strong> Role-specific ethics and compliance training</li>
+                        <li><strong>Case Studies:</strong> Real-world case studies and scenario-based training</li>
+                        <li><strong>Certification:</strong> Ethics certification requirements for key personnel</li>
+                        <li><strong>Awareness Campaigns:</strong> Regular awareness campaigns and communications</li>
+                    </ul>
+                    
+                    <h3>10.3 Culture Development</h3>
+                    <ul>
+                        <li><strong>Leadership Commitment:</strong> Visible commitment from senior leadership</li>
+                        <li><strong>Recognition Programs:</strong> Recognition and rewards for ethical behavior</li>
+                        <li><strong>Integration:</strong> Integration of ethics into all business processes</li>
+                        <li><strong>Communication:</strong> Regular communication about ethical expectations</li>
+                        <li><strong>Measurement:</strong> Measurement and monitoring of ethical culture</li>
+                        <li><strong>Continuous Learning:</strong> Fostering a culture of continuous ethical learning</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Ethics & Compliance Contact Information</h3>
+                    <p><strong>Chief Compliance Officer</strong><br>
+                    Mr. Rajesh Kumar, CFA<br>
+                    Email: ethics@nyqewealthmanagement.com<br>
+                    Phone: +91-11-4567-8901<br>
+                    Address: NYQE Wealth Management Private Limited<br>
+                    123 Financial District, Connaught Place<br>
+                    New Delhi - 110001, India</p>
+                    
+                    <p><strong>Ethics Hotline:</strong> +91-11-4567-8905 (Anonymous reporting)<br>
+                    <strong>Ethics Email:</strong> ethics@nyqewealthmanagement.com<br>
+                    <strong>Whistleblower Portal:</strong> <a href="#" onclick="alert('Secure whistleblower portal would be available here')">Secure Reporting Portal</a></p>
+                    
+                    <p><strong>Response Timeline:</strong> 5-10 working days for ethics inquiries<br>
+                    <strong>Investigation Timeline:</strong> 30-45 days for formal investigations<br>
+                    <strong>24/7 Emergency:</strong> +91-98765-43210</p>
+                    
+                    <p><strong>External Reporting:</strong><br>
+                    SEBI SCORES: <a href="https://scores.sebi.gov.in" target="_blank">https://scores.sebi.gov.in</a><br>
+                    National Helpline: 1800-22-7575</p>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="legal-footer">
+                <p>© 2024 NYQE Wealth Management Private Limited. All rights reserved.</p>
+                <p>This Code of Conduct is binding on all employees, directors, and associated persons.</p>
+                <p><strong>Effective Date:</strong> January 1, 2024 | <strong>Next Review:</strong> December 31, 2024</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()" style="display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</div>
+
+<script>
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Show/hide back to top button
+window.addEventListener('scroll', function() {
+    const button = document.querySelector('.back-to-top');
+    if (window.pageYOffset > 300) {
+        button.style.display = 'block';
+    } else {
+        button.style.display = 'none';
+    }
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

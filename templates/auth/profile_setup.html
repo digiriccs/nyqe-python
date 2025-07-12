@@ -1,0 +1,379 @@
+{% extends "base.html" %}
+
+{% block title %}Complete Your Profile - NYQE Wealth{% endblock %}
+
+{% block head %}
+<style>
+    .profile-setup-container {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        min-height: 100vh;
+        padding: 2rem 0;
+    }
+    
+    .setup-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .setup-header {
+        background: linear-gradient(135deg, #1a365d 0%, #2d5a87 50%, #00d4aa 100%);
+        color: white;
+        padding: 3rem 2rem;
+        text-align: center;
+        position: relative;
+    }
+    
+    .setup-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transform: translate(50%, -50%);
+    }
+    
+    .setup-body {
+        padding: 3rem 2rem;
+    }
+    
+    .progress-steps {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 3rem;
+    }
+    
+    .step {
+        display: flex;
+        align-items: center;
+        color: #6b7280;
+    }
+    
+    .step.active {
+        color: #00d4aa;
+    }
+    
+    .step-number {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+    
+    .step.active .step-number {
+        background: #00d4aa;
+        color: white;
+    }
+    
+    .step-line {
+        width: 60px;
+        height: 2px;
+        background: #e5e7eb;
+        margin: 0 1rem;
+    }
+    
+    .form-section {
+        margin-bottom: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a365d;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+    
+    .section-title i {
+        margin-right: 0.5rem;
+        color: #00d4aa;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #374151;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: #00d4aa;
+        box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+    }
+    
+    .form-select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #1a365d, #2d5a87);
+        border: none;
+        padding: 0.875rem 2rem;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #2d5a87, #1a365d);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
+    }
+    
+    .btn-secondary {
+        background: #f3f4f6;
+        border: 2px solid #e5e7eb;
+        padding: 0.875rem 2rem;
+        border-radius: 8px;
+        color: #374151;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        transition: all 0.3s ease;
+        margin-right: 1rem;
+    }
+    
+    .btn-secondary:hover {
+        background: #e5e7eb;
+        color: #1f2937;
+        text-decoration: none;
+    }
+    
+    .info-card {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .info-card h6 {
+        color: #0369a1;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+    
+    .info-card p {
+        color: #0284c7;
+        margin-bottom: 0;
+        font-size: 0.875rem;
+    }
+    
+    @media (max-width: 768px) {
+        .setup-header {
+            padding: 2rem 1rem;
+        }
+        
+        .setup-body {
+            padding: 2rem 1rem;
+        }
+        
+        .progress-steps {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .step-line {
+            width: 2px;
+            height: 40px;
+            margin: 0.5rem 0;
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-setup-container">
+    <div class="container">
+        <div class="setup-card">
+            <div class="setup-header">
+                <h1 class="mb-2">Complete Your Profile</h1>
+                <p class="mb-0 opacity-90">Help us personalize your investment experience</p>
+            </div>
+            
+            <div class="setup-body">
+                <div class="progress-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <span>Registration</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step active">
+                        <div class="step-number">2</div>
+                        <span>Profile Setup</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <span>Dashboard</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h6><i class="fas fa-info-circle"></i> Why do we need this information?</h6>
+                    <p>This information helps us provide personalized investment recommendations, calculate suitable portfolio allocations, and suggest financial products that match your risk profile and goals.</p>
+                </div>
+                
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h4 class="section-title">
+                            <i class="fas fa-user"></i>
+                            Personal Information
+                        </h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form.date_of_birth.label(class="form-label") }}
+                                    {{ form.date_of_birth(class="form-control") }}
+                                    {% if form.date_of_birth.errors %}
+                                        <div class="text-danger">{{ form.date_of_birth.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form.occupation.label(class="form-label") }}
+                                    {{ form.occupation(class="form-control") }}
+                                    {% if form.occupation.errors %}
+                                        <div class="text-danger">{{ form.occupation.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form.annual_income.label(class="form-label") }}
+                                    {{ form.annual_income(class="form-control") }}
+                                    {% if form.annual_income.errors %}
+                                        <div class="text-danger">{{ form.annual_income.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form.financial_dependents.label(class="form-label") }}
+                                    {{ form.financial_dependents(class="form-control") }}
+                                    {% if form.financial_dependents.errors %}
+                                        <div class="text-danger">{{ form.financial_dependents.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Investment Profile -->
+                    <div class="form-section">
+                        <h4 class="section-title">
+                            <i class="fas fa-chart-line"></i>
+                            Investment Profile
+                        </h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form.investment_experience.label(class="form-label") }}
+                                    {{ form.investment_experience(class="form-control form-select") }}
+                                    {% if form.investment_experience.errors %}
+                                        <div class="text-danger">{{ form.investment_experience.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form.risk_tolerance.label(class="form-label") }}
+                                    {{ form.risk_tolerance(class="form-control form-select") }}
+                                    {% if form.risk_tolerance.errors %}
+                                        <div class="text-danger">{{ form.risk_tolerance.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form.preferred_investment_amount.label(class="form-label") }}
+                                    {{ form.preferred_investment_amount(class="form-control") }}
+                                    {% if form.preferred_investment_amount.errors %}
+                                        <div class="text-danger">{{ form.preferred_investment_amount.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form.investment_timeline.label(class="form-label") }}
+                                    {{ form.investment_timeline(class="form-control form-select") }}
+                                    {% if form.investment_timeline.errors %}
+                                        <div class="text-danger">{{ form.investment_timeline.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form.emergency_fund_months.label(class="form-label") }}
+                            {{ form.emergency_fund_months(class="form-control") }}
+                            <small class="text-muted">Recommended: 6-12 months of expenses</small>
+                            {% if form.emergency_fund_months.errors %}
+                                <div class="text-danger">{{ form.emergency_fund_months.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ url_for('dashboard.index') }}" class="btn-secondary">Skip for Now</a>
+                        <button type="submit" class="btn-primary" style="width: auto;">Complete Setup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block title %}Financial Products - NYQE Wealth Management{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loan-hub.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="loan-hub-hero">
+    <div class="loan-hub-container">
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">Financial Products</h1>
+            <p class="hero-subtitle">
+                Explore our comprehensive range of AMFI-compliant financial products 
+                including mutual funds, insurance, bonds, and investment solutions.
+            </p>
+            <div class="hero-cta">
+                <a href="#recommended-products" class="btn-primary">Explore Products</a>
+                <a href="{{ url_for('financial_products.compare_products') }}" class="btn-secondary">Compare Products</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recommended Products Section -->
+{% if recommended_products %}
+<section id="recommended-products" class="loan-hub-container">
+    <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 40px; font-size: 2rem; font-weight: 700;">
+        Recommended Products
+    </h2>
+    <div class="product-grid">
+        {% for product in recommended_products %}
+        <div class="product-card featured slide-up">
+            <div class="product-header">
+                <h3 class="product-title">{{ product.name }}</h3>
+                <span class="product-category">{{ product.category.replace('_', ' ').title() }}</span>
+                {% if product.amfi_code %}
+                <span class="amfi-badge">AMFI: {{ product.amfi_code }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="product-details">
+                {% if product.fund_house %}
+                <div class="detail-row">
+                    <span class="detail-label">Fund House</span>
+                    <span class="detail-value">{{ product.fund_house }}</span>
+                </div>
+                {% endif %}
+                
+                {% if product.nav %}
+                <div class="detail-row">
+                    <span class="detail-label">NAV</span>
+                    <span class="detail-value">₹{{ "%.2f"|format(product.nav) }}</span>
+                </div>
+                {% endif %}
+                
+                {% if product.returns_1y %}
+                <div class="detail-row">
+                    <span class="detail-label">1 Year Returns</span>
+                    <span class="detail-value interest-rate">{{ "%.2f"|format(product.returns_1y) }}%</span>
+                </div>
+                {% endif %}
+                
+                {% if product.min_investment %}
+                <div class="detail-row">
+                    <span class="detail-label">Min Investment</span>
+                    <span class="detail-value loan-amount">₹{{ "{:,.0f}".format(product.min_investment) }}</span>
+                </div>
+                {% endif %}
+                
+                {% if product.risk_level %}
+                <div class="detail-row">
+                    <span class="detail-label">Risk Level</span>
+                    <span class="risk-indicator risk-{{ product.risk_level }}">
+                        {{ product.risk_level.title() }}
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div style="margin-top: 20px; display: flex; gap: 12px;">
+                <a href="{{ url_for('financial_products.product_detail', product_id=product.id) }}" 
+                   class="btn-primary" style="flex: 1; text-align: center;">
+                    View Details
+                </a>
+                <a href="{{ url_for('submit_query') }}" 
+                   class="btn-secondary" style="flex: 1; text-align: center;">
+                    Invest Now
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Quick Access Categories -->
+<section class="loan-hub-container">
+    <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 40px; font-size: 2rem; font-weight: 700;">
+        Browse by Category
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 40px;">
+        <a href="{{ url_for('financial_products.category_products', category='mutual_funds') }}" 
+           style="text-decoration: none; color: inherit;">
+            <div class="product-card" style="text-align: center; transition: all 0.3s ease;">
+                <i class="fas fa-chart-pie" style="font-size: 3rem; color: var(--secondary-blue); margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary-blue); margin-bottom: 12px;">Mutual Funds</h3>
+                <p style="color: var(--gray-600); font-size: 0.875rem;">
+                    Diversified investment options across equity, debt, and hybrid funds.
+                </p>
+            </div>
+        </a>
+        
+        <a href="{{ url_for('financial_products.category_products', category='insurance') }}" 
+           style="text-decoration: none; color: inherit;">
+            <div class="product-card" style="text-align: center; transition: all 0.3s ease;">
+                <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--secondary-blue); margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary-blue); margin-bottom: 12px;">Insurance</h3>
+                <p style="color: var(--gray-600); font-size: 0.875rem;">
+                    Life and health insurance solutions for comprehensive protection.
+                </p>
+            </div>
+        </a>
+        
+        <a href="{{ url_for('financial_products.category_products', category='bonds') }}" 
+           style="text-decoration: none; color: inherit;">
+            <div class="product-card" style="text-align: center; transition: all 0.3s ease;">
+                <i class="fas fa-coins" style="font-size: 3rem; color: var(--secondary-blue); margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary-blue); margin-bottom: 12px;">Bonds</h3>
+                <p style="color: var(--gray-600); font-size: 0.875rem;">
+                    Government and corporate bonds for stable income generation.
+                </p>
+            </div>
+        </a>
+        
+        <a href="{{ url_for('financial_products.category_products', category='fd') }}" 
+           style="text-decoration: none; color: inherit;">
+            <div class="product-card" style="text-align: center; transition: all 0.3s ease;">
+                <i class="fas fa-building" style="font-size: 3rem; color: var(--secondary-blue); margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary-blue); margin-bottom: 12px;">Fixed Deposits</h3>
+                <p style="color: var(--gray-600); font-size: 0.875rem;">
+                    Safe and secure deposits with guaranteed returns.
+                </p>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- Filters Section -->
+<section class="loan-hub-container">
+    <div class="filters-section">
+        <h3 class="filters-title">Filter Financial Products</h3>
+        <form method="GET" action="{{ url_for('financial_products.index') }}">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select name="category" class="filter-select">
+                        <option value="">All Categories</option>
+                        {% for category in categories %}
+                        <option value="{{ category }}" 
+                                {% if current_filters.category == category %}selected{% endif %}>
+                            {{ category.replace('_', ' ').title() }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Risk Level</label>
+                    <select name="risk_level" class="filter-select">
+                        <option value="">All Risk Levels</option>
+                        {% for risk in risk_levels %}
+                        <option value="{{ risk }}" 
+                                {% if current_filters.risk_level == risk %}selected{% endif %}>
+                            {{ risk.title() }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Fund House</label>
+                    <select name="fund_house" class="filter-select">
+                        <option value="">All Fund Houses</option>
+                        {% for fund_house in fund_houses %}
+                        <option value="{{ fund_house }}" 
+                                {% if current_filters.fund_house == fund_house %}selected{% endif %}>
+                            {{ fund_house }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Min Investment (₹)</label>
+                    <input type="number" name="min_investment" class="filter-input" 
+                           value="{{ current_filters.min_investment or '' }}" 
+                           placeholder="e.g., 1000">
+                </div>
+            </div>
+            
+            <div class="filter-actions">
+                <button type="submit" class="btn-primary">Apply Filters</button>
+                <a href="{{ url_for('financial_products.index') }}" class="btn-outline">Clear Filters</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Products Listing -->
+<section class="loan-hub-container">
+    {% if products.items %}
+    <div class="product-grid">
+        {% for product in products.items %}
+        <div class="product-card slide-up">
+            <div class="product-header">
+                <h3 class="product-title">{{ product.name }}</h3>
+                <span class="product-category">{{ product.category.replace('_', ' ').title() }}</span>
+                {% if product.amfi_code %}
+                <span class="amfi-badge">AMFI: {{ product.amfi_code }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="product-details">
+                {% if product.fund_house %}
+                <div class="detail-row">
+                    <span class="detail-label">Fund House</span>
+                    <span class="detail-value">{{ product.fund_house }}</span>
+                </div>
+                {% endif %}
+                
+                {% if product.nav %}
+                <div class="detail-row">
+                    <span class="detail-label">NAV</span>
+                    <span class="detail-value">₹{{ "%.2f"|format(product.nav) }}</span>
+                </div>
+                {% endif %}
+                
+                {% if product.returns_1y %}
+                <div class="detail-row">
+                    <span class="detail-label">1 Year Returns</span>
+                    <span class="detail-value interest-rate">{{ "%.2f"|format(product.returns_1y) }}%</span>
+                </div>
+                {% endif %}
+                
+                {% if product.min_investment %}
+                <div class="detail-row">
+                    <span class="detail-label">Min Investment</span>
+                    <span class="detail-value loan-amount">₹{{ "{:,.0f}".format(product.min_investment) }}</span>
+                </div>
+                {% endif %}
+                
+                {% if product.risk_level %}
+                <div class="detail-row">
+                    <span class="detail-label">Risk Level</span>
+                    <span class="risk-indicator risk-{{ product.risk_level }}">
+                        {{ product.risk_level.title() }}
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div style="margin-top: 20px; display: flex; gap: 12px;">
+                <a href="{{ url_for('financial_products.product_detail', product_id=product.id) }}" 
+                   class="btn-primary" style="flex: 1; text-align: center;">
+                    View Details
+                </a>
+                <a href="{{ url_for('submit_query') }}" 
+                   class="btn-secondary" style="flex: 1; text-align: center;">
+                    Invest Now
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if products.pages > 1 %}
+    <div style="text-align: center; margin: 40px 0;">
+        {% if products.has_prev %}
+        <a href="{{ url_for('financial_products.index', page=products.prev_num, **current_filters) }}" 
+           class="btn-outline">Previous</a>
+        {% endif %}
+        
+        <span style="margin: 0 20px; color: var(--gray-600);">
+            Page {{ products.page }} of {{ products.pages }}
+        </span>
+        
+        {% if products.has_next %}
+        <a href="{{ url_for('financial_products.index', page=products.next_num, **current_filters) }}" 
+           class="btn-outline">Next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <div style="text-align: center; padding: 60px 0;">
+        <h3 style="color: var(--gray-600); margin-bottom: 20px;">No financial products found</h3>
+        <p style="color: var(--gray-500); margin-bottom: 30px;">
+            Try adjusting your filters or browse all available products.
+        </p>
+        <a href="{{ url_for('financial_products.index') }}" class="btn-primary">View All Products</a>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Investment Tips Section -->
+<section class="loan-hub-container">
+    <div style="background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%); padding: 40px; border-radius: var(--border-radius); margin: 60px 0; border: 1px solid var(--secondary-blue);">
+        <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 1.75rem; font-weight: 700;">
+            Investment Best Practices
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--secondary-blue); margin-bottom: 16px;"></i>
+                <h4 style="color: var(--primary-blue); margin-bottom: 12px;">Diversify Portfolio</h4>
+                <p style="color: var(--gray-600); font-size: 0.875rem;">
+                    Spread investments across different asset classes to reduce risk.
+                </p>
+            </div>
+            
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-clock" style="font-size: 2.5rem; color: var(--secondary-blue); margin-bottom: 16px;"></i>
+                <h4 style="color: var(--primary-blue); margin-bottom: 12px;">Long-term Focus</h4>
+                <p style="color: var(--gray-600); font-size: 0.875rem;">
+                    Stay invested for the long term to benefit from compounding.
+                </p>
+            </div>
+            
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-balance-scale" style="font-size: 2.5rem; color: var(--secondary-blue); margin-bottom: 16px;"></i>
+                <h4 style="color: var(--primary-blue); margin-bottom: 12px;">Regular Review</h4>
+                <p style="color: var(--gray-600); font-size: 0.875rem;">
+                    Periodically review and rebalance your investment portfolio.
+                </p>
+            </div>
+            
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: var(--secondary-blue); margin-bottom: 16px;"></i>
+                <h4 style="color: var(--primary-blue); margin-bottom: 12px;">AMFI Compliance</h4>
+                <p style="color: var(--gray-600); font-size: 0.875rem;">
+                    Choose only AMFI-registered and compliant financial products.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Add smooth scrolling and animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll for anchor links
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+    
+    // Add staggered animation to product cards
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
+    
+    // Add hover effects to category cards
+    const categoryCards = document.querySelectorAll('a > .product-card');
+    categoryCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px)';
+            this.style.boxShadow = 'var(--box-shadow-lg)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'var(--box-shadow)';
+        });
+    });
+});
+</script>
+{% endblock %}

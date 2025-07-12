@@ -1,0 +1,417 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - NYQE Wealth Management{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1>Expert Financial Services</h1>
+                <p class="lead">Comprehensive wealth management solutions tailored to your unique financial goals and aspirations.</p>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg mt-3">
+                    <i class="fas fa-calendar-alt"></i> Schedule Consultation
+                </a>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="services-hero-visual">
+                    <div class="service-icons-grid">
+                        <div class="service-icon-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Investment Advisory</span>
+                        </div>
+                        <div class="service-icon-item">
+                            <i class="fas fa-piggy-bank"></i>
+                            <span>Retirement Planning</span>
+                        </div>
+                        <div class="service-icon-item">
+                            <i class="fas fa-calculator"></i>
+                            <span>Tax Optimization</span>
+                        </div>
+                        <div class="service-icon-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Portfolio Management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Core Services</h2>
+            <p class="lead">Comprehensive financial solutions designed to secure and grow your wealth</p>
+        </div>
+        
+        <div class="row">
+            <!-- Investment Advisory -->
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card service-detail-card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex align-items-center">
+                            <div class="service-icon me-3">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4 class="mb-0">Investment Advisory</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Strategic investment planning and portfolio optimization to maximize returns while managing risk effectively.</p>
+                        
+                        <h6>Key Features:</h6>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success"></i> Personalized investment strategy</li>
+                            <li><i class="fas fa-check text-success"></i> Risk assessment and profiling</li>
+                            <li><i class="fas fa-check text-success"></i> Regular portfolio review</li>
+                            <li><i class="fas fa-check text-success"></i> Goal-based asset allocation</li>
+                        </ul>
+                        
+                        <div class="service-stats mt-3">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <strong>12%+</strong>
+                                    <small class="d-block text-muted">Avg Returns</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong>500+</strong>
+                                    <small class="d-block text-muted">Portfolios</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong>15+</strong>
+                                    <small class="d-block text-muted">Years Exp</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('service_detail', slug='investment-advisory') }}" class="btn btn-primary">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Retirement Planning -->
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card service-detail-card h-100">
+                    <div class="card-header bg-secondary text-white">
+                        <div class="d-flex align-items-center">
+                            <div class="service-icon me-3">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <h4 class="mb-0">Retirement Planning</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Secure your golden years with strategic retirement corpus building and post-retirement income planning.</p>
+                        
+                        <h6>Key Features:</h6>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success"></i> Retirement corpus calculation</li>
+                            <li><i class="fas fa-check text-success"></i> NPS and EPF optimization</li>
+                            <li><i class="fas fa-check text-success"></i> Post-retirement income planning</li>
+                            <li><i class="fas fa-check text-success"></i> Healthcare cost planning</li>
+                        </ul>
+                        
+                        <div class="service-stats mt-3">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <strong>₹2Cr+</strong>
+                                    <small class="d-block text-muted">Avg Corpus</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong>300+</strong>
+                                    <small class="d-block text-muted">Retirees</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong>25+</strong>
+                                    <small class="d-block text-muted">Years Planning</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('service_detail', slug='retirement-planning') }}" class="btn btn-secondary">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tax Optimization -->
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card service-detail-card h-100">
+                    <div class="card-header" style="background: linear-gradient(135deg, #d97706, #fbbf24); color: white;">
+                        <div class="d-flex align-items-center">
+                            <div class="service-icon me-3">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h4 class="mb-0">Tax Optimization</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Intelligent tax planning strategies to minimize tax liability while maximizing investment efficiency.</p>
+                        
+                        <h6>Key Features:</h6>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success"></i> Section 80C optimization</li>
+                            <li><i class="fas fa-check text-success"></i> LTCG and STCG planning</li>
+                            <li><i class="fas fa-check text-success"></i> Tax-efficient investments</li>
+                            <li><i class="fas fa-check text-success"></i> Annual tax review</li>
+                        </ul>
+                        
+                        <div class="service-stats mt-3">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <strong>30%+</strong>
+                                    <small class="d-block text-muted">Tax Savings</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong>₹1.5L</strong>
+                                    <small class="d-block text-muted">Avg Benefit</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong>100%</strong>
+                                    <small class="d-block text-muted">Compliance</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('service_detail', slug='tax-optimization') }}" class="btn" style="background: #d97706; color: white;">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Portfolio Management -->
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="card service-detail-card h-100">
+                    <div class="card-header" style="background: linear-gradient(135deg, #059669, #34d399); color: white;">
+                        <div class="d-flex align-items-center">
+                            <div class="service-icon me-3">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h4 class="mb-0">Portfolio Management</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Professional portfolio management with active monitoring and rebalancing for optimal performance.</p>
+                        
+                        <h6>Key Features:</h6>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success"></i> Active portfolio monitoring</li>
+                            <li><i class="fas fa-check text-success"></i> Regular rebalancing</li>
+                            <li><i class="fas fa-check text-success"></i> Performance tracking</li>
+                            <li><i class="fas fa-check text-success"></i> Risk management</li>
+                        </ul>
+                        
+                        <div class="service-stats mt-3">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <strong>₹100Cr+</strong>
+                                    <small class="d-block text-muted">AUM</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong>14%+</strong>
+                                    <small class="d-block text-muted">Performance</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong>200+</strong>
+                                    <small class="d-block text-muted">Portfolios</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('service_detail', slug='portfolio-management') }}" class="btn" style="background: #059669; color: white;">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Process -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Service Process</h2>
+            <p class="lead">A systematic approach to achieving your financial goals</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="process-step text-center">
+                    <div class="step-number">01</div>
+                    <h5>Discovery</h5>
+                    <p>Understanding your financial situation, goals, and risk tolerance through detailed consultation.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="process-step text-center">
+                    <div class="step-number">02</div>
+                    <h5>Analysis</h5>
+                    <p>Comprehensive analysis of your current portfolio and identification of optimization opportunities.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="process-step text-center">
+                    <div class="step-number">03</div>
+                    <h5>Strategy</h5>
+                    <p>Development of personalized financial strategy aligned with your goals and timeline.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="process-step text-center">
+                    <div class="step-number">04</div>
+                    <h5>Execution</h5>
+                    <p>Implementation of the strategy with ongoing monitoring and periodic reviews.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div data-aos="fade-up">
+            <h2>Ready to Transform Your Financial Future?</h2>
+            <p class="lead">Schedule a free consultation with our certified financial advisors</p>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary btn-lg me-3">
+                    <i class="fas fa-calendar-check"></i> Book Free Consultation
+                </a>
+                <a href="tel:+919876543210" class="btn btn-outline btn-lg">
+                    <i class="fas fa-phone"></i> Call Now
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.service-detail-card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.service-detail-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.service-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.feature-list i {
+    margin-right: 0.5rem;
+    width: 16px;
+}
+
+.service-stats {
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+.services-hero-visual {
+    padding: 2rem;
+}
+
+.service-icons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.service-icon-item {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.service-icon-item:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.service-icon-item i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.service-icon-item span {
+    font-weight: 600;
+    color: white;
+}
+
+.process-step {
+    padding: 2rem 1rem;
+}
+
+.step-number {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 auto 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .service-icons-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .services-hero-visual {
+        padding: 1rem;
+        margin-top: 2rem;
+    }
+}
+</style>
+{% endblock %}

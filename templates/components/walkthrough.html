@@ -1,0 +1,23 @@
+<!-- Investment Education Walkthrough Overlay -->
+<div id="walkthrough-overlay" class="walkthrough-overlay">
+    <!-- Walkthrough content will be injected by JavaScript -->
+</div>
+
+<script>
+// Initialize walkthrough on page load if not seen before
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if user has seen walkthrough
+    const hasSeenWalkthrough = localStorage.getItem('hasSeenWalkthrough');
+    const dontShowAgain = localStorage.getItem('dontShowWalkthrough');
+    
+    // Only show on homepage and if not seen before
+    if (window.location.pathname === '/' && !hasSeenWalkthrough && !dontShowAgain) {
+        // Delay to allow page to load completely
+        setTimeout(() => {
+            if (typeof showWalkthrough === 'function') {
+                showWalkthrough();
+            }
+        }, 2000);
+    }
+});
+</script>

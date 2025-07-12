@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NYQE Wealth – Animated Walkthrough</title>
+
+  <!-- Fonts + Animation Libraries -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/lottie-web@5.7.14/build/player/lottie.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <style>
+    :root {
+      --primary: #003459;
+      --accent: #00A6ED;
+      --bg: #F6F8FA;
+      --text-dark: #1A1A1A;
+      --text-light: #666;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--text-dark);
+    }
+
+    .walkslide {
+      padding: 40px;
+      max-width: 360px;
+      margin: auto;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    #walkthrough {
+      position: fixed;
+      inset: 0;
+      background: white;
+      z-index: 9999;
+      overflow-y: auto;
+    }
+
+    button {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background-color: var(--primary);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+    }
+
+    .services {
+      display: grid;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .services div {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .tools {
+      padding: 40px 20px;
+      background: white;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body onload="startSite()">
+
+<!-- Walkthrough Overlay -->
+<div id="walkthrough">
+  <div id="slide1" class="walkslide">
+    <h2>Why Investing?</h2>
+    <div id="lottie1" style="height: 200px;"></div>
+    <p>Inflation erodes value. Investing helps your money grow.</p>
+    <button onclick="nextSlide()">Next</button>
+  </div>
+
+  <div id="slide2" class="walkslide" style="display: none;">
+    <h2>Why SIP?</h2>
+    <div id="lottie2" style="height: 200px;"></div>
+    <p>Small monthly steps build wealth. SIP adds discipline.</p>
+    <button onclick="nextSlide()">Next</button>
+  </div>
+
+  <div id="slide3" class="walkslide" style="display: none;">
+    <h2>Why Insurance?</h2>
+    <div id="lottie3" style="height: 200px;"></div>
+    <p>Protect your family and your future. Safety nets matter.</p>
+    <button onclick="nextSlide()">Next</button>
+  </div>
+
+  <div id="slide4" class="walkslide" style="display: none;">
+    <h2>How Inflation Works</h2>
+    <div id="lottie4" style="height: 200px;"></div>
+    <p>₹100 today may cost ₹180 in 10 years. Plan ahead wisely.</p>
+    <button onclick="endWalkthrough()">Get Started</button>
+  </div>
+</div>
+
+<!-- Main Site -->
+<div class="hero" data-aos="zoom-in">
+  <h1>Empowering Your Financial Future</h1>
+  <p>With Strategic Investment, Planning, and Protection</p>
+</div>
+
+<section class="services">
+  <div data-aos="fade-up">📈 Investment Advisory</div>
+  <div data-aos="fade-up" data-aos-delay="100">📊 Portfolio Management</div>
+  <div data-aos="fade-up" data-aos-delay="200">🧾 Tax & Retirement Planning</div>
+</section>
+
+<section class="tools" data-aos="fade-right">
+  <h2>🔧 Financial Planning Tools</h2>
+  <p>Use our calculators and dashboards to plan your growth.</p>
+</section>
+
+<script>
+  const animations = [
+    { id: 'lottie1', path: 'https://assets2.lottiefiles.com/packages/lf20_8wREpI.json' },
+    { id: 'lottie2', path: 'https://assets2.lottiefiles.com/packages/lf20_vfnsb74e.json' },
+    { id: 'lottie3', path: 'https://assets10.lottiefiles.com/packages/lf20_yxzrznz7.json' },
+    { id: 'lottie4', path: 'https://assets7.lottiefiles.com/packages/lf20_totrpclr.json' }
+  ];
+
+  animations.forEach(({ id, path }) => {
+    lottie.loadAnimation({
+      container: document.getElementById(id),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path
+    });
+  });
+
+  let currentSlide = 1;
+  function nextSlide() {
+    document.getElementById('slide' + currentSlide).style.display = 'none';
+    currentSlide++;
+    document.getElementById('slide' + currentSlide).style.display = 'block';
+  }
+
+  function endWalkthrough() {
+    localStorage.setItem('walkthroughSeen', 'true');
+    document.getElementById('walkthrough').style.display = 'none';
+  }
+
+  function startSite() {
+    if (localStorage.getItem('walkthroughSeen')) {
+      document.getElementById('walkthrough').style.display = 'none';
+    }
+    AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}Compare Loans - NYQE Wealth Management{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loan-hub.css') }}">
+<style>
+    /* Comparison tool styles are now in loan-hub.css */
+    
+    .loan-comparison-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        background: #f9f9f9;
+    }
+    
+    .loan-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+    
+    .comparison-metric {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .comparison-metric:last-child {
+        border-bottom: none;
+    }
+    
+    .metric-label {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    .metric-value {
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .best-value {
+        background: #d4edda;
+        color: #155724;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+    
+    .emi-highlight {
+        background: #fff3cd;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: center;
+    }
+    
+    .emi-amount {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+    }
+    
+    .savings-badge {
+        background: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        display: inline-block;
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="loan-hub-container">
+    <h1 class="text-center mb-5" style="color: var(--primary-blue);">Bank-wise Loan Comparison</h1>
+    
+    <!-- Comparison Tool -->
+    <div class="comparison-tool">
+        <h3 class="mb-4">Customize Your Comparison</h3>
+        <form method="GET" action="{{ url_for('loan_hub.compare_loans') }}">
+            <div class="comparison-filters">
+                <div class="form-group">
+                    <label>Loan Category</label>
+                    <select name="category" class="form-control" onchange="this.form.submit()">
+                        {% for cat in categories %}
+                        <option value="{{ cat }}" {% if cat == current_category %}selected{% endif %}>
+                            {{ cat.replace('_', ' ').title() }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Loan Amount (₹)</label>
+                    <input type="number" name="amount" class="form-control" 
+                           value="{{ loan_amount }}" min="50000" step="50000">
+                </div>
+                
+                <div class="form-group">
+                    <label>Tenure (Months)</label>
+                    <input type="number" name="tenure" class="form-control" 
+                           value="{{ tenure }}" min="12" max="360" step="12">
+                </div>
+                
+                <div class="form-group d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-sync-alt me-2"></i>Update Comparison
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Comparison Results -->
+    {% if bank_loans %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        Comparing <strong>{{ bank_loans|length }} banks</strong> for 
+        <strong>{{ current_category.replace('_', ' ').title() }} Loans</strong> of 
+        <strong>₹{{ "{:,.0f}".format(loan_amount) }}</strong> for 
+        <strong>{{ tenure }} months</strong>
+    </div>
+    
+    {% set lowest_rate = 100 %}
+    {% set best_bank = '' %}
+    {% for bank, loans in bank_loans.items() %}
+        {% for loan in loans %}
+            {% if loan.interest_rate_min < lowest_rate %}
+                {% set lowest_rate = loan.interest_rate_min %}
+                {% set best_bank = bank %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    
+    {% for bank, loans in bank_loans.items() %}
+    <div class="bank-comparison">
+        <div class="comparison-table">
+            <div class="bank-header">
+                {{ bank }}
+                {% if bank == best_bank %}
+                <span class="badge bg-warning text-dark float-end">Best Rates</span>
+                {% endif %}
+            </div>
+            <div class="comparison-grid">
+                {% for loan in loans %}
+                <div class="loan-comparison-card">
+                    <div class="loan-name">{{ loan.name }}</div>
+                    
+                    <div class="comparison-metric">
+                        <span class="metric-label">Interest Rate</span>
+                        <span class="metric-value">
+                            {{ "%.2f"|format(loan.interest_rate_min) }}% - {{ "%.2f"|format(loan.interest_rate_max) }}%
+                            {% if loan.interest_rate_min == lowest_rate %}
+                            <span class="best-value">Lowest</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div class="comparison-metric">
+                        <span class="metric-label">Processing Fee</span>
+                        <span class="metric-value">
+                            {% if loan.processing_fee %}
+                                {{ "%.2f"|format(loan.processing_fee) }}%
+                            {% else %}
+                                Nil
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div class="comparison-metric">
+                        <span class="metric-label">Max Tenure</span>
+                        <span class="metric-value">{{ loan.max_tenure_months }} months</span>
+                    </div>
+                    
+                    <div class="comparison-metric">
+                        <span class="metric-label">Min Income</span>
+                        <span class="metric-value">₹{{ "{:,.0f}".format(loan.min_income or 0) }}</span>
+                    </div>
+                    
+                    <!-- EMI Calculation -->
+                    {% set rate = loan.interest_rate_min / 100 / 12 %}
+                    {% set emi = (loan_amount * rate * ((1 + rate) ** tenure)) / (((1 + rate) ** tenure) - 1) %}
+                    
+                    <div class="emi-highlight">
+                        <div class="text-muted">Monthly EMI</div>
+                        <div class="emi-amount">₹{{ "{:,.0f}".format(emi) }}</div>
+                        {% set total_interest = (emi * tenure) - loan_amount %}
+                        <small class="text-muted">Total Interest: ₹{{ "{:,.0f}".format(total_interest) }}</small>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('loan_hub.product_detail', product_id=loan.id) }}" 
+                           class="btn btn-primary btn-sm">
+                            View Details
+                        </a>
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('loan_hub.apply_loan', product_id=loan.id) }}" 
+                           class="btn btn-success btn-sm">
+                            Apply Now
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    {% else %}
+    <div class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        No loans found matching your criteria. Try adjusting the filters.
+    </div>
+    {% endif %}
+    
+    <!-- Comparison Tips -->
+    <div class="mt-5 p-4 bg-light rounded">
+        <h4 class="mb-3">Loan Comparison Tips</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success me-2"></i>Compare interest rates and processing fees</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Check prepayment charges and penalties</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Verify eligibility criteria before applying</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success me-2"></i>Calculate total interest over loan tenure</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Consider bank's customer service ratings</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Read terms and conditions carefully</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

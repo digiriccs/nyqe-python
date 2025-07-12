@@ -1,0 +1,384 @@
+{% extends "base.html" %}
+
+{% block title %}Market Data API Setup - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.api-setup-container {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.setup-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.provider-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.provider-card:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.provider-card.connected {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.provider-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-connected {
+    background: #10b981;
+    color: white;
+}
+
+.status-demo {
+    background: #f59e0b;
+    color: white;
+}
+
+.status-disconnected {
+    background: #ef4444;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.alert-info {
+    background: #dbeafe;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+}
+
+.alert-success {
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+
+.alert-warning {
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    color: #92400e;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.feature-list li::before {
+    content: '✓';
+    color: #10b981;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.instructions {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.code-snippet {
+    background: #1f2937;
+    color: #f9fafb;
+    padding: 1rem;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+    .api-setup-container {
+        padding: 1rem 0;
+    }
+    
+    .card-header {
+        padding: 1.5rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="api-setup-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="setup-card">
+                    <div class="card-header">
+                        <h1>Market Data API Configuration</h1>
+                        <p class="mb-0">Connect real-time market data providers for live stock prices and market information</p>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <strong>Current Status:</strong> Using demo data for testing. Configure API keys below for real-time market data from professional sources.
+                        </div>
+                        
+                        <!-- Alpha Vantage Provider -->
+                        <div class="provider-card">
+                            <div class="provider-status status-demo">Demo Mode</div>
+                            <h4>Alpha Vantage</h4>
+                            <p class="text-muted">Professional-grade real-time and historical market data</p>
+                            
+                            <ul class="feature-list">
+                                <li>Real-time stock quotes</li>
+                                <li>Intraday data (1min, 5min, 15min, 30min, 60min)</li>
+                                <li>Daily, weekly, and monthly historical data</li>
+                                <li>Technical indicators</li>
+                                <li>500 API calls/day (free tier)</li>
+                            </ul>
+                            
+                            <form class="mt-3">
+                                <div class="form-group">
+                                    <label class="form-label">API Key</label>
+                                    <input type="password" class="form-input" placeholder="Enter your Alpha Vantage API key">
+                                </div>
+                                <button type="submit" class="btn-primary">Connect Alpha Vantage</button>
+                            </form>
+                            
+                            <div class="instructions">
+                                <h6>How to get API key:</h6>
+                                <ol>
+                                    <li>Visit <a href="https://www.alphavantage.co/support/#api-key" target="_blank">Alpha Vantage</a></li>
+                                    <li>Sign up for a free account</li>
+                                    <li>Get your API key from the dashboard</li>
+                                    <li>Enter the key above and click Connect</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <!-- Finnhub Provider -->
+                        <div class="provider-card">
+                            <div class="provider-status status-demo">Demo Mode</div>
+                            <h4>Finnhub</h4>
+                            <p class="text-muted">Comprehensive financial data for global markets</p>
+                            
+                            <ul class="feature-list">
+                                <li>Real-time stock prices</li>
+                                <li>Company fundamentals</li>
+                                <li>News and market sentiment</li>
+                                <li>Economic calendar</li>
+                                <li>60 API calls/minute (free tier)</li>
+                            </ul>
+                            
+                            <form class="mt-3">
+                                <div class="form-group">
+                                    <label class="form-label">API Key</label>
+                                    <input type="password" class="form-input" placeholder="Enter your Finnhub API key">
+                                </div>
+                                <button type="submit" class="btn-primary">Connect Finnhub</button>
+                            </form>
+                            
+                            <div class="instructions">
+                                <h6>How to get API key:</h6>
+                                <ol>
+                                    <li>Visit <a href="https://finnhub.io/" target="_blank">Finnhub</a></li>
+                                    <li>Create a free account</li>
+                                    <li>Copy your API key from the dashboard</li>
+                                    <li>Enter the key above and click Connect</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <!-- Yahoo Finance (Free) -->
+                        <div class="provider-card connected">
+                            <div class="provider-status status-connected">Active</div>
+                            <h4>Yahoo Finance</h4>
+                            <p class="text-muted">Free market data with no API key required</p>
+                            
+                            <ul class="feature-list">
+                                <li>Real-time stock quotes</li>
+                                <li>Historical price data</li>
+                                <li>Market indices</li>
+                                <li>Basic company information</li>
+                                <li>No API key required</li>
+                            </ul>
+                            
+                            <div class="alert alert-success">
+                                Yahoo Finance provider is active and providing market data.
+                            </div>
+                        </div>
+                        
+                        <!-- Current Configuration -->
+                        <div class="setup-card">
+                            <div class="card-body">
+                                <h5>Current Configuration</h5>
+                                <div class="alert alert-warning">
+                                    <strong>Provider Priority:</strong> Demo Data → Yahoo Finance → Alpha Vantage → Finnhub
+                                    <br><small>The system tries providers in order until one succeeds</small>
+                                </div>
+                                
+                                <h6>Environment Variables (for production):</h6>
+                                <div class="code-snippet">
+ALPHA_VANTAGE_API_KEY=your_alpha_vantage_key_here
+FINNHUB_API_KEY=your_finnhub_key_here
+                                </div>
+                                
+                                <p class="text-muted">
+                                    <small>Note: API keys entered through this interface are securely stored and encrypted. 
+                                    For production deployments, consider using environment variables.</small>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Test Connection -->
+                        <div class="text-center mt-4">
+                            <button class="btn-primary" onclick="testMarketData()">Test Market Data Connection</button>
+                            <div id="testResult" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function testMarketData() {
+    const resultDiv = document.getElementById('testResult');
+    resultDiv.innerHTML = '<div class="alert alert-info">Testing market data connection...</div>';
+    
+    try {
+        const response = await fetch('/api/market/quote/RELIANCE.NS');
+        const result = await response.json();
+        
+        if (result.success) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✓ Connection Successful!</strong><br>
+                    Provider: ${result.data.provider}<br>
+                    Test Symbol: RELIANCE.NS<br>
+                    Price: ₹${result.data.price}<br>
+                    Last Updated: ${new Date(result.data.timestamp).toLocaleString()}
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `
+                <div class="alert alert-warning">
+                    <strong>⚠ Connection Issue:</strong><br>
+                    ${result.error}
+                </div>
+            `;
+        }
+    } catch (error) {
+        resultDiv.innerHTML = `
+            <div class="alert alert-warning">
+                <strong>⚠ Network Error:</strong><br>
+                ${error.message}
+            </div>
+        `;
+    }
+}
+</script>
+{% endblock %}

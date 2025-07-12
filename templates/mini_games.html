@@ -1,0 +1,1328 @@
+{% extends "base.html" %}
+
+{% block title %}Financial Learning Games - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<style>
+/* Mini Games Styles */
+.games-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    padding: 50px 0;
+}
+
+.game-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: #667eea;
+}
+
+.game-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.game-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #2d3748;
+}
+
+.game-description {
+    color: #718096;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.game-difficulty {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.difficulty-beginner {
+    background: #c6f6d5;
+    color: #276749;
+}
+
+.difficulty-intermediate {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.difficulty-advanced {
+    background: #e2e8f0;
+    color: #2d3748;
+}
+
+.play-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.play-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Game Modal Styles */
+.game-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-modal.active {
+    display: flex;
+}
+
+.game-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #718096;
+}
+
+.close-btn:hover {
+    color: #2d3748;
+}
+
+/* Compound Interest Game Styles */
+.investment-simulator {
+    text-align: center;
+    padding: 20px;
+}
+
+.input-group {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.input-group input:focus, .input-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.calculate-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 20px 0;
+}
+
+.result-display {
+    background: #f7fafc;
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px 0;
+    border-left: 5px solid #667eea;
+}
+
+.result-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.result-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.breakdown-item {
+    text-align: center;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+}
+
+.breakdown-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.breakdown-label {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-top: 5px;
+}
+
+/* Budget Game Styles */
+.budget-game {
+    padding: 20px;
+}
+
+.salary-display {
+    background: #4299e1;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.budget-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.category-item {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+}
+
+.category-item.overspent {
+    border-color: #e53e3e;
+    background: #fed7d7;
+}
+
+.category-item.good {
+    border-color: #38a169;
+    background: #c6f6d5;
+}
+
+.category-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2d3748;
+}
+
+.budget-slider {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.amount-display {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #4299e1;
+}
+
+.budget-summary {
+    background: #2d3748;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.remaining-amount {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.remaining-positive {
+    color: #68d391;
+}
+
+.remaining-negative {
+    color: #fc8181;
+}
+
+/* Quiz Styles */
+.quiz-container {
+    padding: 20px;
+}
+
+.question-card {
+    background: #f7fafc;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 5px solid #667eea;
+}
+
+.question-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #2d3748;
+}
+
+.quiz-options {
+    display: grid;
+    gap: 15px;
+}
+
+.quiz-option {
+    background: white;
+    border: 2px solid #e2e8f0;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.quiz-option:hover {
+    border-color: #667eea;
+    background: #edf2f7;
+}
+
+.quiz-option.selected {
+    border-color: #667eea;
+    background: #e6fffa;
+}
+
+.quiz-option.correct {
+    border-color: #38a169;
+    background: #c6f6d5;
+}
+
+.quiz-option.incorrect {
+    border-color: #e53e3e;
+    background: #fed7d7;
+}
+
+.quiz-score {
+    text-align: center;
+    padding: 30px;
+    background: #f7fafc;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.score-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.next-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 20px 10px;
+}
+
+.restart-btn {
+    background: #718096;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 20px 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 30px 15px;
+    }
+    
+    .game-content {
+        padding: 20px;
+        width: 95%;
+    }
+    
+    .budget-categories {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-breakdown {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Games Hero Section -->
+<section class="games-hero">
+    <div class="container">
+        <h1 class="display-4 mb-4">Interactive Financial Learning Games</h1>
+        <p class="lead">Master financial concepts through fun, interactive mini-games and simulations</p>
+    </div>
+</section>
+
+<!-- Games Grid -->
+<section class="container">
+    <div class="games-grid">
+        <!-- Compound Interest Simulator -->
+        <div class="game-card" onclick="openGame('compound-interest')">
+            <span class="game-icon">📈</span>
+            <h3 class="game-title">Compound Interest Simulator</h3>
+            <p class="game-description">Discover the magic of compound interest! See how your money grows over time with different investment amounts, interest rates, and time periods.</p>
+            <span class="game-difficulty difficulty-beginner">Beginner</span>
+            <button class="play-btn" onclick="event.stopPropagation(); openGame('compound-interest')">Play Now</button>
+        </div>
+
+        <!-- Budget Master Challenge -->
+        <div class="game-card" onclick="openGame('budget-game')">
+            <span class="game-icon">💰</span>
+            <h3 class="game-title">Budget Master Challenge</h3>
+            <p class="game-description">Learn to manage your monthly budget! Allocate your salary across different categories and see if you can live within your means.</p>
+            <span class="game-difficulty difficulty-intermediate">Intermediate</span>
+            <button class="play-btn" onclick="event.stopPropagation(); openGame('budget-game')">Play Now</button>
+        </div>
+
+        <!-- Investment Risk Quiz -->
+        <div class="game-card" onclick="openGame('risk-quiz')">
+            <span class="game-icon">🎯</span>
+            <h3 class="game-title">Investment Risk Assessment</h3>
+            <p class="game-description">Test your knowledge about different investment risks and learn how to make informed decisions about your portfolio.</p>
+            <span class="game-difficulty difficulty-advanced">Advanced</span>
+            <button class="play-btn" onclick="event.stopPropagation(); openGame('risk-quiz')">Play Now</button>
+        </div>
+
+        <!-- SIP vs Lumpsum Game -->
+        <div class="game-card" onclick="openGame('sip-comparison')">
+            <span class="game-icon">⚖️</span>
+            <h3 class="game-title">SIP vs Lumpsum Battle</h3>
+            <p class="game-description">Compare different investment strategies and see which approach works better in various market scenarios.</p>
+            <span class="game-difficulty difficulty-intermediate">Intermediate</span>
+            <button class="play-btn" onclick="event.stopPropagation(); openGame('sip-comparison')">Play Now</button>
+        </div>
+
+        <!-- Inflation Impact Game -->
+        <div class="game-card" onclick="openGame('inflation-game')">
+            <span class="game-icon">📊</span>
+            <h3 class="game-title">Beat the Inflation Monster</h3>
+            <p class="game-description">Understand how inflation affects your purchasing power and learn strategies to protect your wealth from its impact.</p>
+            <span class="game-difficulty difficulty-beginner">Beginner</span>
+            <button class="play-btn" onclick="event.stopPropagation(); openGame('inflation-game')">Play Now</button>
+        </div>
+
+        <!-- Financial Literacy Quiz -->
+        <div class="game-card" onclick="openGame('finance-quiz')">
+            <span class="game-icon">🧠</span>
+            <h3 class="game-title">Financial IQ Challenge</h3>
+            <p class="game-description">Test your overall financial knowledge with this comprehensive quiz covering investment, insurance, taxes, and more.</p>
+            <span class="game-difficulty difficulty-advanced">Advanced</span>
+            <button class="play-btn" onclick="event.stopPropagation(); openGame('finance-quiz')">Play Now</button>
+        </div>
+    </div>
+</section>
+
+<!-- Game Modals -->
+
+<!-- Compound Interest Game Modal -->
+<div id="compound-interest-modal" class="game-modal">
+    <div class="game-content">
+        <button class="close-btn" onclick="closeGame()">&times;</button>
+        <div class="investment-simulator">
+            <h2>🚀 Compound Interest Simulator</h2>
+            <p>See how your money grows with the power of compound interest!</p>
+            
+            <div class="input-group">
+                <label for="initial-amount">Initial Investment Amount (₹)</label>
+                <input type="number" id="initial-amount" value="10000" min="1000" max="10000000">
+            </div>
+            
+            <div class="input-group">
+                <label for="monthly-sip">Monthly SIP Amount (₹)</label>
+                <input type="number" id="monthly-sip" value="5000" min="500" max="100000">
+            </div>
+            
+            <div class="input-group">
+                <label for="annual-return">Expected Annual Return (%)</label>
+                <input type="number" id="annual-return" value="12" min="1" max="30" step="0.5">
+            </div>
+            
+            <div class="input-group">
+                <label for="investment-period">Investment Period (Years)</label>
+                <input type="number" id="investment-period" value="10" min="1" max="50">
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateCompoundInterest()">Calculate Growth 📊</button>
+            
+            <div id="compound-result" class="result-display" style="display: none;">
+                <div class="result-amount" id="final-amount">₹0</div>
+                <p>Your investment will grow to this amount!</p>
+                
+                <div class="result-breakdown">
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="total-invested">₹0</div>
+                        <div class="breakdown-label">Total Invested</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="total-gains">₹0</div>
+                        <div class="breakdown-label">Total Gains</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="wealth-multiplier">0x</div>
+                        <div class="breakdown-label">Wealth Multiplier</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Budget Game Modal -->
+<div id="budget-game-modal" class="game-modal">
+    <div class="game-content">
+        <button class="close-btn" onclick="closeGame()">&times;</button>
+        <div class="budget-game">
+            <h2>💰 Budget Master Challenge</h2>
+            <p>You have a monthly salary. Can you create a balanced budget?</p>
+            
+            <div class="salary-display">
+                <h3>Your Monthly Salary</h3>
+                <div class="salary-amount" id="monthly-salary">₹50,000</div>
+            </div>
+            
+            <div class="budget-categories">
+                <div class="category-item" id="housing-category">
+                    <div class="category-title">🏠 Housing & Rent</div>
+                    <input type="range" class="budget-slider" id="housing-slider" min="0" max="50000" value="15000" oninput="updateBudget()">
+                    <div class="amount-display" id="housing-amount">₹15,000</div>
+                    <small>Recommended: 25-30% of salary</small>
+                </div>
+                
+                <div class="category-item" id="food-category">
+                    <div class="category-title">🍽️ Food & Dining</div>
+                    <input type="range" class="budget-slider" id="food-slider" min="0" max="25000" value="8000" oninput="updateBudget()">
+                    <div class="amount-display" id="food-amount">₹8,000</div>
+                    <small>Recommended: 15-20% of salary</small>
+                </div>
+                
+                <div class="category-item" id="transport-category">
+                    <div class="category-title">🚗 Transportation</div>
+                    <input type="range" class="budget-slider" id="transport-slider" min="0" max="20000" value="5000" oninput="updateBudget()">
+                    <div class="amount-display" id="transport-amount">₹5,000</div>
+                    <small>Recommended: 10-15% of salary</small>
+                </div>
+                
+                <div class="category-item" id="entertainment-category">
+                    <div class="category-title">🎬 Entertainment</div>
+                    <input type="range" class="budget-slider" id="entertainment-slider" min="0" max="15000" value="3000" oninput="updateBudget()">
+                    <div class="amount-display" id="entertainment-amount">₹3,000</div>
+                    <small>Recommended: 5-10% of salary</small>
+                </div>
+                
+                <div class="category-item" id="savings-category">
+                    <div class="category-title">💰 Savings & Investment</div>
+                    <input type="range" class="budget-slider" id="savings-slider" min="0" max="30000" value="10000" oninput="updateBudget()">
+                    <div class="amount-display" id="savings-amount">₹10,000</div>
+                    <small>Recommended: 20-30% of salary</small>
+                </div>
+                
+                <div class="category-item" id="misc-category">
+                    <div class="category-title">🛍️ Miscellaneous</div>
+                    <input type="range" class="budget-slider" id="misc-slider" min="0" max="15000" value="4000" oninput="updateBudget()">
+                    <div class="amount-display" id="misc-amount">₹4,000</div>
+                    <small>Recommended: 5-10% of salary</small>
+                </div>
+            </div>
+            
+            <div class="budget-summary">
+                <h3>Budget Summary</h3>
+                <div class="remaining-amount" id="remaining-amount">₹5,000</div>
+                <div id="budget-status">Remaining Budget</div>
+                <button class="calculate-btn" onclick="resetBudgetGame()" style="margin-top: 20px;">Reset Budget</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Risk Quiz Modal -->
+<div id="risk-quiz-modal" class="game-modal">
+    <div class="game-content">
+        <button class="close-btn" onclick="closeGame()">&times;</button>
+        <div class="quiz-container">
+            <h2>🎯 Investment Risk Assessment</h2>
+            <div id="quiz-content">
+                <!-- Quiz questions will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SIP Comparison Modal -->
+<div id="sip-comparison-modal" class="game-modal">
+    <div class="game-content">
+        <button class="close-btn" onclick="closeGame()">&times;</button>
+        <div class="investment-simulator">
+            <h2>⚖️ SIP vs Lumpsum Battle</h2>
+            <p>Compare different investment strategies in various market scenarios!</p>
+            
+            <div class="input-group">
+                <label for="investment-amount">Total Investment Amount (₹)</label>
+                <input type="number" id="investment-amount" value="120000" min="10000" max="10000000">
+            </div>
+            
+            <div class="input-group">
+                <label for="comparison-period">Investment Period (Years)</label>
+                <input type="number" id="comparison-period" value="10" min="1" max="30">
+            </div>
+            
+            <div class="input-group">
+                <label for="market-scenario">Market Scenario</label>
+                <select id="market-scenario">
+                    <option value="steady">Steady Growth (12% p.a.)</option>
+                    <option value="volatile">Volatile Market (8-16% p.a.)</option>
+                    <option value="bearish">Bear Market Start (5-15% p.a.)</option>
+                    <option value="bullish">Bull Market Start (15-8% p.a.)</option>
+                </select>
+            </div>
+            
+            <button class="calculate-btn" onclick="compareInvestments()">Compare Strategies 📊</button>
+            
+            <div id="comparison-result" class="result-display" style="display: none;">
+                <div class="result-breakdown">
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="sip-result">₹0</div>
+                        <div class="breakdown-label">SIP Result</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="lumpsum-result">₹0</div>
+                        <div class="breakdown-label">Lumpsum Result</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="winner">-</div>
+                        <div class="breakdown-label">Winner</div>
+                    </div>
+                </div>
+                <div id="strategy-explanation"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inflation Game Modal -->
+<div id="inflation-game-modal" class="game-modal">
+    <div class="game-content">
+        <button class="close-btn" onclick="closeGame()">&times;</button>
+        <div class="investment-simulator">
+            <h2>📊 Beat the Inflation Monster</h2>
+            <p>See how inflation affects your money over time and learn to protect your wealth!</p>
+            
+            <div class="input-group">
+                <label for="current-money">Current Money Value (₹)</label>
+                <input type="number" id="current-money" value="100000" min="1000" max="10000000">
+            </div>
+            
+            <div class="input-group">
+                <label for="inflation-rate">Annual Inflation Rate (%)</label>
+                <input type="number" id="inflation-rate" value="6" min="1" max="15" step="0.5">
+            </div>
+            
+            <div class="input-group">
+                <label for="time-period">Time Period (Years)</label>
+                <input type="number" id="time-period" value="10" min="1" max="50">
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateInflationImpact()">See Inflation Impact 👹</button>
+            
+            <div id="inflation-result" class="result-display" style="display: none;">
+                <div class="result-amount" id="purchasing-power">₹0</div>
+                <p>Your money's purchasing power after inflation</p>
+                
+                <div class="result-breakdown">
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="value-lost">₹0</div>
+                        <div class="breakdown-label">Value Lost to Inflation</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="inflation-protection">₹0</div>
+                        <div class="breakdown-label">Need to Earn (to beat inflation)</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: #e6fffa; border-radius: 8px;">
+                    <strong>💡 Pro Tip:</strong> Invest in assets that give returns higher than inflation rate to protect your wealth!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Finance Quiz Modal -->
+<div id="finance-quiz-modal" class="game-modal">
+    <div class="game-content">
+        <button class="close-btn" onclick="closeGame()">&times;</button>
+        <div class="quiz-container">
+            <h2>🧠 Financial IQ Challenge</h2>
+            <div id="finance-quiz-content">
+                <!-- Quiz questions will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global game variables
+let currentQuiz = [];
+let currentQuestionIndex = 0;
+let score = 0;
+
+// Game launcher
+function openGame(gameId) {
+    console.log('Opening game:', gameId);
+    const modalId = gameId + '-modal';
+    console.log('Looking for modal:', modalId);
+    const modal = document.getElementById(modalId);
+    console.log('Modal found:', modal);
+    
+    if (modal) {
+        modal.classList.add('active');
+        console.log('Modal activated');
+        
+        // Initialize game-specific content
+        if (gameId === 'risk-quiz') {
+            initializeRiskQuiz();
+        } else if (gameId === 'finance-quiz') {
+            initializeFinanceQuiz();
+        } else if (gameId === 'budget-game') {
+            updateBudget(); // Initialize budget calculations
+        }
+    } else {
+        console.error('Modal not found for gameId:', gameId);
+    }
+}
+
+function closeGame() {
+    const modals = document.querySelectorAll('.game-modal');
+    modals.forEach(modal => modal.classList.remove('active'));
+}
+
+// Compound Interest Calculator
+function calculateCompoundInterest() {
+    console.log('calculateCompoundInterest called');
+    
+    const initialAmountElement = document.getElementById('initial-amount');
+    const monthlySIPElement = document.getElementById('monthly-sip');
+    const annualReturnElement = document.getElementById('annual-return');
+    const yearsElement = document.getElementById('investment-period');
+    
+    console.log('Elements found:', {
+        initialAmount: initialAmountElement,
+        monthlySIP: monthlySIPElement,
+        annualReturn: annualReturnElement,
+        years: yearsElement
+    });
+    
+    if (!initialAmountElement || !monthlySIPElement || !annualReturnElement || !yearsElement) {
+        console.error('Missing input elements');
+        return;
+    }
+    
+    const initialAmount = parseFloat(initialAmountElement.value);
+    const monthlySIP = parseFloat(monthlySIPElement.value);
+    const annualReturn = parseFloat(annualReturnElement.value) / 100;
+    const years = parseInt(yearsElement.value);
+    
+    console.log('Input values:', { initialAmount, monthlySIP, annualReturn, years });
+    
+    const monthlyReturn = annualReturn / 12;
+    const totalMonths = years * 12;
+    
+    // Calculate lumpsum growth
+    const lumpSumGrowth = initialAmount * Math.pow(1 + annualReturn, years);
+    
+    // Calculate SIP growth
+    const sipGrowth = monthlySIP * (((Math.pow(1 + monthlyReturn, totalMonths) - 1) / monthlyReturn) * (1 + monthlyReturn));
+    
+    const finalAmount = lumpSumGrowth + sipGrowth;
+    const totalInvested = initialAmount + (monthlySIP * totalMonths);
+    const totalGains = finalAmount - totalInvested;
+    const multiplier = (finalAmount / totalInvested).toFixed(2);
+    
+    // Display results
+    console.log('Calculation results:', { finalAmount, totalInvested, totalGains, multiplier });
+    
+    const finalAmountEl = document.getElementById('final-amount');
+    const totalInvestedEl = document.getElementById('total-invested');
+    const totalGainsEl = document.getElementById('total-gains');
+    const wealthMultiplierEl = document.getElementById('wealth-multiplier');
+    const resultDiv = document.getElementById('compound-result');
+    
+    console.log('Result elements found:', {
+        finalAmount: finalAmountEl,
+        totalInvested: totalInvestedEl,
+        totalGains: totalGainsEl,
+        wealthMultiplier: wealthMultiplierEl,
+        resultDiv: resultDiv
+    });
+    
+    if (finalAmountEl) finalAmountEl.textContent = `₹${Math.round(finalAmount).toLocaleString()}`;
+    if (totalInvestedEl) totalInvestedEl.textContent = `₹${totalInvested.toLocaleString()}`;
+    if (totalGainsEl) totalGainsEl.textContent = `₹${Math.round(totalGains).toLocaleString()}`;
+    if (wealthMultiplierEl) wealthMultiplierEl.textContent = `${multiplier}x`;
+    
+    if (resultDiv) {
+        resultDiv.style.display = 'block';
+        resultDiv.classList.add('fade-in');
+        console.log('Results displayed successfully');
+    } else {
+        console.error('Result div not found');
+    }
+}
+
+// Budget Game Functions
+function updateBudget() {
+    const salary = 50000;
+    const categories = ['housing', 'food', 'transport', 'entertainment', 'savings', 'misc'];
+    let totalSpent = 0;
+    
+    categories.forEach(category => {
+        const slider = document.getElementById(category + '-slider');
+        const amount = document.getElementById(category + '-amount');
+        const categoryDiv = document.getElementById(category + '-category');
+        
+        const value = parseInt(slider.value);
+        amount.textContent = `₹${value.toLocaleString()}`;
+        totalSpent += value;
+        
+        // Add visual feedback
+        const percentage = (value / salary) * 100;
+        const recommendations = {
+            housing: { min: 25, max: 30 },
+            food: { min: 15, max: 20 },
+            transport: { min: 10, max: 15 },
+            entertainment: { min: 5, max: 10 },
+            savings: { min: 20, max: 30 },
+            misc: { min: 5, max: 10 }
+        };
+        
+        const rec = recommendations[category];
+        if (percentage >= rec.min && percentage <= rec.max) {
+            categoryDiv.classList.remove('overspent');
+            categoryDiv.classList.add('good');
+        } else {
+            categoryDiv.classList.remove('good');
+            categoryDiv.classList.add('overspent');
+        }
+    });
+    
+    const remaining = salary - totalSpent;
+    const remainingElement = document.getElementById('remaining-amount');
+    const statusElement = document.getElementById('budget-status');
+    
+    remainingElement.textContent = `₹${Math.abs(remaining).toLocaleString()}`;
+    
+    if (remaining >= 0) {
+        remainingElement.className = 'remaining-amount remaining-positive';
+        statusElement.textContent = 'Remaining Budget - Great job! 🎉';
+    } else {
+        remainingElement.className = 'remaining-amount remaining-negative';
+        statusElement.textContent = 'Over Budget - Need to cut expenses! ⚠️';
+    }
+}
+
+function resetBudgetGame() {
+    document.getElementById('housing-slider').value = 15000;
+    document.getElementById('food-slider').value = 8000;
+    document.getElementById('transport-slider').value = 5000;
+    document.getElementById('entertainment-slider').value = 3000;
+    document.getElementById('savings-slider').value = 10000;
+    document.getElementById('misc-slider').value = 4000;
+    updateBudget();
+}
+
+// Risk Assessment Quiz
+function initializeRiskQuiz() {
+    currentQuiz = [
+        {
+            question: "What is the primary risk of investing in equity stocks?",
+            options: [
+                "Market volatility and price fluctuations",
+                "Guaranteed losses",
+                "No liquidity",
+                "Fixed returns"
+            ],
+            correct: 0,
+            explanation: "Equity stocks are subject to market volatility, meaning their prices can fluctuate significantly based on market conditions."
+        },
+        {
+            question: "Which investment typically has the lowest risk?",
+            options: [
+                "Small-cap stocks",
+                "Government bonds",
+                "Cryptocurrency",
+                "Commodity futures"
+            ],
+            correct: 1,
+            explanation: "Government bonds are considered low-risk investments as they are backed by the government's ability to repay."
+        },
+        {
+            question: "What is diversification in investing?",
+            options: [
+                "Putting all money in one stock",
+                "Spreading investments across different assets",
+                "Only investing in safe assets",
+                "Avoiding all investments"
+            ],
+            correct: 1,
+            explanation: "Diversification means spreading your investments across different asset classes to reduce overall portfolio risk."
+        },
+        {
+            question: "What does 'high risk, high reward' mean?",
+            options: [
+                "Safe investments give better returns",
+                "Risky investments can provide higher potential returns",
+                "All investments are equally risky",
+                "Risk has no relation to returns"
+            ],
+            correct: 1,
+            explanation: "Generally, investments with higher potential returns also come with higher risk of losses."
+        },
+        {
+            question: "What is inflation risk?",
+            options: [
+                "Risk of prices going down",
+                "Risk of losing purchasing power over time",
+                "Risk of interest rates falling",
+                "Risk of market crash"
+            ],
+            correct: 1,
+            explanation: "Inflation risk is the risk that the value of your investments won't keep up with rising prices, reducing your purchasing power."
+        }
+    ];
+    
+    currentQuestionIndex = 0;
+    score = 0;
+    displayQuestion();
+}
+
+// Financial IQ Quiz
+function initializeFinanceQuiz() {
+    currentQuiz = [
+        {
+            question: "What is the Rule of 72?",
+            options: [
+                "A tax rule for senior citizens",
+                "Formula to estimate how long it takes to double your money",
+                "Maximum age for insurance",
+                "Retirement planning guideline"
+            ],
+            correct: 1,
+            explanation: "The Rule of 72 helps estimate how many years it takes to double your investment by dividing 72 by the annual interest rate."
+        },
+        {
+            question: "What is an Emergency Fund?",
+            options: [
+                "Money for vacations",
+                "Investment in high-risk assets",
+                "3-6 months of expenses saved for emergencies",
+                "Life insurance policy"
+            ],
+            correct: 2,
+            explanation: "An emergency fund should cover 3-6 months of living expenses and be easily accessible for unexpected situations."
+        },
+        {
+            question: "What is Asset Allocation?",
+            options: [
+                "Buying only one type of investment",
+                "Distributing investments across different asset classes",
+                "Selling all investments",
+                "Keeping money only in savings account"
+            ],
+            correct: 1,
+            explanation: "Asset allocation involves distributing your investments among different asset categories like stocks, bonds, and cash."
+        },
+        {
+            question: "What is a Credit Score?",
+            options: [
+                "Your investment portfolio value",
+                "Number representing your creditworthiness",
+                "Bank account balance",
+                "Annual income amount"
+            ],
+            correct: 1,
+            explanation: "A credit score is a numerical representation of your creditworthiness, affecting loan approvals and interest rates."
+        },
+        {
+            question: "What is Dollar Cost Averaging (SIP equivalent)?",
+            options: [
+                "Investing a large amount at once",
+                "Investing fixed amounts regularly regardless of market conditions",
+                "Only investing when markets are down",
+                "Avoiding market investments completely"
+            ],
+            correct: 1,
+            explanation: "Dollar Cost Averaging (or SIP) involves investing fixed amounts regularly, which helps reduce the impact of market volatility."
+        }
+    ];
+    
+    currentQuestionIndex = 0;
+    score = 0;
+    displayFinanceQuestion();
+}
+
+function displayQuestion() {
+    const quizContent = document.getElementById('quiz-content');
+    const question = currentQuiz[currentQuestionIndex];
+    
+    quizContent.innerHTML = `
+        <div class="question-card fade-in">
+            <div class="question-text">Question ${currentQuestionIndex + 1} of ${currentQuiz.length}</div>
+            <div class="question-text">${question.question}</div>
+            <div class="quiz-options">
+                ${question.options.map((option, index) => `
+                    <div class="quiz-option" onclick="selectAnswer(${index})" data-index="${index}">
+                        ${option}
+                    </div>
+                `).join('')}
+            </div>
+            <div id="question-feedback" style="display: none; margin-top: 20px; padding: 15px; border-radius: 8px;"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="next-btn" onclick="nextQuestion()" style="display: none;">Next Question</button>
+            </div>
+        </div>
+    `;
+}
+
+function displayFinanceQuestion() {
+    const quizContent = document.getElementById('finance-quiz-content');
+    const question = currentQuiz[currentQuestionIndex];
+    
+    quizContent.innerHTML = `
+        <div class="question-card fade-in">
+            <div class="question-text">Question ${currentQuestionIndex + 1} of ${currentQuiz.length}</div>
+            <div class="question-text">${question.question}</div>
+            <div class="quiz-options">
+                ${question.options.map((option, index) => `
+                    <div class="quiz-option" onclick="selectFinanceAnswer(${index})" data-index="${index}">
+                        ${option}
+                    </div>
+                `).join('')}
+            </div>
+            <div id="finance-question-feedback" style="display: none; margin-top: 20px; padding: 15px; border-radius: 8px;"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="next-btn" onclick="nextFinanceQuestion()" style="display: none;">Next Question</button>
+            </div>
+        </div>
+    `;
+}
+
+function selectAnswer(selectedIndex) {
+    const question = currentQuiz[currentQuestionIndex];
+    const options = document.querySelectorAll('.quiz-option');
+    const feedback = document.getElementById('question-feedback');
+    
+    options.forEach((option, index) => {
+        option.onclick = null; // Disable further clicks
+        if (index === question.correct) {
+            option.classList.add('correct');
+        } else if (index === selectedIndex) {
+            option.classList.add('incorrect');
+        }
+    });
+    
+    if (selectedIndex === question.correct) {
+        score++;
+        feedback.style.background = '#c6f6d5';
+        feedback.style.color = '#276749';
+        feedback.innerHTML = `✅ Correct! ${question.explanation}`;
+    } else {
+        feedback.style.background = '#fed7d7';
+        feedback.style.color = '#c53030';
+        feedback.innerHTML = `❌ Incorrect. ${question.explanation}`;
+    }
+    
+    feedback.style.display = 'block';
+    document.querySelector('.next-btn').style.display = 'inline-block';
+}
+
+function selectFinanceAnswer(selectedIndex) {
+    const question = currentQuiz[currentQuestionIndex];
+    const options = document.querySelectorAll('.quiz-option');
+    const feedback = document.getElementById('finance-question-feedback');
+    
+    options.forEach((option, index) => {
+        option.onclick = null; // Disable further clicks
+        if (index === question.correct) {
+            option.classList.add('correct');
+        } else if (index === selectedIndex) {
+            option.classList.add('incorrect');
+        }
+    });
+    
+    if (selectedIndex === question.correct) {
+        score++;
+        feedback.style.background = '#c6f6d5';
+        feedback.style.color = '#276749';
+        feedback.innerHTML = `✅ Correct! ${question.explanation}`;
+    } else {
+        feedback.style.background = '#fed7d7';
+        feedback.style.color = '#c53030';
+        feedback.innerHTML = `❌ Incorrect. ${question.explanation}`;
+    }
+    
+    feedback.style.display = 'block';
+    document.querySelector('.next-btn').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuiz.length) {
+        displayQuestion();
+    } else {
+        showQuizResults();
+    }
+}
+
+function nextFinanceQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuiz.length) {
+        displayFinanceQuestion();
+    } else {
+        showFinanceQuizResults();
+    }
+}
+
+function showQuizResults() {
+    const quizContent = document.getElementById('quiz-content');
+    const percentage = Math.round((score / currentQuiz.length) * 100);
+    
+    let message = '';
+    if (percentage >= 80) {
+        message = 'Excellent! You have a great understanding of investment risks! 🏆';
+    } else if (percentage >= 60) {
+        message = 'Good job! You have a solid foundation, but there\'s room for improvement. 👍';
+    } else {
+        message = 'Keep learning! Consider reading more about investment risks and strategies. 📚';
+    }
+    
+    quizContent.innerHTML = `
+        <div class="quiz-score fade-in">
+            <h3>Quiz Complete!</h3>
+            <div class="score-number">${score}/${currentQuiz.length}</div>
+            <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 15px;">${percentage}%</div>
+            <p>${message}</p>
+            <button class="restart-btn" onclick="initializeRiskQuiz()">Retake Quiz</button>
+        </div>
+    `;
+}
+
+function showFinanceQuizResults() {
+    const quizContent = document.getElementById('finance-quiz-content');
+    const percentage = Math.round((score / currentQuiz.length) * 100);
+    
+    let message = '';
+    if (percentage >= 80) {
+        message = 'Outstanding! You have excellent financial knowledge! 🧠✨';
+    } else if (percentage >= 60) {
+        message = 'Well done! Your financial IQ is above average. Keep learning! 💪';
+    } else {
+        message = 'Good start! Focus on building your financial literacy fundamentals. 📖';
+    }
+    
+    quizContent.innerHTML = `
+        <div class="quiz-score fade-in">
+            <h3>Financial IQ Test Complete!</h3>
+            <div class="score-number">${score}/${currentQuiz.length}</div>
+            <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 15px;">${percentage}%</div>
+            <p>${message}</p>
+            <button class="restart-btn" onclick="initializeFinanceQuiz()">Retake Quiz</button>
+        </div>
+    `;
+}
+
+// SIP vs Lumpsum Comparison
+function compareInvestments() {
+    const totalAmount = parseFloat(document.getElementById('investment-amount').value);
+    const years = parseInt(document.getElementById('comparison-period').value);
+    const scenario = document.getElementById('market-scenario').value;
+    
+    let returns = [];
+    switch(scenario) {
+        case 'steady':
+            returns = Array(years).fill(0.12);
+            break;
+        case 'volatile':
+            returns = [0.16, 0.08, 0.14, 0.06, 0.18, 0.10, 0.12, 0.08, 0.15, 0.11].slice(0, years);
+            break;
+        case 'bearish':
+            returns = [0.05, 0.07, 0.09, 0.11, 0.13, 0.15, 0.14, 0.13, 0.12, 0.12].slice(0, years);
+            break;
+        case 'bullish':
+            returns = [0.15, 0.14, 0.13, 0.12, 0.11, 0.10, 0.09, 0.08, 0.08, 0.08].slice(0, years);
+            break;
+    }
+    
+    // Lumpsum calculation
+    let lumpSumValue = totalAmount;
+    for (let i = 0; i < years; i++) {
+        lumpSumValue *= (1 + returns[i % returns.length]);
+    }
+    
+    // SIP calculation
+    const monthlyAmount = totalAmount / (years * 12);
+    let sipValue = 0;
+    for (let year = 0; year < years; year++) {
+        for (let month = 0; month < 12; month++) {
+            let monthlyReturn = returns[year % returns.length] / 12;
+            let remainingMonths = (years * 12) - (year * 12 + month);
+            sipValue += monthlyAmount * Math.pow(1 + monthlyReturn, remainingMonths);
+        }
+    }
+    
+    // Display results
+    document.getElementById('sip-result').textContent = `₹${Math.round(sipValue).toLocaleString()}`;
+    document.getElementById('lumpsum-result').textContent = `₹${Math.round(lumpSumValue).toLocaleString()}`;
+    
+    const winner = sipValue > lumpSumValue ? 'SIP' : 'Lumpsum';
+    const difference = Math.abs(sipValue - lumpSumValue);
+    document.getElementById('winner').textContent = winner;
+    
+    let explanation = '';
+    if (scenario === 'volatile' || scenario === 'bearish') {
+        explanation = 'SIP often performs better in volatile or declining markets due to rupee cost averaging.';
+    } else {
+        explanation = 'Lumpsum typically performs better in steadily rising markets as more money is invested earlier.';
+    }
+    
+    document.getElementById('strategy-explanation').innerHTML = `
+        <div style="margin-top: 20px; padding: 15px; background: #f7fafc; border-radius: 8px;">
+            <strong>Analysis:</strong> ${explanation}<br>
+            <strong>Difference:</strong> ₹${Math.round(difference).toLocaleString()}
+        </div>
+    `;
+    
+    document.getElementById('comparison-result').style.display = 'block';
+    document.getElementById('comparison-result').classList.add('fade-in');
+}
+
+// Inflation Impact Calculator
+function calculateInflationImpact() {
+    const currentMoney = parseFloat(document.getElementById('current-money').value);
+    const inflationRate = parseFloat(document.getElementById('inflation-rate').value) / 100;
+    const years = parseInt(document.getElementById('time-period').value);
+    
+    const futurePurchasingPower = currentMoney / Math.pow(1 + inflationRate, years);
+    const valueLost = currentMoney - futurePurchasingPower;
+    const neededToEarn = currentMoney * Math.pow(1 + inflationRate, years);
+    
+    document.getElementById('purchasing-power').textContent = `₹${Math.round(futurePurchasingPower).toLocaleString()}`;
+    document.getElementById('value-lost').textContent = `₹${Math.round(valueLost).toLocaleString()}`;
+    document.getElementById('inflation-protection').textContent = `₹${Math.round(neededToEarn).toLocaleString()}`;
+    
+    document.getElementById('inflation-result').style.display = 'block';
+    document.getElementById('inflation-result').classList.add('fade-in');
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target.classList.contains('game-modal')) {
+        closeGame();
+    }
+}
+
+// Initialize budget game on page load
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded - Mini Games page');
+    console.log('Available modals:', document.querySelectorAll('.game-modal').length);
+    updateBudget();
+    
+    // Add debugging for all modal IDs
+    const modalIds = ['compound-interest-modal', 'budget-game-modal', 'risk-quiz-modal', 
+                     'sip-comparison-modal', 'inflation-game-modal', 'finance-quiz-modal'];
+    modalIds.forEach(id => {
+        const modal = document.getElementById(id);
+        console.log(`Modal ${id}:`, modal ? 'found' : 'NOT FOUND');
+    });
+});
+</script>
+{% endblock %}

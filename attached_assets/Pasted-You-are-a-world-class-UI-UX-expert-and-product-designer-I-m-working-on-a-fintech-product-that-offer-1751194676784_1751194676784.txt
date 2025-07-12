@@ -1,0 +1,40 @@
+You are a world-class UI/UX expert and product designer. I'm working on a fintech product that offers SIPs, investment advisory, and modern portfolio tools — but the current **UI and UX are not engaging or educational**. It lacks visual storytelling, intuitive flow, and clarity for new investors.
+
+🎯 TASK: 
+1. First, **critically audit** the existing UI/UX — it feels flat, generic, and not tailored to retail investors.
+2. Then, design a **step-by-step educational walkthrough overlay** with animation or visual support (Lottie or React animations) that explains the **importance of financial planning**.
+
+📋 Walkthrough Structure (Each step = one slide/page with animation & copy):
+---
+**Step 1: Why Investing Is Important**
+- Talk about wealth creation, future goals, compounding
+- Visual idea: a person walking from "salary" to "goals achieved"
+- Tagline: "Your money shouldn’t sleep — it should grow."
+
+**Step 2: Why SIPs Matter**
+- Explain rupee cost averaging, long-term habit, volatility management
+- Visual: monthly drops filling a growing plant pot
+- Tagline: "Discipline beats timing."
+
+**Step 3: Why Understanding Inflation Is Critical**
+- Show how ₹100 today ≠ ₹100 in 10 years
+- Visual: same basket of groceries shrinking in quantity over time
+- Tagline: "If your money isn’t growing, it’s shrinking."
+
+**Step 4: Why AIFs Are the Unexplored Game-Changer**
+- Briefly show how AIFs are used by HNIs, offer higher alpha, are less crowded
+- Visual: a treasure map showing “Mutual Funds” vs “AIFs” with lockbox
+- Tagline: "Alternate is not optional — it’s smart."
+
+🎨 Design Guidelines:
+- Use modern, mobile-first UI (Next.js + Tailwind or shadcn/ui)
+- Support dark/light mode
+- Animations via Lottie or Framer Motion
+- Keep each step dismissible, with "Next" and "Skip"
+
+🎁 Outcome:
+- Fully styled React component walkthrough
+- Optional: trigger on first login using `localStorage` flag
+- Fully reusable and responsive
+
+My current UI does **not communicate these educational ideas well**, and feels too static. Please reimagine it for maximum onboarding value.

@@ -1,0 +1,1926 @@
+<!-- Enhanced Form Components - Multi-step & Conversion Optimized -->
+
+<!-- Multi-Step Lead Capture Form -->
+<div class="enhanced-form-container" id="lead-form-container">
+    <form class="multi-step-form" id="enhanced-lead-form" action="{{ url_for('contact') }}" method="POST">
+        {{ form.hidden_tag() if form }}
+        
+        <!-- Progress Indicator -->
+        <div class="form-progress-container">
+            <div class="form-progress-header">
+                <h3 class="form-title">Start Your Wealth Journey</h3>
+                <p class="form-subtitle">Get personalized investment recommendations in 3 simple steps</p>
+            </div>
+            
+            <div class="progress-indicator">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-steps">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-circle">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="step-label">Personal Info</span>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-circle">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <span class="step-label">Investment Goals</span>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-circle">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <span class="step-label">Get Started</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Step 1: Personal Information -->
+        <div class="form-step active" data-step="1">
+            <div class="step-header">
+                <h4>Tell us about yourself</h4>
+                <p>We'll use this information to create your personalized investment plan</p>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group-enhanced">
+                    <input type="text" 
+                           class="form-control-enhanced" 
+                           id="name" 
+                           name="name" 
+                           placeholder=" " 
+                           required 
+                           data-validation="name">
+                    <label class="form-label-floating" for="name">Full Name *</label>
+                    <div class="validation-message"></div>
+                </div>
+                
+                <div class="form-group-enhanced">
+                    <input type="email" 
+                           class="form-control-enhanced" 
+                           id="email" 
+                           name="email" 
+                           placeholder=" " 
+                           required 
+                           data-validation="email">
+                    <label class="form-label-floating" for="email">Email Address *</label>
+                    <div class="validation-message"></div>
+                    <div class="form-help">We'll send your investment report here</div>
+                </div>
+                
+                <div class="form-group-enhanced">
+                    <input type="tel" 
+                           class="form-control-enhanced" 
+                           id="phone" 
+                           name="phone" 
+                           placeholder=" " 
+                           required 
+                           data-validation="phone">
+                    <label class="form-label-floating" for="phone">Mobile Number *</label>
+                    <div class="validation-message"></div>
+                    <div class="form-help">For important updates only</div>
+                </div>
+                
+                <div class="form-group-enhanced">
+                    <select class="form-control-enhanced" 
+                            id="age_group" 
+                            name="age_group" 
+                            required>
+                        <option value="">Select Age Group</option>
+                        <option value="18-25">18-25 years</option>
+                        <option value="26-35">26-35 years</option>
+                        <option value="36-45">36-45 years</option>
+                        <option value="46-55">46-55 years</option>
+                        <option value="55+">Above 55 years</option>
+                    </select>
+                    <label class="form-label-floating" for="age_group">Age Group *</label>
+                    <div class="validation-message"></div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn-form-next" onclick="nextStep()">
+                    <span>Continue</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Investment Goals -->
+        <div class="form-step" data-step="2">
+            <div class="step-header">
+                <h4>What are your investment goals?</h4>
+                <p>Help us understand your financial objectives to recommend the best strategy</p>
+            </div>
+            
+            <div class="goal-selection">
+                <div class="goal-grid">
+                    <label class="goal-option">
+                        <input type="checkbox" name="goals" value="wealth-creation">
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h5>Wealth Creation</h5>
+                            <p>Long-term growth for financial freedom</p>
+                        </div>
+                    </label>
+                    
+                    <label class="goal-option">
+                        <input type="checkbox" name="goals" value="retirement-planning">
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <h5>Retirement Planning</h5>
+                            <p>Secure your golden years</p>
+                        </div>
+                    </label>
+                    
+                    <label class="goal-option">
+                        <input type="checkbox" name="goals" value="child-education">
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h5>Child Education</h5>
+                            <p>Fund your child's bright future</p>
+                        </div>
+                    </label>
+                    
+                    <label class="goal-option">
+                        <input type="checkbox" name="goals" value="tax-saving">
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h5>Tax Saving</h5>
+                            <p>Optimize tax liabilities legally</p>
+                        </div>
+                    </label>
+                    
+                    <label class="goal-option">
+                        <input type="checkbox" name="goals" value="emergency-fund">
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h5>Emergency Fund</h5>
+                            <p>Build financial safety net</p>
+                        </div>
+                    </label>
+                    
+                    <label class="goal-option">
+                        <input type="checkbox" name="goals" value="home-purchase">
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h5>Home Purchase</h5>
+                            <p>Achieve homeownership dreams</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="investment-details">
+                <div class="form-grid">
+                    <div class="form-group-enhanced">
+                        <div class="amount-slider-container">
+                            <label class="form-label-enhanced">Monthly Investment Capacity</label>
+                            <div class="slider-wrapper">
+                                <input type="range" 
+                                       class="amount-slider" 
+                                       id="monthly_amount" 
+                                       name="monthly_amount" 
+                                       min="1000" 
+                                       max="100000" 
+                                       value="10000" 
+                                       step="1000">
+                                <div class="slider-value">
+                                    ₹<span id="monthly_amount_display">10,000</span>/month
+                                </div>
+                            </div>
+                            <div class="slider-markers">
+                                <span>₹1K</span>
+                                <span>₹25K</span>
+                                <span>₹50K</span>
+                                <span>₹75K</span>
+                                <span>₹1L</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group-enhanced">
+                        <label class="form-label-enhanced">Risk Tolerance</label>
+                        <div class="risk-options">
+                            <label class="risk-option">
+                                <input type="radio" name="risk_tolerance" value="conservative" required>
+                                <div class="risk-card conservative">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Conservative</span>
+                                    <small>8-10% returns</small>
+                                </div>
+                            </label>
+                            <label class="risk-option">
+                                <input type="radio" name="risk_tolerance" value="moderate" required>
+                                <div class="risk-card moderate">
+                                    <i class="fas fa-balance-scale"></i>
+                                    <span>Moderate</span>
+                                    <small>10-12% returns</small>
+                                </div>
+                            </label>
+                            <label class="risk-option">
+                                <input type="radio" name="risk_tolerance" value="aggressive" required>
+                                <div class="risk-card aggressive">
+                                    <i class="fas fa-rocket"></i>
+                                    <span>Aggressive</span>
+                                    <small>12-15% returns</small>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn-form-back" onclick="previousStep()">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </button>
+                <button type="button" class="btn-form-next" onclick="nextStep()">
+                    <span>Continue</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Get Started -->
+        <div class="form-step" data-step="3">
+            <div class="step-header">
+                <h4>You're all set! 🎉</h4>
+                <p>Here's your personalized investment recommendation</p>
+            </div>
+            
+            <!-- Personalized Recommendation Preview -->
+            <div class="recommendation-preview" id="recommendation-preview">
+                <div class="recommendation-card">
+                    <div class="recommendation-header">
+                        <div class="recommendation-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="recommendation-title">
+                            <h5>Recommended Portfolio</h5>
+                            <p>Based on your goals and risk profile</p>
+                        </div>
+                        <div class="expected-return">
+                            <span class="return-percentage" id="expected-return">12.5%</span>
+                            <span class="return-label">Expected Annual Return</span>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-allocation">
+                        <div class="allocation-chart">
+                            <canvas id="allocation-chart" width="200" height="200"></canvas>
+                        </div>
+                        <div class="allocation-details">
+                            <div class="allocation-item">
+                                <div class="allocation-color equity"></div>
+                                <span class="allocation-name">Equity Funds</span>
+                                <span class="allocation-percentage" id="equity-allocation">60%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <div class="allocation-color debt"></div>
+                                <span class="allocation-name">Debt Funds</span>
+                                <span class="allocation-percentage" id="debt-allocation">30%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <div class="allocation-color hybrid"></div>
+                                <span class="allocation-name">Hybrid Funds</span>
+                                <span class="allocation-percentage" id="hybrid-allocation">10%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="projection-summary">
+                        <div class="projection-item">
+                            <span class="projection-label">In 10 Years</span>
+                            <span class="projection-value" id="projection-10y">₹32,45,000</span>
+                        </div>
+                        <div class="projection-item">
+                            <span class="projection-label">Total Investment</span>
+                            <span class="projection-value" id="total-investment">₹12,00,000</span>
+                        </div>
+                        <div class="projection-item">
+                            <span class="projection-label">Wealth Gain</span>
+                            <span class="projection-value gain" id="wealth-gain">₹20,45,000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trust Reassurance -->
+                <div class="trust-reassurance">
+                    <div class="trust-points">
+                        <div class="trust-point">
+                            <i class="fas fa-shield-check"></i>
+                            <span>AMFI Registered Advisory</span>
+                        </div>
+                        <div class="trust-point">
+                            <i class="fas fa-lock"></i>
+                            <span>Your data is secure</span>
+                        </div>
+                        <div class="trust-point">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>Free consultation included</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Preferences -->
+            <div class="contact-preferences">
+                <h5>How would you like us to contact you?</h5>
+                <div class="contact-options">
+                    <label class="contact-option">
+                        <input type="radio" name="contact_preference" value="call" checked>
+                        <div class="contact-card">
+                            <i class="fas fa-phone"></i>
+                            <span>Call Me</span>
+                            <small>Within 2 hours</small>
+                        </div>
+                    </label>
+                    <label class="contact-option">
+                        <input type="radio" name="contact_preference" value="whatsapp">
+                        <div class="contact-card">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                            <small>Instant message</small>
+                        </div>
+                    </label>
+                    <label class="contact-option">
+                        <input type="radio" name="contact_preference" value="email">
+                        <div class="contact-card">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email</span>
+                            <small>Detailed report</small>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn-form-back" onclick="previousStep()">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </button>
+                <button type="submit" class="btn-form-submit" id="submit-btn">
+                    <span class="btn-text">Get My Free Consultation</span>
+                    <span class="btn-subtext">Start building wealth today</span>
+                    <i class="fas fa-rocket"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Loading Overlay -->
+        <div class="form-loading" id="form-loading">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h4>Creating your personalized plan...</h4>
+                <p>This will just take a moment</p>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Enhanced Quick Contact Widget -->
+<div class="quick-contact-widget" id="quick-contact-widget">
+    <div class="widget-trigger" onclick="toggleQuickContact()">
+        <i class="fas fa-comments"></i>
+        <span>Quick Help</span>
+    </div>
+    
+    <div class="widget-content" id="widget-content">
+        <div class="widget-header">
+            <h4>Need Quick Help?</h4>
+            <button class="widget-close" onclick="toggleQuickContact()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="widget-body">
+            <div class="quick-options">
+                <a href="tel:+918123456789" class="quick-option call">
+                    <i class="fas fa-phone"></i>
+                    <div class="option-content">
+                        <span class="option-title">Call Now</span>
+                        <span class="option-subtitle">Speak to expert</span>
+                    </div>
+                </a>
+                
+                <a href="https://wa.me/918123456789" class="quick-option whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <div class="option-content">
+                        <span class="option-title">WhatsApp</span>
+                        <span class="option-subtitle">Instant chat</span>
+                    </div>
+                </a>
+                
+                <button class="quick-option callback" onclick="requestCallback()">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="option-content">
+                        <span class="option-title">Request Callback</span>
+                        <span class="option-subtitle">We'll call you</span>
+                    </div>
+                </button>
+            </div>
+            
+            <div class="widget-footer">
+                <div class="advisor-info">
+                    <div class="advisor-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="advisor-details">
+                        <span class="advisor-name">Priya Sharma</span>
+                        <span class="advisor-title">Senior Investment Advisor</span>
+                        <div class="advisor-status online">
+                            <span class="status-dot"></span>
+                            <span>Online now</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Enhanced Form Styles */
+.enhanced-form-container {
+    max-width: 800px;
+    margin: var(--space-12) auto;
+    padding: var(--space-8);
+    background: white;
+    border-radius: var(--radius-3xl);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--neutral-200);
+    position: relative;
+}
+
+.multi-step-form {
+    position: relative;
+}
+
+/* Progress Indicator */
+.form-progress-container {
+    margin-bottom: var(--space-10);
+    text-align: center;
+}
+
+.form-progress-header {
+    margin-bottom: var(--space-8);
+}
+
+.form-title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--trust-primary);
+    margin-bottom: var(--space-2);
+}
+
+.form-subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-600);
+    margin: 0;
+}
+
+.progress-indicator {
+    margin-bottom: var(--space-8);
+}
+
+.progress-bar {
+    height: 4px;
+    background: var(--neutral-200);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-6);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--growth-gradient);
+    border-radius: var(--radius-full);
+    transition: width 0.5s ease;
+    width: 33.33%;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    flex: 1;
+    position: relative;
+}
+
+.step-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--neutral-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neutral-500);
+    font-size: var(--text-lg);
+    transition: all var(--transition-base);
+    position: relative;
+    z-index: 2;
+}
+
+.progress-step.active .step-circle {
+    background: var(--growth-gradient);
+    color: white;
+    transform: scale(1.1);
+}
+
+.progress-step.completed .step-circle {
+    background: var(--success);
+    color: white;
+}
+
+.step-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--neutral-600);
+    transition: color var(--transition-base);
+}
+
+.progress-step.active .step-label {
+    color: var(--growth-primary);
+}
+
+/* Form Steps */
+.form-step {
+    display: none;
+    animation: fadeInSlide 0.5s ease-in-out;
+}
+
+.form-step.active {
+    display: block;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.step-header h4 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-900);
+    margin-bottom: var(--space-2);
+}
+
+.step-header p {
+    font-size: var(--text-base);
+    color: var(--neutral-600);
+    margin: 0;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+}
+
+/* Enhanced Form Controls */
+.form-group-enhanced {
+    position: relative;
+    margin-bottom: var(--space-6);
+}
+
+.form-control-enhanced {
+    width: 100%;
+    padding: var(--space-4) var(--space-4);
+    border: 2px solid var(--neutral-300);
+    border-radius: var(--radius-xl);
+    font-size: var(--text-base);
+    font-family: var(--font-primary);
+    background: white;
+    transition: all var(--transition-base);
+    min-height: 56px;
+}
+
+.form-control-enhanced:focus {
+    outline: none;
+    border-color: var(--growth-primary);
+    box-shadow: 0 0 0 3px rgba(0, 166, 237, 0.1);
+    background: var(--neutral-50);
+}
+
+.form-control-enhanced:invalid {
+    border-color: var(--error);
+}
+
+.form-control-enhanced:valid {
+    border-color: var(--success);
+}
+
+.form-label-floating {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--text-base);
+    color: var(--neutral-500);
+    pointer-events: none;
+    transition: all var(--transition-base);
+    background: white;
+    padding: 0 var(--space-2);
+}
+
+.form-control-enhanced:focus + .form-label-floating,
+.form-control-enhanced:not(:placeholder-shown) + .form-label-floating {
+    top: 0;
+    font-size: var(--text-sm);
+    color: var(--growth-primary);
+    font-weight: var(--font-medium);
+}
+
+.form-help {
+    font-size: var(--text-xs);
+    color: var(--neutral-500);
+    margin-top: var(--space-1);
+    padding-left: var(--space-4);
+}
+
+.validation-message {
+    font-size: var(--text-xs);
+    color: var(--error);
+    margin-top: var(--space-1);
+    padding-left: var(--space-4);
+    min-height: 16px;
+}
+
+/* Goal Selection */
+.goal-selection {
+    margin-bottom: var(--space-8);
+}
+
+.goal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+}
+
+.goal-option {
+    cursor: pointer;
+}
+
+.goal-option input[type="checkbox"] {
+    display: none;
+}
+
+.goal-card {
+    padding: var(--space-6);
+    border: 2px solid var(--neutral-200);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    transition: all var(--transition-base);
+    background: white;
+    height: 100%;
+}
+
+.goal-card:hover {
+    border-color: var(--growth-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.goal-option input:checked + .goal-card {
+    border-color: var(--growth-primary);
+    background: var(--growth-light);
+    color: white;
+}
+
+.goal-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--growth-light);
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    font-size: var(--text-2xl);
+    color: var(--growth-primary);
+    transition: all var(--transition-base);
+}
+
+.goal-option input:checked + .goal-card .goal-icon {
+    background: white;
+    color: var(--growth-primary);
+}
+
+.goal-card h5 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-2);
+    color: var(--neutral-800);
+}
+
+.goal-option input:checked + .goal-card h5 {
+    color: white;
+}
+
+.goal-card p {
+    font-size: var(--text-sm);
+    color: var(--neutral-600);
+    margin: 0;
+}
+
+.goal-option input:checked + .goal-card p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Amount Slider */
+.amount-slider-container {
+    margin-bottom: var(--space-6);
+}
+
+.form-label-enhanced {
+    display: block;
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--neutral-700);
+    margin-bottom: var(--space-4);
+}
+
+.slider-wrapper {
+    position: relative;
+    margin-bottom: var(--space-3);
+}
+
+.amount-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--neutral-200);
+    outline: none;
+    appearance: none;
+}
+
+.amount-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--growth-gradient);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+}
+
+.amount-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--growth-gradient);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow-md);
+}
+
+.slider-value {
+    text-align: center;
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--growth-primary);
+    margin-top: var(--space-3);
+}
+
+.slider-markers {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    color: var(--neutral-500);
+    margin-top: var(--space-2);
+}
+
+/* Risk Options */
+.risk-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--space-4);
+}
+
+.risk-option {
+    cursor: pointer;
+}
+
+.risk-option input[type="radio"] {
+    display: none;
+}
+
+.risk-card {
+    padding: var(--space-4);
+    border: 2px solid var(--neutral-200);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    transition: all var(--transition-base);
+    background: white;
+}
+
+.risk-card:hover {
+    border-color: var(--growth-primary);
+    transform: translateY(-2px);
+}
+
+.risk-option input:checked + .risk-card {
+    border-color: var(--growth-primary);
+    background: var(--growth-light);
+    color: white;
+}
+
+.risk-card.conservative {
+    border-color: var(--success);
+}
+
+.risk-option input:checked + .risk-card.conservative {
+    background: var(--success);
+}
+
+.risk-card.moderate {
+    border-color: var(--warning);
+}
+
+.risk-option input:checked + .risk-card.moderate {
+    background: var(--warning);
+}
+
+.risk-card.aggressive {
+    border-color: var(--error);
+}
+
+.risk-option input:checked + .risk-card.aggressive {
+    background: var(--error);
+}
+
+.risk-card i {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-2);
+}
+
+.risk-card span {
+    display: block;
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-1);
+}
+
+.risk-card small {
+    font-size: var(--text-xs);
+    opacity: 0.8;
+}
+
+/* Recommendation Preview */
+.recommendation-preview {
+    margin-bottom: var(--space-8);
+}
+
+.recommendation-card {
+    background: var(--neutral-50);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    border: 1px solid var(--neutral-200);
+}
+
+.recommendation-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+    flex-wrap: wrap;
+}
+
+.recommendation-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--growth-gradient);
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--text-2xl);
+}
+
+.recommendation-title {
+    flex: 1;
+}
+
+.recommendation-title h5 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin-bottom: var(--space-1);
+}
+
+.recommendation-title p {
+    font-size: var(--text-base);
+    color: var(--neutral-600);
+    margin: 0;
+}
+
+.expected-return {
+    text-align: center;
+}
+
+.return-percentage {
+    display: block;
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--success);
+}
+
+.return-label {
+    font-size: var(--text-sm);
+    color: var(--neutral-600);
+}
+
+.portfolio-allocation {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-8);
+    align-items: center;
+    margin-bottom: var(--space-8);
+}
+
+.allocation-chart {
+    position: relative;
+}
+
+.allocation-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.allocation-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.allocation-color {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-base);
+}
+
+.allocation-color.equity {
+    background: #3B82F6;
+}
+
+.allocation-color.debt {
+    background: #10B981;
+}
+
+.allocation-color.hybrid {
+    background: #F59E0B;
+}
+
+.allocation-name {
+    flex: 1;
+    font-size: var(--text-base);
+    color: var(--neutral-700);
+}
+
+.allocation-percentage {
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+}
+
+.projection-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-6);
+}
+
+.projection-item {
+    text-align: center;
+    padding: var(--space-4);
+    background: white;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--neutral-200);
+}
+
+.projection-label {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--neutral-600);
+    margin-bottom: var(--space-1);
+}
+
+.projection-value {
+    display: block;
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+}
+
+.projection-value.gain {
+    color: var(--success);
+}
+
+/* Trust Reassurance */
+.trust-reassurance {
+    margin-top: var(--space-8);
+}
+
+.trust-points {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+}
+
+.trust-point {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--success);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+}
+
+/* Contact Preferences */
+.contact-preferences {
+    margin-bottom: var(--space-8);
+}
+
+.contact-preferences h5 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin-bottom: var(--space-4);
+    text-align: center;
+}
+
+.contact-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+}
+
+.contact-option {
+    cursor: pointer;
+}
+
+.contact-option input[type="radio"] {
+    display: none;
+}
+
+.contact-card {
+    padding: var(--space-4);
+    border: 2px solid var(--neutral-200);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    transition: all var(--transition-base);
+    background: white;
+}
+
+.contact-card:hover {
+    border-color: var(--growth-primary);
+    transform: translateY(-2px);
+}
+
+.contact-option input:checked + .contact-card {
+    border-color: var(--growth-primary);
+    background: var(--growth-light);
+    color: white;
+}
+
+.contact-card i {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-2);
+    color: var(--growth-primary);
+}
+
+.contact-option input:checked + .contact-card i {
+    color: white;
+}
+
+.contact-card span {
+    display: block;
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-1);
+}
+
+.contact-card small {
+    font-size: var(--text-xs);
+    opacity: 0.8;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+    flex-wrap: wrap;
+}
+
+.btn-form-back,
+.btn-form-next,
+.btn-form-submit {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-xl);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-base);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    border: none;
+    cursor: pointer;
+    min-height: 56px;
+}
+
+.btn-form-back {
+    background: var(--neutral-100);
+    color: var(--neutral-700);
+    border: 1px solid var(--neutral-300);
+}
+
+.btn-form-back:hover {
+    background: var(--neutral-200);
+    transform: translateY(-2px);
+}
+
+.btn-form-next {
+    background: var(--growth-gradient);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-form-next:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-form-submit {
+    background: var(--wealth-gradient);
+    color: white;
+    box-shadow: var(--shadow-lg);
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-5) var(--space-8);
+    min-width: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-form-submit:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.btn-form-submit .btn-text {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+}
+
+.btn-form-submit .btn-subtext {
+    font-size: var(--text-sm);
+    opacity: 0.9;
+    font-weight: var(--font-normal);
+}
+
+/* Form Loading */
+.form-loading {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-3xl);
+    backdrop-filter: blur(4px);
+}
+
+.form-loading.active {
+    display: flex;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-content h4 {
+    font-size: var(--text-xl);
+    color: var(--neutral-800);
+    margin: var(--space-4) 0 var(--space-2);
+}
+
+.loading-content p {
+    font-size: var(--text-base);
+    color: var(--neutral-600);
+    margin: 0;
+}
+
+/* Quick Contact Widget */
+.quick-contact-widget {
+    position: fixed;
+    bottom: var(--space-24);
+    right: var(--space-6);
+    z-index: var(--z-fixed);
+}
+
+.widget-trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: var(--growth-gradient);
+    color: white;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-base);
+    font-weight: var(--font-medium);
+}
+
+.widget-trigger:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+.widget-content {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    width: 320px;
+    background: white;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--neutral-200);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all var(--transition-base);
+}
+
+.widget-content.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.widget-header h4 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin: 0;
+}
+
+.widget-close {
+    background: none;
+    border: none;
+    color: var(--neutral-500);
+    cursor: pointer;
+    padding: var(--space-1);
+    border-radius: var(--radius-base);
+    transition: all var(--transition-base);
+}
+
+.widget-close:hover {
+    background: var(--neutral-100);
+    color: var(--neutral-700);
+}
+
+.widget-body {
+    padding: var(--space-6);
+}
+
+.quick-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+}
+
+.quick-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    color: var(--neutral-700);
+    transition: all var(--transition-base);
+    background: white;
+    cursor: pointer;
+}
+
+.quick-option:hover {
+    border-color: var(--growth-primary);
+    background: var(--neutral-50);
+    transform: translateY(-1px);
+}
+
+.quick-option.call {
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.quick-option.whatsapp {
+    border-color: #25D366;
+    color: #25D366;
+}
+
+.quick-option.callback {
+    border-color: var(--warning);
+    color: var(--warning);
+}
+
+.quick-option i {
+    font-size: var(--text-xl);
+    width: 24px;
+    text-align: center;
+}
+
+.option-content {
+    flex: 1;
+}
+
+.option-title {
+    display: block;
+    font-weight: var(--font-semibold);
+    font-size: var(--text-base);
+}
+
+.option-subtitle {
+    display: block;
+    font-size: var(--text-sm);
+    opacity: 0.8;
+}
+
+.advisor-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--neutral-50);
+    border-radius: var(--radius-xl);
+}
+
+.advisor-avatar {
+    width: 48px;
+    height: 48px;
+    background: var(--growth-gradient);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--text-lg);
+}
+
+.advisor-details {
+    flex: 1;
+}
+
+.advisor-name {
+    display: block;
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    font-size: var(--text-base);
+}
+
+.advisor-title {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--neutral-600);
+    margin-bottom: var(--space-1);
+}
+
+.advisor-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--success);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: var(--radius-full);
+    animation: pulse 2s infinite;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .enhanced-form-container {
+        margin: var(--space-6) var(--space-4);
+        padding: var(--space-6);
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    
+    .goal-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: var(--space-3);
+    }
+    
+    .progress-steps {
+        gap: var(--space-2);
+    }
+    
+    .step-label {
+        font-size: var(--text-xs);
+    }
+    
+    .recommendation-header {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-4);
+    }
+    
+    .portfolio-allocation {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+        text-align: center;
+    }
+    
+    .projection-summary {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+    
+    .btn-form-back,
+    .btn-form-next,
+    .btn-form-submit {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .quick-contact-widget {
+        bottom: var(--space-20);
+        right: var(--space-4);
+    }
+    
+    .widget-content {
+        width: 280px;
+        right: -100px;
+    }
+    
+    .trust-points {
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+}
+
+@media (max-width: 480px) {
+    .enhanced-form-container {
+        margin: var(--space-4);
+        padding: var(--space-4);
+    }
+    
+    .form-title {
+        font-size: var(--text-2xl);
+    }
+    
+    .goal-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .risk-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-options {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+// Enhanced Form JavaScript
+let currentStep = 1;
+const totalSteps = 3;
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeForm();
+    setupValidation();
+    setupSlider();
+    updateRecommendation();
+});
+
+function initializeForm() {
+    updateProgressBar();
+    updateStepVisibility();
+}
+
+function nextStep() {
+    if (validateCurrentStep()) {
+        if (currentStep < totalSteps) {
+            currentStep++;
+            updateProgressBar();
+            updateStepVisibility();
+            updateStepIndicators();
+            
+            if (currentStep === 3) {
+                generateRecommendation();
+            }
+        }
+    }
+}
+
+function previousStep() {
+    if (currentStep > 1) {
+        currentStep--;
+        updateProgressBar();
+        updateStepVisibility();
+        updateStepIndicators();
+    }
+}
+
+function updateProgressBar() {
+    const progressFill = document.getElementById('progress-fill');
+    const percentage = (currentStep / totalSteps) * 100;
+    progressFill.style.width = percentage + '%';
+}
+
+function updateStepVisibility() {
+    document.querySelectorAll('.form-step').forEach(step => {
+        step.classList.remove('active');
+    });
+    
+    const activeStep = document.querySelector(`[data-step="${currentStep}"]`);
+    if (activeStep) {
+        activeStep.classList.add('active');
+    }
+}
+
+function updateStepIndicators() {
+    document.querySelectorAll('.progress-step').forEach((step, index) => {
+        step.classList.remove('active', 'completed');
+        
+        if (index + 1 === currentStep) {
+            step.classList.add('active');
+        } else if (index + 1 < currentStep) {
+            step.classList.add('completed');
+        }
+    });
+}
+
+function validateCurrentStep() {
+    const currentStepElement = document.querySelector(`[data-step="${currentStep}"]`);
+    const requiredFields = currentStepElement.querySelectorAll('[required]');
+    let isValid = true;
+    
+    requiredFields.forEach(field => {
+        if (!validateField(field)) {
+            isValid = false;
+        }
+    });
+    
+    // Additional step-specific validation
+    if (currentStep === 2) {
+        const goals = document.querySelectorAll('input[name="goals"]:checked');
+        if (goals.length === 0) {
+            showValidationMessage('Please select at least one investment goal');
+            isValid = false;
+        }
+    }
+    
+    return isValid;
+}
+
+function validateField(field) {
+    const value = field.value.trim();
+    const type = field.getAttribute('data-validation') || field.type;
+    let isValid = true;
+    let message = '';
+    
+    // Required field check
+    if (field.hasAttribute('required') && !value) {
+        isValid = false;
+        message = 'This field is required';
+    }
+    
+    // Type-specific validation
+    if (value && type) {
+        switch (type) {
+            case 'email':
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    isValid = false;
+                    message = 'Please enter a valid email address';
+                }
+                break;
+                
+            case 'phone':
+                const phoneRegex = /^[6-9]\d{9}$/;
+                if (!phoneRegex.test(value.replace(/\D/g, ''))) {
+                    isValid = false;
+                    message = 'Please enter a valid 10-digit mobile number';
+                }
+                break;
+                
+            case 'name':
+                if (value.length < 2) {
+                    isValid = false;
+                    message = 'Name must be at least 2 characters long';
+                }
+                break;
+        }
+    }
+    
+    // Update field appearance
+    const group = field.closest('.form-group-enhanced');
+    const messageElement = group?.querySelector('.validation-message');
+    
+    if (isValid) {
+        field.classList.remove('invalid');
+        field.classList.add('valid');
+        if (messageElement) messageElement.textContent = '';
+    } else {
+        field.classList.remove('valid');
+        field.classList.add('invalid');
+        if (messageElement) messageElement.textContent = message;
+    }
+    
+    return isValid;
+}
+
+function setupValidation() {
+    // Real-time validation
+    document.querySelectorAll('.form-control-enhanced').forEach(field => {
+        field.addEventListener('blur', () => validateField(field));
+        field.addEventListener('input', () => {
+            // Clear validation on input
+            field.classList.remove('invalid', 'valid');
+            const group = field.closest('.form-group-enhanced');
+            const messageElement = group?.querySelector('.validation-message');
+            if (messageElement) messageElement.textContent = '';
+        });
+    });
+}
+
+function setupSlider() {
+    const slider = document.getElementById('monthly_amount');
+    const display = document.getElementById('monthly_amount_display');
+    
+    if (slider && display) {
+        slider.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            display.textContent = formatIndianCurrency(value);
+            updateRecommendation();
+        });
+    }
+}
+
+function formatIndianCurrency(amount) {
+    return new Intl.NumberFormat('en-IN').format(amount);
+}
+
+function generateRecommendation() {
+    const monthlyAmount = parseInt(document.getElementById('monthly_amount')?.value || 10000);
+    const riskTolerance = document.querySelector('input[name="risk_tolerance"]:checked')?.value || 'moderate';
+    const ageGroup = document.getElementById('age_group')?.value || '26-35';
+    
+    // Calculate allocation based on risk and age
+    let equityPercent, debtPercent, hybridPercent, expectedReturn;
+    
+    switch (riskTolerance) {
+        case 'conservative':
+            equityPercent = 40;
+            debtPercent = 50;
+            hybridPercent = 10;
+            expectedReturn = 9.5;
+            break;
+        case 'aggressive':
+            equityPercent = 80;
+            debtPercent = 15;
+            hybridPercent = 5;
+            expectedReturn = 14.5;
+            break;
+        default: // moderate
+            equityPercent = 60;
+            debtPercent = 30;
+            hybridPercent = 10;
+            expectedReturn = 12.5;
+    }
+    
+    // Adjust for age
+    if (ageGroup === '18-25') {
+        equityPercent += 10;
+        debtPercent -= 10;
+        expectedReturn += 0.5;
+    } else if (ageGroup === '55+') {
+        equityPercent -= 15;
+        debtPercent += 15;
+        expectedReturn -= 1;
+    }
+    
+    // Update UI
+    document.getElementById('equity-allocation').textContent = equityPercent + '%';
+    document.getElementById('debt-allocation').textContent = debtPercent + '%';
+    document.getElementById('hybrid-allocation').textContent = hybridPercent + '%';
+    document.getElementById('expected-return').textContent = expectedReturn.toFixed(1) + '%';
+    
+    // Calculate projections
+    const totalInvestment = monthlyAmount * 12 * 10;
+    const futureValue = calculateSIP(monthlyAmount, expectedReturn, 10);
+    const wealthGain = futureValue - totalInvestment;
+    
+    document.getElementById('total-investment').textContent = '₹' + formatIndianCurrency(totalInvestment);
+    document.getElementById('projection-10y').textContent = '₹' + formatIndianCurrency(Math.round(futureValue));
+    document.getElementById('wealth-gain').textContent = '₹' + formatIndianCurrency(Math.round(wealthGain));
+    
+    // Update allocation chart
+    updateAllocationChart(equityPercent, debtPercent, hybridPercent);
+}
+
+function calculateSIP(monthly, rate, years) {
+    const monthlyRate = rate / 100 / 12;
+    const months = years * 12;
+    return monthly * (((1 + monthlyRate) ** months - 1) / monthlyRate) * (1 + monthlyRate);
+}
+
+function updateAllocationChart(equity, debt, hybrid) {
+    const canvas = document.getElementById('allocation-chart');
+    if (!canvas || !window.Chart) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Clear existing chart
+    if (window.allocationChart) {
+        window.allocationChart.destroy();
+    }
+    
+    window.allocationChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Equity Funds', 'Debt Funds', 'Hybrid Funds'],
+            datasets: [{
+                data: [equity, debt, hybrid],
+                backgroundColor: ['#3B82F6', '#10B981', '#F59E0B'],
+                borderWidth: 0,
+                cutout: '70%'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    borderColor: '#3B82F6',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function updateRecommendation() {
+    if (currentStep === 3) {
+        generateRecommendation();
+    }
+}
+
+function showValidationMessage(message) {
+    // Show a toast or alert with the validation message
+    const toast = document.createElement('div');
+    toast.className = 'validation-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// Form submission
+document.getElementById('enhanced-lead-form')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (!validateCurrentStep()) {
+        return;
+    }
+    
+    const loadingOverlay = document.getElementById('form-loading');
+    loadingOverlay.classList.add('active');
+    
+    // Simulate API call
+    setTimeout(() => {
+        loadingOverlay.classList.remove('active');
+        
+        // Show success message
+        showSuccessMessage();
+        
+        // Submit form data
+        this.submit();
+    }, 2000);
+});
+
+function showSuccessMessage() {
+    const successModal = document.createElement('div');
+    successModal.innerHTML = `
+        <div class="success-modal-overlay">
+            <div class="success-modal">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Thank You!</h3>
+                <p>Your investment plan has been created. Our advisor will contact you within 2 hours.</p>
+                <button onclick="this.closest('.success-modal-overlay').remove()" class="btn-primary-enhanced">
+                    Got it!
+                </button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(successModal);
+}
+
+// Quick Contact Widget
+function toggleQuickContact() {
+    const content = document.getElementById('widget-content');
+    content.classList.toggle('active');
+}
+
+function requestCallback() {
+    // Implement callback request functionality
+    alert('Callback requested! We will call you within 30 minutes.');
+    toggleQuickContact();
+}
+
+// Close widget when clicking outside
+document.addEventListener('click', function(e) {
+    const widget = document.getElementById('quick-contact-widget');
+    const content = document.getElementById('widget-content');
+    
+    if (widget && !widget.contains(e.target) && content.classList.contains('active')) {
+        content.classList.remove('active');
+    }
+});
+</script>

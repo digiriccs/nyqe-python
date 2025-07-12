@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  isAdmin      Boolean  @default(false) @map("is_admin")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Lead {
+  id                String         @id @default(cuid())
+  name              String
+  email             String
+  phone             String?
+  serviceInterest   String?        @map("service_interest")
+  message           String?
+  investmentAmount  Decimal?       @map("investment_amount")
+  investmentTimeline String?       @map("investment_timeline")
+  riskTolerance     String?        @map("risk_tolerance")
+  status            String         @default("new")
+  createdAt         DateTime       @default(now()) @map("created_at")
+  updatedAt         DateTime       @updatedAt @map("updated_at")
+  
+  consultations     Consultation[]
+
+  @@map("leads")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  title       String?
+  description String?
+  content     String?
+  features    Json?
+  benefits    Json?
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("services")
+}
+
+model Investment {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  category        String?
+  riskLevel       String?  @map("risk_level")
+  minInvestment   Decimal? @map("min_investment")
+  expectedReturns String?  @map("expected_returns")
+  lockInPeriod    String?  @map("lock_in_period")
+  liquidity       String?
+  taxBenefits     Boolean  @default(false) @map("tax_benefits")
+  description     String?
+  features        Json?
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("investments")
+}
+
+model Partner {
+  id         String   @id @default(cuid())
+  name       String
+  logoUrl    String?  @map("logo_url")
+  website    String?
+  category   String?
+  isFeatured Boolean  @default(false) @map("is_featured")
+  isActive   Boolean  @default(true) @map("is_active")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("partners")
+}
+
+model Consultation {
+  id               String    @id @default(cuid())
+  leadId           String    @map("lead_id")
+  preferredDate    DateTime? @map("preferred_date")
+  preferredTime    String?   @map("preferred_time")
+  consultationType String?   @map("consultation_type")
+  status           String    @default("scheduled")
+  notes            String?
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  
+  lead             Lead      @relation(fields: [leadId], references: [id])
+
+  @@map("consultations")
+}
+
+model SiteSettings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String?
+  description String?
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("site_settings")
+}

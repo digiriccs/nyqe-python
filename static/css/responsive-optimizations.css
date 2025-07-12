@@ -1,0 +1,671 @@
+/* NYQE Wealth Management - Comprehensive Responsive Design Optimizations */
+/* Mobile-First Approach for Cross-Device Compatibility */
+
+/* ================================
+   GLOBAL RESPONSIVE FOUNDATION
+   ================================ */
+
+/* Container System - Mobile First */
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Base Grid System */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -0.5rem;
+}
+
+.col, [class*="col-"] {
+  flex: 1;
+  padding: 0 0.5rem;
+  min-width: 0;
+}
+
+/* ================================
+   BREAKPOINT SYSTEM
+   ================================ */
+
+/* Small Mobile: 320px - 479px */
+@media (min-width: 320px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  /* Typography adjustments */
+  h1 { font-size: 1.75rem; line-height: 1.2; }
+  h2 { font-size: 1.5rem; line-height: 1.3; }
+  h3 { font-size: 1.25rem; line-height: 1.4; }
+  h4 { font-size: 1.125rem; line-height: 1.4; }
+  
+  /* Button optimizations */
+  .btn {
+    min-height: 48px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  /* Form controls */
+  .form-control, input, textarea, select {
+    min-height: 48px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+  }
+}
+
+/* Medium Mobile: 480px - 767px */
+@media (min-width: 480px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+  
+  /* Grid improvements */
+  .col-sm-6 { flex: 0 0 50%; max-width: 50%; }
+  .col-sm-12 { flex: 0 0 100%; max-width: 100%; }
+  
+  /* Typography scale up */
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+}
+
+/* Tablet Portrait: 768px - 991px */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+    padding: 0 2rem;
+  }
+  
+  /* Grid system expansion */
+  .col-md-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+  .col-md-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  .col-md-3 { flex: 0 0 25%; max-width: 25%; }
+  .col-md-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .col-md-6 { flex: 0 0 50%; max-width: 50%; }
+  .col-md-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .col-md-12 { flex: 0 0 100%; max-width: 100%; }
+  
+  /* Typography improvements */
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.75rem; }
+  
+  /* Enhanced spacing */
+  .py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+  .my-5 { margin-top: 3rem !important; margin-bottom: 3rem !important; }
+}
+
+/* Tablet Landscape & Small Laptop: 992px - 1199px */
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+  
+  /* Full grid system */
+  .col-lg-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+  .col-lg-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  .col-lg-3 { flex: 0 0 25%; max-width: 25%; }
+  .col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+  .col-lg-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .col-lg-9 { flex: 0 0 75%; max-width: 75%; }
+  .col-lg-12 { flex: 0 0 100%; max-width: 100%; }
+  
+  /* Desktop typography */
+  h1 { font-size: 3rem; }
+  h2 { font-size: 2.5rem; }
+  h3 { font-size: 2rem; }
+  
+  /* Enhanced spacing for desktop */
+  .py-5 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+  .my-5 { margin-top: 4rem !important; margin-bottom: 4rem !important; }
+}
+
+/* Large Laptop & Desktop: 1200px+ */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+  
+  /* Large screen optimizations */
+  .col-xl-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+  .col-xl-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  .col-xl-3 { flex: 0 0 25%; max-width: 25%; }
+  .col-xl-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .col-xl-6 { flex: 0 0 50%; max-width: 50%; }
+  .col-xl-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .col-xl-12 { flex: 0 0 100%; max-width: 100%; }
+  
+  /* Large screen typography */
+  h1 { font-size: 3.5rem; }
+  h2 { font-size: 3rem; }
+  h3 { font-size: 2.25rem; }
+}
+
+/* Extra Large Screens: 1400px+ */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* ================================
+   NAVBAR RESPONSIVE OPTIMIZATIONS
+   ================================ */
+
+/* Mobile navbar adjustments */
+@media (max-width: 767px) {
+  .navbar-enhanced {
+    padding: 0.5rem 0;
+  }
+  
+  .navbar-content {
+    min-height: 60px;
+    padding: 0.75rem 0;
+  }
+  
+  .brand-name {
+    font-size: 1.125rem;
+  }
+  
+  .brand-tagline {
+    display: none; /* Hide on very small screens */
+  }
+  
+  .trust-badge {
+    display: none; /* Hide on mobile for space */
+  }
+  
+  .mobile-menu-toggle {
+    display: flex;
+  }
+  
+  .navbar-nav {
+    display: none;
+  }
+  
+  .navbar-actions {
+    gap: 0.5rem;
+  }
+  
+  .navbar-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .cta-button {
+    display: none; /* Hide CTA on mobile nav */
+  }
+}
+
+/* Tablet navbar adjustments */
+@media (min-width: 768px) and (max-width: 991px) {
+  .navbar-content {
+    min-height: 70px;
+  }
+  
+  .brand-name {
+    font-size: 1.25rem;
+  }
+  
+  .navbar-nav {
+    gap: 1rem;
+  }
+  
+  .nav-link {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Desktop navbar optimizations */
+@media (min-width: 992px) {
+  .navbar-content {
+    min-height: 80px;
+  }
+  
+  .mobile-menu-toggle {
+    display: none;
+  }
+  
+  .navbar-nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .mega-menu {
+    min-width: 800px;
+  }
+}
+
+/* ================================
+   HERO SECTION RESPONSIVE
+   ================================ */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Mobile hero */
+@media (max-width: 767px) {
+  .hero-section {
+    min-height: 70vh;
+    padding: 2rem 0;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-content .lead {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-badges {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .btn-hero {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .hero-visual {
+    margin-top: 3rem;
+  }
+}
+
+/* Tablet hero */
+@media (min-width: 768px) and (max-width: 991px) {
+  .hero-section {
+    min-height: 80vh;
+    padding: 3rem 0;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  
+  .hero-badges {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .hero-cta {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .btn-hero {
+    flex: 1;
+  }
+}
+
+/* Desktop hero */
+@media (min-width: 992px) {
+  .hero-section {
+    min-height: 90vh;
+    padding: 4rem 0;
+  }
+  
+  .hero-content h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+  }
+  
+  .hero-badges {
+    gap: 1rem;
+  }
+  
+  .btn-hero {
+    min-width: 200px;
+  }
+}
+
+/* ================================
+   CARD COMPONENTS RESPONSIVE
+   ================================ */
+
+/* Service cards mobile-first */
+.service-cards {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 576px) {
+  .service-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .service-cards {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+.service-card {
+  padding: 2rem 1.5rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .service-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .service-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .service-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .service-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+/* ================================
+   FEATURE LISTS RESPONSIVE
+   ================================ */
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+@media (max-width: 767px) {
+  .feature-item {
+    gap: 0.75rem;
+  }
+  
+  .feature-icon {
+    min-width: 2.5rem;
+    text-align: center;
+  }
+  
+  .feature-item h5 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .feature-item p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+}
+
+/* ================================
+   METRICS GRID RESPONSIVE
+   ================================ */
+
+.why-choose-visual .row {
+  margin: 0;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, var(--trust-primary), var(--growth-primary));
+  color: white;
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  height: 100%;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .metric-card {
+    padding: 1.5rem 1rem;
+    min-height: 100px;
+  }
+  
+  .metric-card h3 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .metric-card p {
+    font-size: 0.875rem;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .metric-card h3 {
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* ================================
+   FORM RESPONSIVE OPTIMIZATIONS
+   ================================ */
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .form-control {
+    padding: 1rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 52px;
+  }
+  
+  .btn-submit {
+    width: 100%;
+    min-height: 52px;
+    font-size: 1.125rem;
+  }
+}
+
+/* ================================
+   FOOTER RESPONSIVE
+   ================================ */
+
+.footer-content {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 576px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .footer-content {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* Footer bottom responsive */
+.footer-bottom {
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+  
+  .footer-legal {
+    margin-top: 0;
+  }
+}
+
+/* ================================
+   UTILITY CLASSES
+   ================================ */
+
+/* Display utilities */
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-flex { display: flex !important; }
+
+@media (max-width: 767px) {
+  .d-md-none { display: none !important; }
+  .d-md-block { display: block !important; }
+  .text-center-mobile { text-align: center !important; }
+}
+
+@media (min-width: 768px) {
+  .d-md-block { display: block !important; }
+  .d-md-flex { display: flex !important; }
+  .d-md-none { display: none !important; }
+}
+
+/* Spacing utilities for mobile */
+@media (max-width: 767px) {
+  .px-mobile-2 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .py-mobile-3 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+  .mb-mobile-3 { margin-bottom: 1.5rem !important; }
+  .mt-mobile-2 { margin-top: 1rem !important; }
+}
+
+/* ================================
+   TOUCH & INTERACTION OPTIMIZATIONS
+   ================================ */
+
+/* Touch-friendly interactive elements */
+@media (hover: none) and (pointer: coarse) {
+  .btn, button, [role="button"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .dropdown-item {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================ */
+
+/* Optimize animations for mobile */
+@media (max-width: 767px) {
+  * {
+    animation-duration: 0.2s !important;
+  }
+  
+  .aos-animate {
+    animation-duration: 0.3s !important;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================
+   CROSS-BROWSER COMPATIBILITY
+   ================================ */
+
+/* Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .form-control {
+    transform: translateZ(0); /* Fix iOS rendering issues */
+  }
+  
+  .btn {
+    transform: translateZ(0);
+  }
+}
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+  .form-control {
+    padding: 0.875rem 1rem;
+  }
+}
+
+/* Edge specific fixes */
+@supports (-ms-ime-align: auto) {
+  .container {
+    max-width: calc(100% - 2rem);
+  }
+}

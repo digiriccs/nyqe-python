@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NYQE Wealth Management - Empowering Your Financial Future{% endblock %}</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="{% block description %}NYQE Wealth Management provides expert financial advisory, investment planning, portfolio management, and retirement planning services. Empowering your financial future, one decision at a time.{% endblock %}">
+    <meta name="keywords" content="wealth management, financial advisory, investment planning, portfolio management, retirement planning, SIP, mutual funds, tax optimization">
+    <meta name="author" content="NYQE Wealth Management">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="{% block og_title %}NYQE Wealth Management{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Expert financial advisory and wealth management services. Empowering your financial future, one decision at a time.{% endblock %}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="{% block twitter_title %}NYQE Wealth Management{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Expert financial advisory and wealth management services{% endblock %}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/nyqe-favicon.svg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/nyqe-favicon.svg') }}">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive-optimizations.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hero-modern.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/anti-flicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animation-fix.css') }}">
+    
+    <!-- Reduce AOS animation delays -->
+    <style>
+        /* Quick anti-flicker fixes */
+        body { opacity: 0; transition: opacity 0.3s; }
+        body.loaded { opacity: 1; }
+        
+        /* Reduce AOS delays globally */
+        [data-aos][data-aos-delay] {
+            transition-delay: 0ms !important;
+        }
+        
+        /* Disable animations until ready */
+        html:not(.animations-ready) * {
+            animation: none !important;
+            transition: none !important;
+        }
+    </style>
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Enhanced Navigation -->
+    {% include 'components/navbar_enhanced.html' %}
+    
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    {% include 'components/footer.html' %}
+    
+    <!-- Walkthrough Overlay (only on homepage) -->
+    {% if request and request.endpoint and request.endpoint == 'index' %}
+        {% include 'components/walkthrough.html' %}
+    {% endif %}
+    
+    <!-- Scripts -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <!-- Lottie Web -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="{{ url_for('static', filename='js/chart-configs.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/walkthrough.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/calculators.js') }}"></script>
+    
+    <!-- Initialize AOS and fix flicker -->
+    <script>
+        // Fix body flicker and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+            document.documentElement.classList.add('animations-ready');
+        });
+        
+        // Delay AOS initialization to prevent flicker
+        window.addEventListener('load', function() {
+            // Add class to enable animations
+            document.documentElement.classList.add('aos-ready');
+            
+            // Initialize AOS with reduced settings
+            setTimeout(function() {
+                AOS.init({
+                    duration: 600,
+                    easing: 'ease-out',
+                    once: true,
+                    offset: 50,
+                    disable: window.innerWidth < 768
+                });
+            }, 100);
+        });
+    </script>
+    
+    {% block extra_scripts %}{% endblock %}
+    
+    <!-- AMFI Compliance Notice -->
+    <div class="position-fixed amfi-notice-container" style="bottom: 20px; right: 20px; z-index: 1050; max-width: 350px;">
+        <div class="toast" id="amfi-notice" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" style="box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);">
+            <div class="toast-header" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; border: none;">
+                <i class="fas fa-info-circle me-2" style="color: var(--accent-color);"></i>
+                <strong class="me-auto">Important Notice</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" style="background: white; color: var(--text-dark); border-radius: 0 0 8px 8px;">
+                <small>
+                    AMFI Registered Mutual Fund Distributor. Mutual fund investments are subject to market risks. 
+                    Please read all scheme related documents carefully before investing.
+                </small>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* AMFI Notice Responsive Positioning */
+        @media (max-width: 768px) {
+            .amfi-notice-container {
+                bottom: 10px !important;
+                right: 10px !important;
+                left: 10px !important;
+                max-width: none !important;
+            }
+            
+            #amfi-notice {
+                width: 100% !important;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .amfi-notice-container {
+                max-width: 350px;
+            }
+        }
+    </style>
+    
+    <script>
+        // Show AMFI notice on first visit
+        if (!localStorage.getItem('amfi_notice_shown')) {
+            setTimeout(() => {
+                const toast = new bootstrap.Toast(document.getElementById('amfi-notice'));
+                toast.show();
+                localStorage.setItem('amfi_notice_shown', 'true');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

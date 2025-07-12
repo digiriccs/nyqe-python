@@ -1,0 +1,1032 @@
+{% extends "base.html" %}
+
+{% block title %}NYQE Wealth Management - Empowering Your Financial Future, One Decision at a Time{% endblock %}
+
+{% block extra_head %}
+<!-- Enhanced Walkthrough Styles and Scripts -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/lottie-web@5.7.14/build/player/lottie.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<style>
+  /* Enhanced Walkthrough Overlay */
+  #walkthrough {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    z-index: 9999;
+    overflow-y: auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #walkthrough.show {
+    display: flex;
+  }
+
+  .walkslide {
+    padding: 40px;
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+    animation: fadeInSlide 0.6s ease-in-out;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .walkslide h2 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .walkslide p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 1rem 0;
+  }
+
+  .lottie-container {
+    height: 220px;
+    margin: 1.5rem 0;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .walkthrough-btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    margin-top: 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 166, 237, 0.3);
+  }
+
+  .walkthrough-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 166, 237, 0.4);
+  }
+
+  .skip-walkthrough {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-light);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .skip-walkthrough:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .walkthrough-progress {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .progress-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-light);
+    opacity: 0.3;
+    transition: all 0.3s ease;
+  }
+
+  .progress-dot.active {
+    background: var(--accent);
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  @keyframes fadeInSlide {
+    from { 
+      opacity: 0; 
+      transform: translateY(30px) scale(0.95); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0) scale(1); 
+    }
+  }
+
+  /* Enhanced AOS animations for main content */
+  [data-aos] {
+    pointer-events: none;
+  }
+
+  [data-aos].aos-animate {
+    pointer-events: auto;
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .walkslide {
+      padding: 30px 20px;
+      max-width: 90%;
+      margin: 20px auto;
+    }
+    
+    .lottie-container {
+      height: 180px;
+    }
+    
+    .walkslide h2 {
+      font-size: 1.6rem;
+    }
+  }
+
+  /* Game Preview Cards */
+  .game-preview-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  .game-preview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .game-preview-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .game-preview-card:hover .game-preview-icon {
+    transform: scale(1.1);
+  }
+
+  .game-preview-card .card-body {
+    padding: 2rem 1.5rem;
+  }
+
+  .game-preview-card h5 {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+  }
+
+  .game-preview-card p {
+    color: #718096;
+    margin-bottom: 1rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Loan Hub Alert Banner -->
+<div class="alert alert-primary alert-dismissible fade show m-0 text-center py-3" role="alert" style="background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 0;">
+    <strong class="text-white fs-5">
+        <i class="fas fa-bullhorn me-2"></i>NEW! Visit our Loan Hub for instant loan approvals
+    </strong>
+    <a href="{{ url_for('loan_hub.index') }}" class="btn btn-warning btn-sm ms-3">
+        <i class="fas fa-arrow-right me-1"></i>Apply Now
+    </a>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<!-- Enhanced Walkthrough Overlay -->
+<div id="walkthrough" style="display: none;">
+  <button class="skip-walkthrough" onclick="endWalkthrough()">Skip Walkthrough</button>
+  
+  <div id="slide1" class="walkslide">
+    <h2>🏠 Why Investing?</h2>
+    <div id="lottie1" class="lottie-container"></div>
+    <p>Inflation erodes your money's value over time. Investing helps your money grow and beat inflation, securing your financial future.</p>
+    <div class="walkthrough-progress">
+      <div class="progress-dot active"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+    </div>
+    <button class="walkthrough-btn" onclick="nextSlide()">
+      <i class="fas fa-arrow-right" style="margin-right: 8px;"></i>
+      Next
+    </button>
+  </div>
+
+  <div id="slide2" class="walkslide" style="display: none;">
+    <h2>📈 Why SIP?</h2>
+    <div id="lottie2" class="lottie-container"></div>
+    <p>Systematic Investment Plans (SIP) help you invest small amounts regularly. This builds discipline and harnesses the power of compounding.</p>
+    <div class="walkthrough-progress">
+      <div class="progress-dot"></div>
+      <div class="progress-dot active"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+    </div>
+    <button class="walkthrough-btn" onclick="nextSlide()">
+      <i class="fas fa-arrow-right" style="margin-right: 8px;"></i>
+      Next
+    </button>
+  </div>
+
+  <div id="slide3" class="walkslide" style="display: none;">
+    <h2>🛡️ Why Insurance?</h2>
+    <div id="lottie3" class="lottie-container"></div>
+    <p>Insurance protects your family and investments from unexpected events. It's your financial safety net for life's uncertainties.</p>
+    <div class="walkthrough-progress">
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot active"></div>
+      <div class="progress-dot"></div>
+    </div>
+    <button class="walkthrough-btn" onclick="nextSlide()">
+      <i class="fas fa-arrow-right" style="margin-right: 8px;"></i>
+      Next
+    </button>
+  </div>
+
+  <div id="slide4" class="walkslide" style="display: none;">
+    <h2>📊 How Inflation Works</h2>
+    <div id="lottie4" class="lottie-container"></div>
+    <p>₹100 today may cost ₹180 in 10 years due to inflation. Start investing early to stay ahead and maintain your purchasing power.</p>
+    <div class="walkthrough-progress">
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot active"></div>
+    </div>
+    <button class="walkthrough-btn" onclick="endWalkthrough()">
+      <i class="fas fa-rocket" style="margin-right: 8px;"></i>
+      Get Started
+    </button>
+  </div>
+</div>
+
+<!-- Enhanced Hero Section -->
+{% include 'components/hero_enhanced.html' %}
+
+<!-- Services Section -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Expert Services</h2>
+            <p class="lead">Comprehensive financial solutions tailored to your unique needs</p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h4>Investment Advisory</h4>
+                <p>Strategic investment planning and portfolio optimization to maximize your returns while managing risk effectively.</p>
+                <a href="{{ url_for('service_detail', slug='investment-advisory') }}" class="btn btn-outline mt-3">Learn More</a>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-icon">
+                    <i class="fas fa-umbrella"></i>
+                </div>
+                <h4>Financial Planning</h4>
+                <p>Comprehensive financial roadmap creation including emergency funds, insurance, and goal-based planning.</p>
+                <a href="{{ url_for('services') }}" class="btn btn-outline mt-3">Learn More</a>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-icon">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <h4>Retirement Planning</h4>
+                <p>Secure your golden years with strategic retirement corpus building and post-retirement income planning.</p>
+                <a href="{{ url_for('service_detail', slug='retirement-planning') }}" class="btn btn-outline mt-3">Learn More</a>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="service-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h4>Tax Optimization</h4>
+                <p>Intelligent tax planning strategies to minimize your tax liability while maximizing investment efficiency.</p>
+                <a href="{{ url_for('service_detail', slug='tax-optimization') }}" class="btn btn-outline mt-3">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose NYQE Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2>Why Choose NYQE?</h2>
+                <p class="lead">Your trusted partner in wealth creation</p>
+                
+                <div class="feature-list mt-4">
+                    <div class="feature-item d-flex align-items-start mb-3">
+                        <div class="feature-icon me-3">
+                            <i class="fas fa-shield-alt text-primary"></i>
+                        </div>
+                        <div>
+                            <h5>AMFI Registered</h5>
+                            <p>Fully regulated and compliant investment advisory services</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item d-flex align-items-start mb-3">
+                        <div class="feature-icon me-3">
+                            <i class="fas fa-user-tie text-primary"></i>
+                        </div>
+                        <div>
+                            <h5>Expert Team</h5>
+                            <p>Certified financial planners with proven track record</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item d-flex align-items-start mb-3">
+                        <div class="feature-icon me-3">
+                            <i class="fas fa-mobile-alt text-primary"></i>
+                        </div>
+                        <div>
+                            <h5>Digital First</h5>
+                            <p>Advanced technology platform for seamless experience</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item d-flex align-items-start">
+                        <div class="feature-icon me-3">
+                            <i class="fas fa-handshake text-primary"></i>
+                        </div>
+                        <div>
+                            <h5>Transparent Fees</h5>
+                            <p>No hidden charges, clear fee structure</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="why-choose-visual">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="metric-card">
+                                <h3>15+</h3>
+                                <p>Years Experience</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="metric-card">
+                                <h3>₹500Cr+</h3>
+                                <p>Assets Managed</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="metric-card">
+                                <h3>1000+</h3>
+                                <p>Happy Families</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="metric-card">
+                                <h3>12%+</h3>
+                                <p>Avg. Returns</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Prominent Loan Hub Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="text-white display-4 fw-bold">LOAN HUB</h2>
+            <p class="lead text-white fs-3">Your Gateway to Quick & Easy Loans</p>
+            <p class="text-white-50">Get instant approval with minimal documentation</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 text-center border-0 shadow-lg">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-home text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="fw-bold">Home Loans</h4>
+                        <p class="text-muted">Starting from 8.5% p.a.</p>
+                        <ul class="list-unstyled text-start small">
+                            <li><i class="fas fa-check text-success me-2"></i>Up to ₹5 Crore</li>
+                            <li><i class="fas fa-check text-success me-2"></i>30 Years Tenure</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Quick Approval</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 text-center border-0 shadow-lg">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-user-tie text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="fw-bold">Personal Loans</h4>
+                        <p class="text-muted">Starting from 10.5% p.a.</p>
+                        <ul class="list-unstyled text-start small">
+                            <li><i class="fas fa-check text-success me-2"></i>Up to ₹40 Lakhs</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Instant Disbursal</li>
+                            <li><i class="fas fa-check text-success me-2"></i>No Collateral</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card h-100 text-center border-0 shadow-lg">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-briefcase text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="fw-bold">Business Loans</h4>
+                        <p class="text-muted">Starting from 11% p.a.</p>
+                        <ul class="list-unstyled text-start small">
+                            <li><i class="fas fa-check text-success me-2"></i>Up to ₹2 Crore</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Flexible Terms</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Easy EMI</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="card h-100 text-center border-0 shadow-lg">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-graduation-cap text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="fw-bold">Education Loans</h4>
+                        <p class="text-muted">Starting from 9% p.a.</p>
+                        <ul class="list-unstyled text-start small">
+                            <li><i class="fas fa-check text-success me-2"></i>Up to ₹1.5 Crore</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Study Abroad</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Easy Repayment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="500">
+            <a href="{{ url_for('loan_hub.index') }}" class="btn btn-warning btn-lg px-5 py-3 fw-bold shadow">
+                <i class="fas fa-arrow-right me-2"></i>Explore All Loan Options
+            </a>
+            <p class="text-white-50 mt-3">
+                <i class="fas fa-phone-alt me-2"></i>Call us at <strong class="text-white">1800-123-4567</strong> for instant assistance
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Learning Games Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="text-white">Master Finance Through Games</h2>
+            <p class="lead text-white">Learn complex financial concepts through fun, interactive mini-games</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 text-center game-preview-card">
+                    <div class="card-body">
+                        <div class="game-preview-icon mb-3">
+                            <span style="font-size: 3rem;">📈</span>
+                        </div>
+                        <h5>Compound Interest Simulator</h5>
+                        <p>See the magic of compound interest in action</p>
+                        <span class="badge bg-success mb-2">Beginner Friendly</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 text-center game-preview-card">
+                    <div class="card-body">
+                        <div class="game-preview-icon mb-3">
+                            <span style="font-size: 3rem;">💰</span>
+                        </div>
+                        <h5>Budget Master Challenge</h5>
+                        <p>Learn to manage your monthly budget effectively</p>
+                        <span class="badge bg-warning mb-2">Interactive</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card h-100 text-center game-preview-card">
+                    <div class="card-body">
+                        <div class="game-preview-icon mb-3">
+                            <span style="font-size: 3rem;">🧠</span>
+                        </div>
+                        <h5>Financial IQ Quiz</h5>
+                        <p>Test your financial knowledge and learn</p>
+                        <span class="badge bg-info mb-2">Educational</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="400">
+            <a href="{{ url_for('mini_games') }}" class="btn btn-light btn-lg px-5 py-3">
+                <i class="fas fa-gamepad me-2"></i>Explore All Games
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Investment Solutions Preview -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Investment Solutions</h2>
+            <p class="lead">Diversified investment options for every risk appetite</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 investment-card">
+                    <div class="card-body text-center">
+                        <div class="investment-icon mb-3">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h5>Mutual Funds</h5>
+                        <p>Diversified portfolio of equity and debt mutual funds</p>
+                        <span class="badge bg-success">8-15% Returns</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 investment-card">
+                    <div class="card-body text-center">
+                        <div class="investment-icon mb-3">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h5>Fixed Income</h5>
+                        <p>Government bonds, corporate bonds, and FDs</p>
+                        <span class="badge bg-primary">6-9% Returns</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card h-100 investment-card">
+                    <div class="card-body text-center">
+                        <div class="investment-icon mb-3">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h5>Direct Equity</h5>
+                        <p>Carefully selected stocks and equity portfolios</p>
+                        <span class="badge bg-warning">12-20% Returns</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="card h-100 investment-card">
+                    <div class="card-body text-center">
+                        <div class="investment-icon mb-3">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h5>Alternatives</h5>
+                        <p>REITs, gold, and other alternative investments</p>
+                        <span class="badge bg-secondary">10-18% Returns</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('investments') }}" class="btn btn-primary">
+                Explore All Solutions <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Financial Calculators Preview -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Financial Calculators</h2>
+            <p class="lead">Plan your financial journey with our advanced calculators</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card calculator-preview">
+                    <div class="card-body">
+                        <div class="calculator-icon mb-3">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <h5>SIP Calculator</h5>
+                        <p>Calculate your SIP returns and plan systematic investments</p>
+                        <a href="{{ url_for('sip_calculator_enhanced') }}" class="btn btn-outline-primary">Calculate Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card calculator-preview">
+                    <div class="card-body">
+                        <div class="calculator-icon mb-3">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h5>EMI Calculator</h5>
+                        <p>Plan your home loan EMI and compare different options</p>
+                        <a href="{{ url_for('emi_calculator_enhanced') }}" class="btn btn-outline-primary">Calculate Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card calculator-preview">
+                    <div class="card-body">
+                        <div class="calculator-icon mb-3">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <h5>Retirement Calculator</h5>
+                        <p>Plan your retirement corpus and secure your future</p>
+                        <a href="{{ url_for('retirement_calculator_enhanced') }}" class="btn btn-outline-primary">Calculate Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <a href="{{ url_for('calculators') }}" class="btn btn-primary">
+                View All Calculators <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div data-aos="fade-up">
+            <h2>Ready to Start Your Financial Journey?</h2>
+            <p class="lead">Book a free consultation with our experts and take the first step towards financial freedom</p>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary btn-lg me-3">
+                    <i class="fas fa-calendar-check"></i> Book Free Consultation
+                </a>
+                <a href="tel:+919876543210" class="btn btn-outline btn-lg">
+                    <i class="fas fa-phone"></i> Call Now
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Start Guide -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>How We Work</h2>
+            <p class="lead">Simple steps to achieve your financial goals</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-card text-center">
+                    <div class="step-number">1</div>
+                    <h5>Consultation</h5>
+                    <p>Free initial consultation to understand your financial goals and current situation</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-card text-center">
+                    <div class="step-number">2</div>
+                    <h5>Analysis</h5>
+                    <p>Detailed financial analysis and risk profiling to create a personalized strategy</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-card text-center">
+                    <div class="step-number">3</div>
+                    <h5>Planning</h5>
+                    <p>Comprehensive financial plan with investment recommendations and timelines</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="step-card text-center">
+                    <div class="step-number">4</div>
+                    <h5>Execution</h5>
+                    <p>Implementation and ongoing monitoring with regular reviews and adjustments</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.stat-item {
+    padding: 1rem;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+.metric-card {
+    background: var(--card-bg);
+    padding: 2rem 1rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border-color);
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.metric-card h3 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.investment-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+.investment-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.calculator-preview {
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.calculator-preview:hover {
+    transform: translateY(-5px);
+}
+
+.calculator-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.step-card {
+    padding: 2rem 1rem;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 auto 1rem;
+}
+
+.feature-icon {
+    width: 40px;
+    text-align: center;
+}
+</style>
+
+<script>
+// Enhanced Walkthrough with Lottie Animations
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize AOS (Animate on Scroll) - HERO SECTION PROTECTED FROM ANIMATIONS
+  AOS.init({ 
+    duration: 800, 
+    easing: 'ease-in-out', 
+    once: true,
+    offset: 100
+  });
+
+  // Lottie animations configuration
+  const animations = [
+    { 
+      id: 'lottie1', 
+      path: 'https://assets2.lottiefiles.com/packages/lf20_8wREpI.json' // Growth/Investment animation
+    },
+    { 
+      id: 'lottie2', 
+      path: 'https://assets2.lottiefiles.com/packages/lf20_vfnsb74e.json' // SIP/Saving animation
+    },
+    { 
+      id: 'lottie3', 
+      path: 'https://assets10.lottiefiles.com/packages/lf20_yxzrznz7.json' // Insurance/Protection animation
+    },
+    { 
+      id: 'lottie4', 
+      path: 'https://assets7.lottiefiles.com/packages/lf20_totrpclr.json' // Inflation/Chart animation
+    }
+  ];
+
+  // Load Lottie animations
+  animations.forEach(({ id, path }) => {
+    const container = document.getElementById(id);
+    if (container) {
+      lottie.loadAnimation({
+        container: container,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: path
+      });
+    }
+  });
+
+  // Check if walkthrough should be shown - RESET FOR DEMO
+  localStorage.removeItem('walkthroughSeen'); // Force show for demonstration
+  console.log('Checking walkthrough visibility...');
+  if (!localStorage.getItem('walkthroughSeen')) {
+    const walkthroughEl = document.getElementById('walkthrough');
+    console.log('Walkthrough element:', walkthroughEl);
+    walkthroughEl.classList.add('show');
+    console.log('Added show class, classes now:', walkthroughEl.className);
+    console.log('Walkthrough should now be visible');
+  }
+});
+
+let currentSlide = 1;
+
+function nextSlide() {
+  // Hide current slide
+  document.getElementById('slide' + currentSlide).style.display = 'none';
+  
+  // Show next slide
+  currentSlide++;
+  const nextSlideElement = document.getElementById('slide' + currentSlide);
+  if (nextSlideElement) {
+    nextSlideElement.style.display = 'block';
+    nextSlideElement.style.animation = 'fadeInSlide 0.6s ease-in-out';
+  }
+}
+
+function endWalkthrough() {
+  // Save that user has seen walkthrough
+  localStorage.setItem('walkthroughSeen', 'true');
+  
+  // Hide walkthrough with fade out animation
+  const walkthrough = document.getElementById('walkthrough');
+  walkthrough.style.opacity = '0';
+  walkthrough.style.transition = 'opacity 0.5s ease-out';
+  
+  setTimeout(() => {
+    walkthrough.classList.remove('show');
+    walkthrough.style.opacity = '';
+    walkthrough.style.transition = '';
+    
+    // Trigger AOS refresh for main content
+    AOS.refresh();
+  }, 500);
+}
+
+// Add option to reset walkthrough (for testing)
+function resetWalkthrough() {
+  localStorage.removeItem('walkthroughSeen');
+  location.reload();
+}
+
+// Test function for walkthrough
+function testWalkthrough() {
+  console.log('Test walkthrough button clicked');
+  localStorage.removeItem('walkthroughSeen');
+  const walkthrough = document.getElementById('walkthrough');
+  console.log('Walkthrough element:', walkthrough);
+  walkthrough.classList.add('show');
+  walkthrough.style.display = 'flex';
+  console.log('Walkthrough should now be visible');
+}
+
+// Add keyboard support for walkthrough
+document.addEventListener('keydown', function(e) {
+  const walkthrough = document.getElementById('walkthrough');
+  if (walkthrough.classList.contains('show')) {
+    if (e.key === 'ArrowRight' || e.key === 'Enter') {
+      if (currentSlide < 4) {
+        nextSlide();
+      } else {
+        endWalkthrough();
+      }
+    } else if (e.key === 'Escape') {
+      endWalkthrough();
+    }
+  }
+});
+
+// Enhanced animations for sections
+function initializePageAnimations() {
+  // Add enhanced data-aos attributes to existing sections - HERO SECTION DISABLED
+  const heroSection = document.querySelector('.hero-modern');
+  if (heroSection && !heroSection.hasAttribute('data-aos')) {
+    // heroSection.setAttribute('data-aos', 'zoom-in'); // DISABLED TO PREVENT COLLAPSE
+    console.log('Hero section AOS animation disabled to prevent collapse');
+  }
+
+  const serviceCards = document.querySelectorAll('.service-card');
+  serviceCards.forEach((card, index) => {
+    if (!card.hasAttribute('data-aos')) {
+      card.setAttribute('data-aos', 'fade-up');
+      card.setAttribute('data-aos-delay', (index * 100).toString());
+    }
+  });
+
+  const investmentCards = document.querySelectorAll('.investment-card');
+  investmentCards.forEach((card, index) => {
+    if (!card.hasAttribute('data-aos')) {
+      card.setAttribute('data-aos', 'fade-right');
+      card.setAttribute('data-aos-delay', (index * 150).toString());
+    }
+  });
+
+  const calculatorCards = document.querySelectorAll('.calculator-preview');
+  calculatorCards.forEach((card, index) => {
+    if (!card.hasAttribute('data-aos')) {
+      card.setAttribute('data-aos', 'flip-left');
+      card.setAttribute('data-aos-delay', (index * 100).toString());
+    }
+  });
+}
+
+// Initialize page animations when DOM is ready
+document.addEventListener('DOMContentLoaded', initializePageAnimations);
+
+// Add a smooth scroll effect for better UX
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+</script>
+
+{% endblock %}

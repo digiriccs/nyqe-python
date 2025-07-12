@@ -1,0 +1,40 @@
+/* Animation Fix for Flickering */
+
+/* Disable all animations until page loads */
+html:not(.animations-ready) * {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Disable AOS animations completely until ready */
+html:not(.aos-ready) [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: all !important;
+    visibility: visible !important;
+}
+
+/* Smooth transition when animations are enabled */
+html.animations-ready * {
+    animation-duration: 0.6s !important;
+    animation-timing-function: ease-out !important;
+}
+
+/* Fix for hero section flicker */
+.hero-enhanced,
+.hero-section {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Walkthrough should not cause flicker */
+.walkthrough-overlay {
+    animation: none !important;
+}
+
+/* Trust indicators should appear immediately */
+.trust-indicators,
+.trust-item {
+    opacity: 1 !important;
+    transform: none !important;
+}

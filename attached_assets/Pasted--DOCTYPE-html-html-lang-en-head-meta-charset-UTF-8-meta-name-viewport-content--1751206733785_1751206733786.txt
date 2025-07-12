@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NYQE Wealth – SIP Simulation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: #003459;
+      --accent: #00A6ED;
+      --secondary-bg: #F6F8FA;
+      --text-dark: #1A1A1A;
+      --text-light: #666666;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--secondary-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 100%;
+      padding: 16px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .heading {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .input-label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(0,166,237,0.2);
+      outline: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    canvas {
+      max-width: 100%;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="heading">SIP Growth Simulator</div>
+
+      <label class="input-label" for="amount">Monthly Investment (₹)</label>
+      <input id="amount" type="number" value="5000" />
+
+      <label class="input-label" for="years">Investment Duration (Years)</label>
+      <input id="years" type="number" value="10" />
+
+      <label class="input-label" for="return">Expected Annual Return (%)</label>
+      <input id="return" type="number" value="12" />
+
+      <button class="btn-primary" onclick="simulateSIP()">Simulate SIP</button>
+
+      <canvas id="sipChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('sipChart').getContext('2d');
+    let sipChart;
+
+    function calculateSIP(p, r, n) {
+      r = r / 12 / 100;
+      n = n * 12;
+      return p * (((Math.pow(1 + r, n) - 1) / r) * (1 + r));
+    }
+
+    function simulateSIP() {
+      const amount = parseFloat(document.getElementById('amount').value);
+      const years = parseFloat(document.getElementById('years').value);
+      const rate = parseFloat(document.getElementById('return').value);
+
+      const invested = amount * years * 12;
+      const maturity = calculateSIP(amount, rate, years);
+      const gain = maturity - invested;
+
+      const data = {
+        labels: ['Invested', 'Gains'],
+        datasets: [{
+          label: 'SIP Result',
+          data: [invested.toFixed(2), gain.toFixed(2)],
+          backgroundColor: ['#003459', '#00A6ED'],
+          borderWidth: 1
+        }]
+      };
+
+      if (sipChart) sipChart.destroy();
+      sipChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+          plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+              callbacks: {
+                label: function (ctx) {
+                  return `₹ ${parseFloat(ctx.parsed).toLocaleString()}`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Initial load
+    simulateSIP();
+  </script>
+</body>
+</html>

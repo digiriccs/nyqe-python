@@ -1,0 +1,414 @@
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- Company Info -->
+            <div class="footer-section">
+                <div class="footer-logo mb-3">
+                    <img src="{{ url_for('static', filename='images/nyqe-logo.svg') }}" 
+                         alt="NYQE Wealth Management" 
+                         class="footer-logo-img">
+                </div>
+                <p>Empowering your financial future, one decision at a time.</p>
+                
+                <div class="social-links mt-3">
+                    <a href="#" class="social-link me-3" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link me-3" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link me-3" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="social-link" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Services -->
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('service_detail', slug='investment-advisory') }}">Investment Advisory</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='retirement-planning') }}">Retirement Planning</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='tax-optimization') }}">Tax Optimization</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='portfolio-management') }}">Portfolio Management</a></li>
+                </ul>
+            </div>
+            
+            <!-- Investment Solutions -->
+            <div class="footer-section">
+                <h4>Investment Solutions</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('investment_detail', slug='mutual-funds') }}">Mutual Funds</a></li>
+                    <li><a href="{{ url_for('investment_detail', slug='fixed-income') }}">Fixed Income</a></li>
+                    <li><a href="{{ url_for('investment_detail', slug='equity') }}">Direct Equity</a></li>
+                    <li><a href="{{ url_for('investment_detail', slug='alternatives') }}">Alternatives</a></li>
+                </ul>
+            </div>
+            
+            <!-- Tools & Resources -->
+            <div class="footer-section">
+                <h4>Tools & Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('sip_calculator_enhanced') }}">SIP Calculator</a></li>
+                    <li><a href="{{ url_for('emi_calculator_enhanced') }}">EMI Calculator</a></li>
+                    <li><a href="{{ url_for('retirement_calculator_enhanced') }}">Retirement Calculator</a></li>
+                    <li><a href="{{ url_for('comparison_tool') }}">Investment Comparison</a></li>
+                </ul>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="footer-section">
+                <h4>Get In Touch</h4>
+                <div class="contact-info">
+                    <div class="contact-item d-flex align-items-center mb-2">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        <span>Mumbai, Maharashtra, India</span>
+                    </div>
+                    <div class="contact-item d-flex align-items-center mb-2">
+                        <i class="fas fa-phone me-2"></i>
+                        <a href="tel:+919876543210">+91 98765 43210</a>
+                    </div>
+                    <div class="contact-item d-flex align-items-center mb-2">
+                        <i class="fas fa-envelope me-2"></i>
+                        <a href="mailto:info@nyqewealth.com">info@nyqewealth.com</a>
+                    </div>
+                    <div class="contact-item d-flex align-items-center">
+                        <i class="fas fa-clock me-2"></i>
+                        <span>Mon-Fri: 9:00 AM - 6:00 PM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Security Badges -->
+        <div class="security-badges text-center py-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="badges d-flex justify-content-center justify-content-md-start align-items-center flex-wrap">
+                        <span class="badge badge-security me-3 mb-2">
+                            <i class="fas fa-shield-alt me-1"></i> AMFI Registered
+                        </span>
+                        <span class="badge badge-security me-3 mb-2">
+                            <i class="fas fa-lock me-1"></i> SSL Secured
+                        </span>
+                        <span class="badge badge-security me-3 mb-2">
+                            <i class="fas fa-certificate me-1"></i> ISO Certified
+                        </span>
+                        <span class="badge badge-security mb-2">
+                            <i class="fas fa-user-shield me-1"></i> Privacy Protected
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="partnership-logos d-flex justify-content-center justify-content-md-end align-items-center">
+                        <span class="text-muted small">Trusted by leading financial institutions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p>&copy; 2024 NYQE Wealth Management. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="footer-legal">
+                        <a href="/legal/terms.html" class="legal-link me-3">Terms & Conditions</a>
+                        <a href="/legal/privacy.html" class="legal-link me-3">Privacy Policy</a>
+                        <a href="/legal/cookies.html" class="legal-link me-3">Cookie Policy</a>
+                        <a href="/legal/sebi.html" class="legal-link me-3">Investment AMFI Policy</a>
+                        <a href="/legal/codeofconduct.html" class="legal-link">Code of Conduct</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AMFI Disclaimer -->
+        <div class="amfi-disclaimer mt-4 p-3" style="background: rgba(220, 38, 38, 0.1); border-left: 4px solid #dc2626; border-radius: 0 8px 8px 0;">
+            <p class="small mb-2">
+                <strong>AMFI Registration Number:</strong> ARN-012345 | 
+                <strong>Validity:</strong> Valid till March 2025
+            </p>
+            <p class="small mb-0">
+                <strong>Important Disclaimer:</strong> Mutual fund investments are subject to market risks. 
+                Please read all scheme related documents carefully before investing. Past performance is not 
+                indicative of future returns. Investment in securities market are subject to market risks, 
+                read all the related documents carefully before investing.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button id="backToTop" class="btn btn-primary position-fixed d-none" style="bottom: 20px; right: 20px; z-index: 1000; border-radius: 50%; width: 50px; height: 50px;">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<style>
+.footer {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    color: white;
+    padding: 4rem 0 0;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.footer-section h4 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: var(--secondary-color);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.contact-info a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    color: var(--secondary-color);
+}
+
+.badge-security {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.legal-link {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.legal-link:hover {
+    color: var(--secondary-color);
+}
+
+.sebi-disclaimer {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-left: 4px solid var(--accent-color) !important;
+}
+
+.footer-logo-img {
+    height: 80px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .footer-logo-img {
+        height: 60px;
+    }
+    
+    .footer-section h4 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-links a {
+        font-size: 0.95rem;
+        padding: 0.25rem 0;
+        display: block;
+    }
+    
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+    }
+    
+    .contact-item {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+        gap: 1.5rem;
+    }
+    
+    .social-link {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .badges {
+        justify-content: center !important;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .badge-security {
+        font-size: 0.75rem;
+        padding: 0.75rem 1rem;
+        width: 100%;
+        max-width: 200px;
+        text-align: center;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .footer-legal {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .legal-link {
+        font-size: 0.875rem;
+        padding: 0.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .legal-link:last-child {
+        border-bottom: none;
+    }
+    
+    .sebi-disclaimer {
+        padding: 1.5rem !important;
+        margin-top: 2rem !important;
+    }
+    
+    .sebi-disclaimer p {
+        font-size: 0.8rem !important;
+        line-height: 1.4 !important;
+    }
+}
+
+/* Back to top button animation */
+#backToTop {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+#backToTop.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#backToTop:hover {
+    transform: translateY(-3px);
+}
+</style>
+
+<script>
+// Back to top functionality
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('d-none');
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.add('d-none');
+        backToTopBtn.classList.remove('show');
+    }
+});
+
+backToTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Footer animations
+const footerElements = document.querySelectorAll('.footer-section');
+const footerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+footerElements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'all 0.6s ease';
+    footerObserver.observe(el);
+});
+</script>

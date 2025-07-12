@@ -1,0 +1,1852 @@
+{% extends "base.html" %}
+
+{% block title %}Enhanced Financial Calculators - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced-design-system.css') }}">
+<style>
+/* Enhanced Calculator Styles */
+.calculator-page {
+    background: linear-gradient(135deg, var(--neutral-50) 0%, white 100%);
+    min-height: 100vh;
+    padding: var(--space-8) 0;
+}
+
+.calculator-hero {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    padding: var(--space-8) 0;
+    background: var(--trust-gradient);
+    color: white;
+    border-radius: var(--radius-3xl);
+    margin: var(--space-8) 0 var(--space-12);
+}
+
+.calculator-hero h1 {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-4);
+    color: white;
+}
+
+.calculator-hero p {
+    font-size: var(--text-xl);
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-8);
+    margin-bottom: var(--space-16);
+}
+
+.calculator-card {
+    background: white;
+    border-radius: var(--radius-3xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--neutral-200);
+    overflow: hidden;
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.calculator-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-2xl);
+}
+
+.calculator-card.featured {
+    border: 2px solid var(--growth-primary);
+    transform: scale(1.02);
+}
+
+.calculator-card.featured::before {
+    content: 'Most Popular';
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    background: var(--growth-primary);
+    color: white;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    z-index: 2;
+}
+
+.calculator-header {
+    padding: var(--space-8) var(--space-6) var(--space-6);
+    background: var(--neutral-50);
+    text-align: center;
+    position: relative;
+}
+
+.calculator-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--growth-gradient);
+    border-radius: var(--radius-2xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    font-size: var(--text-3xl);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.calculator-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-900);
+    margin-bottom: var(--space-2);
+}
+
+.calculator-description {
+    font-size: var(--text-base);
+    color: var(--neutral-600);
+    line-height: var(--leading-relaxed);
+}
+
+.calculator-body {
+    padding: var(--space-6);
+}
+
+.calculator-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--neutral-700);
+    margin-bottom: var(--space-2);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--neutral-500);
+    font-size: var(--text-lg);
+}
+
+.calculator-input {
+    width: 100%;
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-12);
+    border: 2px solid var(--neutral-300);
+    border-radius: var(--radius-xl);
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    background: white;
+    transition: all var(--transition-base);
+    color: var(--neutral-800);
+}
+
+.calculator-input:focus {
+    outline: none;
+    border-color: var(--growth-primary);
+    box-shadow: 0 0 0 3px rgba(0, 166, 237, 0.1);
+    background: var(--neutral-50);
+}
+
+.input-help {
+    font-size: var(--text-xs);
+    color: var(--neutral-500);
+    margin-top: var(--space-1);
+    padding-left: var(--space-4);
+}
+
+.slider-container {
+    margin-top: var(--space-3);
+}
+
+.range-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--neutral-200);
+    outline: none;
+    appearance: none;
+    position: relative;
+}
+
+.range-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--growth-gradient);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: var(--shadow-lg);
+}
+
+.range-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--growth-gradient);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow-md);
+}
+
+.slider-track {
+    position: relative;
+    margin-top: var(--space-2);
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    color: var(--neutral-500);
+}
+
+.calculator-results {
+    background: var(--neutral-50);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+}
+
+.result-header {
+    text-align: center;
+    margin-bottom: var(--space-6);
+}
+
+.result-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin-bottom: var(--space-2);
+}
+
+.result-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+}
+
+.result-value {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    color: var(--growth-primary);
+}
+
+.result-currency {
+    font-size: var(--text-lg);
+    color: var(--neutral-600);
+    align-self: flex-start;
+    margin-top: var(--space-2);
+}
+
+.result-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.breakdown-item {
+    text-align: center;
+    padding: var(--space-4);
+    background: white;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--neutral-200);
+}
+
+.breakdown-label {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--neutral-600);
+    margin-bottom: var(--space-1);
+}
+
+.breakdown-value {
+    display: block;
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+}
+
+.breakdown-value.positive {
+    color: var(--success);
+}
+
+.breakdown-value.negative {
+    color: var(--error);
+}
+
+.chart-container {
+    height: 300px;
+    margin: var(--space-6) 0;
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+}
+
+.calculator-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.calc-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-medium);
+    font-size: var(--text-base);
+    transition: all var(--transition-base);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    text-decoration: none;
+}
+
+.calc-btn-primary {
+    background: var(--growth-gradient);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.calc-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.calc-btn-secondary {
+    background: white;
+    color: var(--neutral-700);
+    border: 1px solid var(--neutral-300);
+}
+
+.calc-btn-secondary:hover {
+    background: var(--neutral-50);
+    border-color: var(--neutral-400);
+}
+
+.scenario-selector {
+    margin-bottom: var(--space-6);
+}
+
+.scenario-options {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.scenario-btn {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--neutral-300);
+    border-radius: var(--radius-lg);
+    background: white;
+    color: var(--neutral-700);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.scenario-btn.active {
+    background: var(--growth-primary);
+    color: white;
+    border-color: var(--growth-primary);
+}
+
+.scenario-btn:hover:not(.active) {
+    background: var(--neutral-50);
+}
+
+.insights-panel {
+    background: var(--info-light);
+    border: 1px solid var(--info);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    margin-top: var(--space-6);
+}
+
+.insights-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+.insights-icon {
+    color: var(--info);
+    font-size: var(--text-lg);
+}
+
+.insights-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--info);
+}
+
+.insights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.insight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.insight-item:last-child {
+    border-bottom: none;
+}
+
+.insight-icon {
+    color: var(--info);
+    font-size: var(--text-base);
+    margin-top: 2px;
+}
+
+.insight-text {
+    flex: 1;
+    font-size: var(--text-sm);
+    color: var(--neutral-700);
+    line-height: var(--leading-relaxed);
+}
+
+.comparison-toggle {
+    margin-bottom: var(--space-6);
+    text-align: center;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 0 var(--space-3);
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--neutral-300);
+    transition: var(--transition-base);
+    border-radius: 34px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: var(--transition-base);
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--growth-primary);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.download-options {
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--neutral-200);
+}
+
+.download-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin-bottom: var(--space-4);
+    text-align: center;
+}
+
+.download-buttons {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: white;
+    border: 1px solid var(--neutral-300);
+    border-radius: var(--radius-lg);
+    color: var(--neutral-700);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    transition: all var(--transition-base);
+}
+
+.download-btn:hover {
+    background: var(--neutral-50);
+    border-color: var(--neutral-400);
+    color: var(--neutral-800);
+}
+
+.loading-state {
+    display: none;
+    text-align: center;
+    padding: var(--space-8);
+}
+
+.loading-state.active {
+    display: block;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--neutral-200);
+    border-top: 4px solid var(--growth-primary);
+    border-radius: var(--radius-full);
+    animation: spin 1s linear infinite;
+    margin: 0 auto var(--space-4);
+}
+
+.calculator-features {
+    background: white;
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    margin-top: var(--space-12);
+    text-align: center;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+}
+
+.feature-item {
+    text-align: center;
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--growth-light);
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    color: var(--growth-primary);
+    font-size: var(--text-2xl);
+}
+
+.feature-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin-bottom: var(--space-2);
+}
+
+.feature-description {
+    font-size: var(--text-base);
+    color: var(--neutral-600);
+    line-height: var(--leading-relaxed);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .calculator-page {
+        padding: var(--space-4) 0;
+    }
+    
+    .calculator-hero {
+        margin: var(--space-4) 0 var(--space-8);
+        padding: var(--space-6) var(--space-4);
+    }
+    
+    .calculator-hero h1 {
+        font-size: var(--text-3xl);
+    }
+    
+    .calculator-hero p {
+        font-size: var(--text-lg);
+    }
+    
+    .calculator-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+        margin-bottom: var(--space-12);
+    }
+    
+    .calculator-card.featured {
+        transform: none;
+    }
+    
+    .calculator-input {
+        font-size: var(--text-base);
+        padding: var(--space-3) var(--space-3) var(--space-3) var(--space-10);
+    }
+    
+    .result-value {
+        font-size: var(--text-3xl);
+    }
+    
+    .result-breakdown {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+    
+    .calculator-actions {
+        flex-direction: column;
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+    }
+    
+    .download-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .scenario-options {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .calculator-header {
+        padding: var(--space-6) var(--space-4) var(--space-4);
+    }
+    
+    .calculator-body {
+        padding: var(--space-4);
+    }
+    
+    .calculator-icon {
+        width: 64px;
+        height: 64px;
+        font-size: var(--text-2xl);
+    }
+    
+    .calculator-title {
+        font-size: var(--text-lg);
+    }
+    
+    .result-main {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+    
+    .result-currency {
+        align-self: center;
+        margin-top: 0;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="calculator-page">
+    <div class="container">
+        <!-- Calculator Hero Section -->
+        <div class="calculator-hero">
+            <h1>Smart Financial Calculators</h1>
+            <p>Make informed investment decisions with our advanced calculators. Get instant results with interactive charts and personalized insights.</p>
+        </div>
+        
+        <!-- Calculator Grid -->
+        <div class="calculator-grid">
+            <!-- SIP Calculator -->
+            <div class="calculator-card featured" data-calculator="sip">
+                <div class="calculator-header">
+                    <div class="calculator-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <h3 class="calculator-title">SIP Calculator</h3>
+                    <p class="calculator-description">Calculate the future value of your systematic investment plan with compound growth visualization.</p>
+                </div>
+                
+                <div class="calculator-body">
+                    <div class="calculator-inputs">
+                        <div class="input-group">
+                            <label class="input-label">Monthly Investment Amount</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">₹</span>
+                                <input type="number" class="calculator-input" id="sip-amount" value="10000" min="500" max="1000000">
+                            </div>
+                            <div class="input-help">Minimum ₹500 per month</div>
+                            <div class="slider-container">
+                                <input type="range" class="range-slider" id="sip-amount-slider" min="500" max="100000" value="10000" step="500">
+                                <div class="slider-track">
+                                    <span>₹500</span>
+                                    <span>₹25K</span>
+                                    <span>₹50K</span>
+                                    <span>₹75K</span>
+                                    <span>₹1L</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Expected Annual Return</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">%</span>
+                                <input type="number" class="calculator-input" id="sip-return" value="12" min="1" max="30" step="0.1">
+                            </div>
+                            <div class="input-help">Historical average: 10-15%</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Investment Period</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">📅</span>
+                                <input type="number" class="calculator-input" id="sip-years" value="10" min="1" max="50">
+                            </div>
+                            <div class="input-help">Years</div>
+                        </div>
+                        
+                        <div class="scenario-selector">
+                            <label class="input-label">Quick Scenarios</label>
+                            <div class="scenario-options">
+                                <button class="scenario-btn" data-scenario="conservative">Conservative (8%)</button>
+                                <button class="scenario-btn active" data-scenario="moderate">Moderate (12%)</button>
+                                <button class="scenario-btn" data-scenario="aggressive">Aggressive (15%)</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-results">
+                        <div class="result-header">
+                            <h4 class="result-title">Your Investment Will Grow To</h4>
+                        </div>
+                        
+                        <div class="result-main">
+                            <span class="result-currency">₹</span>
+                            <span class="result-value" id="sip-future-value">23,23,391</span>
+                        </div>
+                        
+                        <div class="result-breakdown">
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Total Investment</span>
+                                <span class="breakdown-value" id="sip-total-investment">₹12,00,000</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Wealth Gained</span>
+                                <span class="breakdown-value positive" id="sip-wealth-gain">₹11,23,391</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Return Percentage</span>
+                                <span class="breakdown-value positive" id="sip-return-percent">93.6%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="sip-chart"></canvas>
+                        </div>
+                        
+                        <div class="insights-panel">
+                            <div class="insights-header">
+                                <i class="fas fa-lightbulb insights-icon"></i>
+                                <h5 class="insights-title">Investment Tips</h5>
+                            </div>
+                            <ul class="insights-list" id="sip-insights">
+                                <li class="insight-item">
+                                    <i class="fas fa-check-circle insight-icon"></i>
+                                    <span class="insight-text">Starting early gives you the power of compound growth</span>
+                                </li>
+                                <li class="insight-item">
+                                    <i class="fas fa-trending-up insight-icon"></i>
+                                    <span class="insight-text">Your money will double every 6 years at 12% return</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-actions">
+                        <button class="calc-btn calc-btn-primary" onclick="calculateSIP()">
+                            <i class="fas fa-calculator"></i>
+                            Calculate
+                        </button>
+                        <button class="calc-btn calc-btn-secondary" onclick="resetSIP()">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                        <a href="{{ url_for('sip_calculator_enhanced') }}" class="calc-btn calc-btn-secondary">
+                            <i class="fas fa-expand"></i>
+                            Full View
+                        </a>
+                    </div>
+                    
+                    <div class="download-options">
+                        <h5 class="download-title">Save Your Results</h5>
+                        <div class="download-buttons">
+                            <a href="#" class="download-btn" onclick="downloadPDF('sip')">
+                                <i class="fas fa-file-pdf"></i>
+                                Download PDF
+                            </a>
+                            <a href="#" class="download-btn" onclick="shareResults('sip')">
+                                <i class="fas fa-share-alt"></i>
+                                Share Results
+                            </a>
+                            <a href="#" class="download-btn" onclick="emailResults('sip')">
+                                <i class="fas fa-envelope"></i>
+                                Email Report
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- EMI Calculator -->
+            <div class="calculator-card" data-calculator="emi">
+                <div class="calculator-header">
+                    <div class="calculator-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="calculator-title">EMI Calculator</h3>
+                    <p class="calculator-description">Calculate your loan EMI with detailed amortization schedule and payment breakdown.</p>
+                </div>
+                
+                <div class="calculator-body">
+                    <div class="calculator-inputs">
+                        <div class="input-group">
+                            <label class="input-label">Loan Amount</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">₹</span>
+                                <input type="number" class="calculator-input" id="emi-principal" value="2500000" min="100000" max="100000000">
+                            </div>
+                            <div class="input-help">Principal loan amount</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Interest Rate (Annual)</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">%</span>
+                                <input type="number" class="calculator-input" id="emi-rate" value="8.5" min="1" max="50" step="0.1">
+                            </div>
+                            <div class="input-help">Current home loan rates: 8-10%</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Loan Tenure</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">📅</span>
+                                <input type="number" class="calculator-input" id="emi-years" value="20" min="1" max="30">
+                            </div>
+                            <div class="input-help">Years</div>
+                        </div>
+                        
+                        <div class="comparison-toggle">
+                            <span>Compare Different Tenures</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="emi-comparison">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-results">
+                        <div class="result-header">
+                            <h4 class="result-title">Your Monthly EMI</h4>
+                        </div>
+                        
+                        <div class="result-main">
+                            <span class="result-currency">₹</span>
+                            <span class="result-value" id="emi-amount">21,441</span>
+                        </div>
+                        
+                        <div class="result-breakdown">
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Total Interest</span>
+                                <span class="breakdown-value" id="emi-total-interest">₹26,45,840</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Total Payment</span>
+                                <span class="breakdown-value" id="emi-total-payment">₹51,45,840</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Interest %</span>
+                                <span class="breakdown-value" id="emi-interest-percent">51.4%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="emi-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-actions">
+                        <button class="calc-btn calc-btn-primary" onclick="calculateEMI()">
+                            <i class="fas fa-calculator"></i>
+                            Calculate
+                        </button>
+                        <button class="calc-btn calc-btn-secondary" onclick="resetEMI()">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                        <a href="{{ url_for('emi_calculator_enhanced') }}" class="calc-btn calc-btn-secondary">
+                            <i class="fas fa-table"></i>
+                            View Schedule
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Retirement Calculator -->
+            <div class="calculator-card" data-calculator="retirement">
+                <div class="calculator-header">
+                    <div class="calculator-icon">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <h3 class="calculator-title">Retirement Calculator</h3>
+                    <p class="calculator-description">Plan your retirement corpus with inflation-adjusted calculations and goal tracking.</p>
+                </div>
+                
+                <div class="calculator-body">
+                    <div class="calculator-inputs">
+                        <div class="input-group">
+                            <label class="input-label">Current Age</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">👤</span>
+                                <input type="number" class="calculator-input" id="retirement-current-age" value="30" min="18" max="65">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Retirement Age</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">🎯</span>
+                                <input type="number" class="calculator-input" id="retirement-age" value="60" min="50" max="75">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Current Monthly Expenses</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">₹</span>
+                                <input type="number" class="calculator-input" id="retirement-expenses" value="50000" min="10000" max="1000000">
+                            </div>
+                            <div class="input-help">Today's monthly lifestyle cost</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Expected Inflation Rate</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">📈</span>
+                                <input type="number" class="calculator-input" id="retirement-inflation" value="6" min="2" max="15" step="0.1">
+                            </div>
+                            <div class="input-help">Historical average: 4-7%</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Expected Return on Investment</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">💹</span>
+                                <input type="number" class="calculator-input" id="retirement-return" value="12" min="5" max="25" step="0.1">
+                            </div>
+                            <div class="input-help">Post-retirement portfolio return</div>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-results">
+                        <div class="result-header">
+                            <h4 class="result-title">Required Retirement Corpus</h4>
+                        </div>
+                        
+                        <div class="result-main">
+                            <span class="result-currency">₹</span>
+                            <span class="result-value" id="retirement-corpus">1.2</span>
+                            <span class="result-currency">Cr</span>
+                        </div>
+                        
+                        <div class="result-breakdown">
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Monthly SIP Needed</span>
+                                <span class="breakdown-value" id="retirement-sip-needed">₹15,847</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Future Monthly Expense</span>
+                                <span class="breakdown-value" id="retirement-future-expense">₹2,87,175</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Years to Retirement</span>
+                                <span class="breakdown-value" id="retirement-years-left">30</span>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="retirement-chart"></canvas>
+                        </div>
+                        
+                        <div class="insights-panel">
+                            <div class="insights-header">
+                                <i class="fas fa-lightbulb insights-icon"></i>
+                                <h5 class="insights-title">Retirement Insights</h5>
+                            </div>
+                            <ul class="insights-list" id="retirement-insights">
+                                <li class="insight-item">
+                                    <i class="fas fa-exclamation-triangle insight-icon"></i>
+                                    <span class="insight-text">Inflation will increase your expenses significantly over time</span>
+                                </li>
+                                <li class="insight-item">
+                                    <i class="fas fa-clock insight-icon"></i>
+                                    <span class="insight-text">Starting early reduces your monthly investment burden</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-actions">
+                        <button class="calc-btn calc-btn-primary" onclick="calculateRetirement()">
+                            <i class="fas fa-calculator"></i>
+                            Calculate
+                        </button>
+                        <button class="calc-btn calc-btn-secondary" onclick="resetRetirement()">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                        <a href="{{ url_for('retirement_calculator_enhanced') }}" class="calc-btn calc-btn-secondary">
+                            <i class="fas fa-chart-line"></i>
+                            Detailed View
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lumpsum Calculator -->
+            <div class="calculator-card" data-calculator="lumpsum">
+                <div class="calculator-header">
+                    <div class="calculator-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="calculator-title">Lumpsum Calculator</h3>
+                    <p class="calculator-description">Calculate returns on one-time investments with compound growth projections.</p>
+                </div>
+                
+                <div class="calculator-body">
+                    <div class="calculator-inputs">
+                        <div class="input-group">
+                            <label class="input-label">Investment Amount</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">₹</span>
+                                <input type="number" class="calculator-input" id="lumpsum-amount" value="500000" min="10000" max="10000000">
+                            </div>
+                            <div class="input-help">One-time investment amount</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Expected Annual Return</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">%</span>
+                                <input type="number" class="calculator-input" id="lumpsum-return" value="12" min="1" max="30" step="0.1">
+                            </div>
+                            <div class="input-help">Expected yearly growth</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Investment Period</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">📅</span>
+                                <input type="number" class="calculator-input" id="lumpsum-years" value="10" min="1" max="50">
+                            </div>
+                            <div class="input-help">Years</div>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-results">
+                        <div class="result-header">
+                            <h4 class="result-title">Future Value</h4>
+                        </div>
+                        
+                        <div class="result-main">
+                            <span class="result-currency">₹</span>
+                            <span class="result-value" id="lumpsum-future-value">15,52,924</span>
+                        </div>
+                        
+                        <div class="result-breakdown">
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Wealth Gained</span>
+                                <span class="breakdown-value positive" id="lumpsum-wealth-gain">₹10,52,924</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Total Return</span>
+                                <span class="breakdown-value positive" id="lumpsum-return-percent">210.6%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Growth Multiple</span>
+                                <span class="breakdown-value positive" id="lumpsum-multiple">3.1x</span>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="lumpsum-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-actions">
+                        <button class="calc-btn calc-btn-primary" onclick="calculateLumpsum()">
+                            <i class="fas fa-calculator"></i>
+                            Calculate
+                        </button>
+                        <button class="calc-btn calc-btn-secondary" onclick="resetLumpsum()">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                        <a href="{{ url_for('lumpsum_calculator_enhanced') }}" class="calc-btn calc-btn-secondary">
+                            <i class="fas fa-expand"></i>
+                            Full View
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Calculator Features -->
+        <div class="calculator-features">
+            <h2>Why Choose Our Calculators?</h2>
+            <p>Advanced features designed for accurate financial planning</p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="feature-title">Interactive Charts</h4>
+                    <p class="feature-description">Visualize your investment growth with dynamic, real-time charts that update as you change parameters.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4 class="feature-title">Expert Analysis</h4>
+                    <p class="feature-description">Get expert recommendations and analysis based on your financial goals and risk profile.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h4 class="feature-title">Export Results</h4>
+                    <p class="feature-description">Download detailed reports in PDF format or share results with family and advisors.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4 class="feature-title">Mobile Optimized</h4>
+                    <p class="feature-description">Calculate on-the-go with our fully responsive design that works perfectly on all devices.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="feature-title">Secure & Private</h4>
+                    <p class="feature-description">Your financial data is never stored. All calculations happen locally in your browser.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="feature-title">Real-time Updates</h4>
+                    <p class="feature-description">See results update instantly as you adjust sliders and input values for immediate feedback.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-state" id="loading-overlay">
+    <div class="loading-spinner"></div>
+    <h4>Calculating your results...</h4>
+    <p>Please wait while we crunch the numbers</p>
+</div>
+
+<script src="{{ url_for('static', filename='js/chart-configs.js') }}"></script>
+<script>
+// Enhanced Calculator JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCalculators();
+    setupSliders();
+    setupScenarios();
+    
+    // Auto-calculate on input change
+    setupAutoCalculation();
+});
+
+function initializeCalculators() {
+    calculateSIP();
+    calculateEMI();
+    calculateRetirement();
+    calculateLumpsum();
+}
+
+function setupSliders() {
+    // SIP Amount Slider
+    const sipSlider = document.getElementById('sip-amount-slider');
+    const sipInput = document.getElementById('sip-amount');
+    
+    if (sipSlider && sipInput) {
+        sipSlider.addEventListener('input', function() {
+            sipInput.value = this.value;
+            calculateSIP();
+        });
+        
+        sipInput.addEventListener('input', function() {
+            sipSlider.value = this.value;
+            calculateSIP();
+        });
+    }
+}
+
+function setupScenarios() {
+    document.querySelectorAll('.scenario-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Update return rate based on scenario
+            const scenario = this.dataset.scenario;
+            const returnInput = document.getElementById('sip-return');
+            
+            switch(scenario) {
+                case 'conservative':
+                    returnInput.value = 8;
+                    break;
+                case 'moderate':
+                    returnInput.value = 12;
+                    break;
+                case 'aggressive':
+                    returnInput.value = 15;
+                    break;
+            }
+            
+            calculateSIP();
+        });
+    });
+}
+
+function setupAutoCalculation() {
+    // Add event listeners to all calculator inputs
+    document.querySelectorAll('.calculator-input').forEach(input => {
+        input.addEventListener('input', function() {
+            const calculator = this.closest('[data-calculator]').dataset.calculator;
+            
+            // Debounce calculation
+            clearTimeout(this.calculationTimeout);
+            this.calculationTimeout = setTimeout(() => {
+                switch(calculator) {
+                    case 'sip':
+                        calculateSIP();
+                        break;
+                    case 'emi':
+                        calculateEMI();
+                        break;
+                    case 'retirement':
+                        calculateRetirement();
+                        break;
+                    case 'lumpsum':
+                        calculateLumpsum();
+                        break;
+                }
+            }, 500);
+        });
+    });
+}
+
+function calculateSIP() {
+    showLoading();
+    
+    setTimeout(() => {
+        const amount = parseFloat(document.getElementById('sip-amount').value) || 10000;
+        const rate = parseFloat(document.getElementById('sip-return').value) || 12;
+        const years = parseFloat(document.getElementById('sip-years').value) || 10;
+        
+        const monthlyRate = rate / 100 / 12;
+        const months = years * 12;
+        const totalInvestment = amount * months;
+        
+        // SIP Future Value Formula
+        const futureValue = amount * (((1 + monthlyRate) ** months - 1) / monthlyRate) * (1 + monthlyRate);
+        const wealthGain = futureValue - totalInvestment;
+        const returnPercentage = (wealthGain / totalInvestment) * 100;
+        
+        // Update UI
+        document.getElementById('sip-future-value').textContent = formatIndianCurrency(Math.round(futureValue));
+        document.getElementById('sip-total-investment').textContent = '₹' + formatIndianCurrency(totalInvestment);
+        document.getElementById('sip-wealth-gain').textContent = '₹' + formatIndianCurrency(Math.round(wealthGain));
+        document.getElementById('sip-return-percent').textContent = returnPercentage.toFixed(1) + '%';
+        
+        // Update insights
+        updateSIPInsights(amount, rate, years, futureValue);
+        
+        // Create chart
+        createSIPChart(amount, rate, years);
+        
+        hideLoading();
+    }, 800);
+}
+
+function calculateEMI() {
+    const principal = parseFloat(document.getElementById('emi-principal').value) || 2500000;
+    const rate = parseFloat(document.getElementById('emi-rate').value) || 8.5;
+    const years = parseFloat(document.getElementById('emi-years').value) || 20;
+    
+    const monthlyRate = rate / 100 / 12;
+    const months = years * 12;
+    
+    // EMI Formula
+    const emi = (principal * monthlyRate * ((1 + monthlyRate) ** months)) / (((1 + monthlyRate) ** months) - 1);
+    const totalPayment = emi * months;
+    const totalInterest = totalPayment - principal;
+    const interestPercent = (totalInterest / principal) * 100;
+    
+    // Update UI
+    document.getElementById('emi-amount').textContent = formatIndianCurrency(Math.round(emi));
+    document.getElementById('emi-total-interest').textContent = '₹' + formatIndianCurrency(Math.round(totalInterest));
+    document.getElementById('emi-total-payment').textContent = '₹' + formatIndianCurrency(Math.round(totalPayment));
+    document.getElementById('emi-interest-percent').textContent = interestPercent.toFixed(1) + '%';
+    
+    // Create chart
+    createEMIChart(principal, totalInterest, years);
+}
+
+function calculateRetirement() {
+    const currentAge = parseFloat(document.getElementById('retirement-current-age').value) || 30;
+    const retirementAge = parseFloat(document.getElementById('retirement-age').value) || 60;
+    const currentExpenses = parseFloat(document.getElementById('retirement-expenses').value) || 50000;
+    const inflation = parseFloat(document.getElementById('retirement-inflation').value) || 6;
+    const returnRate = parseFloat(document.getElementById('retirement-return').value) || 12;
+    
+    const yearsToRetirement = retirementAge - currentAge;
+    const futureExpenses = currentExpenses * ((1 + inflation / 100) ** yearsToRetirement);
+    
+    // Assuming 25 years post retirement
+    const requiredCorpus = (futureExpenses * 12 * 25) / (1 + returnRate / 100);
+    
+    // Required monthly SIP
+    const monthlyRate = returnRate / 100 / 12;
+    const months = yearsToRetirement * 12;
+    const sipNeeded = requiredCorpus / (((1 + monthlyRate) ** months - 1) / monthlyRate * (1 + monthlyRate));
+    
+    // Update UI
+    document.getElementById('retirement-corpus').textContent = (requiredCorpus / 10000000).toFixed(1);
+    document.getElementById('retirement-sip-needed').textContent = '₹' + formatIndianCurrency(Math.round(sipNeeded));
+    document.getElementById('retirement-future-expense').textContent = '₹' + formatIndianCurrency(Math.round(futureExpenses));
+    document.getElementById('retirement-years-left').textContent = yearsToRetirement;
+    
+    // Update insights
+    updateRetirementInsights(yearsToRetirement, futureExpenses, currentExpenses);
+    
+    // Create chart
+    createRetirementChart(currentExpenses, futureExpenses, yearsToRetirement, inflation);
+}
+
+function calculateLumpsum() {
+    const amount = parseFloat(document.getElementById('lumpsum-amount').value) || 500000;
+    const rate = parseFloat(document.getElementById('lumpsum-return').value) || 12;
+    const years = parseFloat(document.getElementById('lumpsum-years').value) || 10;
+    
+    // Compound Interest Formula
+    const futureValue = amount * ((1 + rate / 100) ** years);
+    const wealthGain = futureValue - amount;
+    const returnPercentage = (wealthGain / amount) * 100;
+    const multiple = futureValue / amount;
+    
+    // Update UI
+    document.getElementById('lumpsum-future-value').textContent = formatIndianCurrency(Math.round(futureValue));
+    document.getElementById('lumpsum-wealth-gain').textContent = '₹' + formatIndianCurrency(Math.round(wealthGain));
+    document.getElementById('lumpsum-return-percent').textContent = returnPercentage.toFixed(1) + '%';
+    document.getElementById('lumpsum-multiple').textContent = multiple.toFixed(1) + 'x';
+    
+    // Create chart
+    createLumpsumChart(amount, rate, years);
+}
+
+function createSIPChart(amount, rate, years) {
+    const canvas = document.getElementById('sip-chart');
+    if (!canvas || !window.Chart) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Clear existing chart
+    if (window.sipChart) {
+        window.sipChart.destroy();
+    }
+    
+    // Generate data points
+    const data = [];
+    const investmentData = [];
+    const labels = [];
+    
+    for (let year = 1; year <= years; year++) {
+        const months = year * 12;
+        const monthlyRate = rate / 100 / 12;
+        const futureValue = amount * (((1 + monthlyRate) ** months - 1) / monthlyRate) * (1 + monthlyRate);
+        const totalInvestment = amount * months;
+        
+        data.push(Math.round(futureValue));
+        investmentData.push(totalInvestment);
+        labels.push('Year ' + year);
+    }
+    
+    window.sipChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Investment Value',
+                data: data,
+                borderColor: '#00A6ED',
+                backgroundColor: 'rgba(0, 166, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }, {
+                label: 'Total Investment',
+                data: investmentData,
+                borderColor: '#10B981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                borderWidth: 2,
+                fill: false,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    borderColor: '#00A6ED',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ₹' + formatIndianCurrency(context.parsed.y);
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + formatIndianCurrency(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createEMIChart(principal, totalInterest, years) {
+    const canvas = document.getElementById('emi-chart');
+    if (!canvas || !window.Chart) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Clear existing chart
+    if (window.emiChart) {
+        window.emiChart.destroy();
+    }
+    
+    window.emiChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Principal', 'Interest'],
+            datasets: [{
+                data: [principal, totalInterest],
+                backgroundColor: ['#10B981', '#F59E0B'],
+                borderWidth: 0,
+                cutout: '60%'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    borderColor: '#00A6ED',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ₹' + formatIndianCurrency(context.parsed);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createRetirementChart(currentExpenses, futureExpenses, years, inflation) {
+    const canvas = document.getElementById('retirement-chart');
+    if (!canvas || !window.Chart) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Clear existing chart
+    if (window.retirementChart) {
+        window.retirementChart.destroy();
+    }
+    
+    // Generate data points for expense growth
+    const data = [];
+    const labels = [];
+    
+    for (let year = 0; year <= years; year += 5) {
+        const expenses = currentExpenses * ((1 + inflation / 100) ** year);
+        data.push(Math.round(expenses));
+        labels.push(year === 0 ? 'Today' : year + ' years');
+    }
+    
+    window.retirementChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Monthly Expenses',
+                data: data,
+                backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                borderColor: '#EF4444',
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    borderColor: '#EF4444',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Monthly Expenses: ₹' + formatIndianCurrency(context.parsed.y);
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + formatIndianCurrency(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createLumpsumChart(amount, rate, years) {
+    const canvas = document.getElementById('lumpsum-chart');
+    if (!canvas || !window.Chart) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Clear existing chart
+    if (window.lumpsumChart) {
+        window.lumpsumChart.destroy();
+    }
+    
+    // Generate data points
+    const data = [];
+    const labels = [];
+    
+    for (let year = 0; year <= years; year++) {
+        const futureValue = amount * ((1 + rate / 100) ** year);
+        data.push(Math.round(futureValue));
+        labels.push('Year ' + year);
+    }
+    
+    window.lumpsumChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Investment Value',
+                data: data,
+                borderColor: '#8B5CF6',
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#8B5CF6',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    borderColor: '#8B5CF6',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Value: ₹' + formatIndianCurrency(context.parsed.y);
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + formatIndianCurrency(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function updateSIPInsights(amount, rate, years, futureValue) {
+    const insights = document.getElementById('sip-insights');
+    if (!insights) return;
+    
+    const doublingTime = Math.log(2) / Math.log(1 + rate / 100);
+    const totalInvestment = amount * years * 12;
+    const wealthMultiple = futureValue / totalInvestment;
+    
+    const insightsList = [
+        {
+            icon: 'fas fa-chart-line',
+            text: `Your money will double every ${doublingTime.toFixed(1)} years at ${rate}% return`
+        },
+        {
+            icon: 'fas fa-coins',
+            text: `Every ₹1 invested will become ₹${wealthMultiple.toFixed(2)} in ${years} years`
+        },
+        {
+            icon: 'fas fa-clock',
+            text: 'Starting early gives you the power of compound growth'
+        }
+    ];
+    
+    insights.innerHTML = insightsList.map(insight => `
+        <li class="insight-item">
+            <i class="${insight.icon} insight-icon"></i>
+            <span class="insight-text">${insight.text}</span>
+        </li>
+    `).join('');
+}
+
+function updateRetirementInsights(years, futureExpenses, currentExpenses) {
+    const insights = document.getElementById('retirement-insights');
+    if (!insights) return;
+    
+    const expenseMultiple = futureExpenses / currentExpenses;
+    
+    const insightsList = [
+        {
+            icon: 'fas fa-exclamation-triangle',
+            text: `Your expenses will be ${expenseMultiple.toFixed(1)}x higher due to inflation`
+        },
+        {
+            icon: 'fas fa-clock',
+            text: `You have ${years} years to build your retirement corpus`
+        },
+        {
+            icon: 'fas fa-lightbulb',
+            text: 'Consider increasing your investment as your income grows'
+        }
+    ];
+    
+    insights.innerHTML = insightsList.map(insight => `
+        <li class="insight-item">
+            <i class="${insight.icon} insight-icon"></i>
+            <span class="insight-text">${insight.text}</span>
+        </li>
+    `).join('');
+}
+
+function formatIndianCurrency(amount) {
+    return new Intl.NumberFormat('en-IN').format(amount);
+}
+
+function showLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+        overlay.classList.add('active');
+    }
+}
+
+function hideLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+        overlay.classList.remove('active');
+    }
+}
+
+function resetSIP() {
+    document.getElementById('sip-amount').value = 10000;
+    document.getElementById('sip-return').value = 12;
+    document.getElementById('sip-years').value = 10;
+    document.getElementById('sip-amount-slider').value = 10000;
+    
+    // Reset scenario buttons
+    document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('[data-scenario="moderate"]').classList.add('active');
+    
+    calculateSIP();
+}
+
+function resetEMI() {
+    document.getElementById('emi-principal').value = 2500000;
+    document.getElementById('emi-rate').value = 8.5;
+    document.getElementById('emi-years').value = 20;
+    calculateEMI();
+}
+
+function resetRetirement() {
+    document.getElementById('retirement-current-age').value = 30;
+    document.getElementById('retirement-age').value = 60;
+    document.getElementById('retirement-expenses').value = 50000;
+    document.getElementById('retirement-inflation').value = 6;
+    document.getElementById('retirement-return').value = 12;
+    calculateRetirement();
+}
+
+function resetLumpsum() {
+    document.getElementById('lumpsum-amount').value = 500000;
+    document.getElementById('lumpsum-return').value = 12;
+    document.getElementById('lumpsum-years').value = 10;
+    calculateLumpsum();
+}
+
+function downloadPDF(calculator) {
+    // Implement PDF download functionality
+    alert('PDF download feature will be implemented');
+}
+
+function shareResults(calculator) {
+    // Implement share functionality
+    if (navigator.share) {
+        navigator.share({
+            title: 'My Financial Calculation Results',
+            text: 'Check out my financial planning results!',
+            url: window.location.href
+        });
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Link copied to clipboard!');
+        });
+    }
+}
+
+function emailResults(calculator) {
+    // Implement email functionality
+    const subject = 'My Financial Calculation Results';
+    const body = 'Please find my financial planning results attached.';
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+</script>
+{% endblock %}

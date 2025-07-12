@@ -1,0 +1,124 @@
+You are a senior web developer and high-end UI/UX designer. Build a **visually stunning, secure, mobile-first website** for **NYQE Wealth Management** — a premium financial advisory firm. This project must match the quality of top fintech websites like Groww and Zerodha, but with a more elegant and trust-focused aesthetic.
+
+---
+
+🏢 **About NYQE**
+**Tagline:** Empowering Your Financial Future, One Decision at a Time.
+
+NYQE Wealth Management provides expert advisory across:
+- Investment Planning
+- Portfolio Management
+- Retirement & Tax Optimization
+- Multi-Asset & Alternative Investments
+
+---
+
+🎯 **CORE SITE FEATURES**
+
+1. **Homepage with Visual Walkthrough on Entry**
+ - On first visit, trigger a 4-step animated walkthrough overlay:
+ 1. **Why Investing Is Needed** → Saving ≠ Growing (inflation vs investment)
+ 2. **Why SIP Works** → Small steps grow big with consistency
+ 3. **Why Insurance Is Important** → Protecting before growing
+ 4. **How Inflation Erodes Wealth** → ₹100 today ≠ ₹100 tomorrow
+ - Use Lottie animations or SVG illustrations
+ - “Skip” and “Don’t Show Again” toggle via `localStorage`
+ - Smooth transitions and branded visual storytelling
+
+2. **Service Pages**
+ - Investment Advisory, Financial Planning, Retirement, Tax & Portfolio Management
+ - Structured with rich visuals, iconography, FAQs, and CTA buttons
+
+3. **Investment Solutions**
+ - Dedicated pages: Mutual Funds, Fixed Income, Equity, Alternatives, Structured Products
+ - Include info cards, risk meters, and visually intuitive layouts
+
+4. **Financial Tools Section**
+ - Add calculators modeled on Groww.in but with NYQE branding and improved UI:
+ - SIP Calculator
+ - Lumpsum Calculator
+ - SWP Calculator
+ - FD & PPF Calculators
+ - Retirement Calculator
+ - NPS Calculator
+ - EMI Calculator
+ - Each calculator must have real-time updates, sliders, and animated charts (use Chart.js)
+ - Include result download and print options
+
+5. **Product Information & Comparison**
+ - Side-by-side comparison tool for investment options
+ - Star ratings, risk levels, key feature highlights
+ - Dynamic filtering (e.g. return %, lock-in, liquidity)
+
+6. **Partners Page**
+ - Display banking/lending partners (logo grid)
+ - Include security badges (ISO, SEBI Registered, etc.)
+
+---
+
+🎨 **DESIGN REQUIREMENTS**
+- Luxury-fintech aesthetic: gradients, blur effects, clean icons
+- Use parallax sections, scroll animations (via AOS or IntersectionObserver)
+- Dark + Light mode toggle
+- Responsive across devices
+- Custom illustrations to explain financial concepts
+- Smooth form validations, tooltips, and transitions
+
+---
+
+🛠 **TECH STACK**
+- HTML5 + CSS3 + Vanilla JavaScript
+- Optional: Chart.js, LottieFiles, AOS.js for animations
+- Fully static, no backend for now
+- CMS optional: Use NetlifyCMS or JSON-config file to allow easy updates
+
+---
+
+📁 **FILE STRUCTURE**
+
+
+index.html → Home + walkthrough
+/services/
+advisory.html
+retirement.html
+/investments/
+mutual-funds.html
+alternatives.html
+/calculators/
+sip.html
+emi.html
+retirement.html
+fd.html
+/components/
+walkthrough.html
+navbar.html
+footer.html
+/assets/
+/images/
+/animations/
+/icons/
+/charts/
+js/
+walkthrough.js
+calculators.js
+chart-configs.js
+css/
+styles.css
+walkthrough.css
+cms/
+config.json (optional)
+
+---
+
+🔐 **SECURITY & COMPLIANCE UI**
+- Display SEBI registration, disclaimers, terms, and risk warnings
+- Add privacy policy and secure client login placeholder (do not implement login logic yet)
+
+---
+
+📌 **FINAL OUTPUT**
+A modern, high-performance, investor-friendly website for NYQE Wealth Management that:
+- Educates users via onboarding walkthrough
+- Offers deep insight via calculators & tools
+- Builds trust through strong UX, security visuals, and partner integration
+- Is visually striking, responsive, and CMS-ready

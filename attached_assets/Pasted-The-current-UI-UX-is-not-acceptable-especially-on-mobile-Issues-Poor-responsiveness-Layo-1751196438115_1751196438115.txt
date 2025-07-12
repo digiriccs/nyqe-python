@@ -1,0 +1,62 @@
+The current UI/UX is not acceptable — especially on mobile.
+
+🔴 Issues:
+- Poor responsiveness
+- Layout breaks on small screens
+- No onboarding or walkthrough for new users
+- Fails to communicate investment value or trust
+
+🎯 What I need:
+Build a **mobile-first responsive walkthrough overlay** using HTML, CSS (Tailwind preferred or Bootstrap 5), and Python (Flask or Django templates). This overlay should show **4 educational screens/slides** on first login — using session or localStorage tracking.
+
+### 📲 Walkthrough Slides:
+
+1. **Why Investing Is Important**
+   - Text: “Your money loses value over time. Start investing to build wealth.”
+   - Visual: Graph or animated SVG showing compounding growth
+   - CTA: “Next”
+
+2. **Why SIPs Matter**
+   - Text: “SIPs help you invest small amounts monthly and grow wealth steadily.”
+   - Visual: Coins filling a jar or a tree growing
+   - CTA: “Next”
+
+3. **Why Understanding Inflation Is Critical**
+   - Text: “₹100 today won’t buy the same things in 10 years. Beat inflation with smart investing.”
+   - Visual: Shrinking basket graphic
+   - CTA: “Next”
+
+4. **Why AIFs Are Underrated**
+   - Text: “Alternative Investment Funds offer high-growth potential and diversification. Most retail investors miss this.”
+   - Visual: Comparison between Mutual Funds and AIFs
+   - CTA: “Explore Investments”
+
+---
+
+### 🧑‍💻 Developer Requirements:
+- Fully mobile responsive (media queries or Tailwind/Bootstrap)
+- Use `localStorage` to show only on first login:  
+  ```js
+  if (!localStorage.getItem("walkthrough_seen")) {
+    showWalkthrough();
+    localStorage.setItem("walkthrough_seen", "true");
+  }
+
+	•	Each step in the overlay must be a sliding panel with Next and Skip buttons
+	•	Overlay should dim background (backdrop-blur or opacity: 0.6)
+	•	Integrate with base Python template layout (base.html)
+	•	Add {% if show_walkthrough %} block logic if server-rendered
+
+✅ Deliver:
+	•	1 walkthrough template (walkthrough.html)
+	•	1 JS file (walkthrough.js)
+	•	Integrated CSS (responsive + dark mode optional)
+	•	Code to inject this only on first login or first visit
+
+🚫 Don’t use fixed-width layouts
+🚫 Don’t make it desktop-only
+🚫 Don’t show all 4 points on one page — must be step-by-step
+
+---
+
+Would you like me to now **generate the HTML + JS + Python template code** for this walkthrough?

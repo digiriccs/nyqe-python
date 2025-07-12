@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NYQE Wealth - Submit Your Query</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #003459;
+      --accent: #00A6ED;
+      --secondary-bg: #F6F8FA;
+      --text-dark: #1A1A1A;
+      --text-light: #666666;
+      --highlight: #FFD700;
+      --error: #E74C3C;
+      --success: #27AE60;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--secondary-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 100%;
+      padding: 16px;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      margin-bottom: 20px;
+    }
+
+    .heading {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .subheading {
+      font-size: 16px;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+
+    .input-label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+      display: block;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(0,166,237,0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    @media (min-width: 600px) {
+      .heading { font-size: 28px; }
+      .subheading { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="heading">Submit Your Query</div>
+      <div class="subheading">Our team will get back to you shortly</div>
+
+      <label class="input-label" for="category">Category</label>
+      <select id="category">
+        <option>Investment</option>
+        <option>Tax Planning</option>
+        <option>Retirement</option>
+      </select>
+
+      <label class="input-label" for="query">Your Message</label>
+      <textarea id="query" rows="5" placeholder="Type your message here..."></textarea>
+
+      <button class="btn-primary">Submit</button>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,749 @@
+{% extends "base.html" %}
+
+{% block title %}Terms & Conditions - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced-design-system.css') }}">
+<style>
+.legal-page {
+    background: var(--neutral-50);
+    min-height: 100vh;
+    padding: var(--space-8) 0;
+}
+
+.legal-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.legal-header {
+    background: var(--trust-gradient);
+    color: white;
+    padding: var(--space-8);
+    text-align: center;
+}
+
+.legal-header h1 {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-2);
+    color: white;
+}
+
+.legal-header p {
+    font-size: var(--text-lg);
+    opacity: 0.9;
+    margin: 0;
+}
+
+.legal-nav {
+    background: var(--neutral-100);
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.nav-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--neutral-600);
+}
+
+.nav-breadcrumb a {
+    color: var(--growth-primary);
+    text-decoration: none;
+    font-weight: var(--font-medium);
+}
+
+.nav-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.legal-content {
+    padding: var(--space-8);
+    line-height: var(--leading-relaxed);
+}
+
+.legal-section {
+    margin-bottom: var(--space-8);
+}
+
+.legal-section h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--trust-primary);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--neutral-200);
+}
+
+.legal-section h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin: var(--space-6) 0 var(--space-3);
+}
+
+.legal-section p {
+    margin-bottom: var(--space-4);
+    color: var(--neutral-700);
+    text-align: justify;
+}
+
+.legal-section ul, .legal-section ol {
+    margin: var(--space-4) 0;
+    padding-left: var(--space-6);
+    color: var(--neutral-700);
+}
+
+.legal-section li {
+    margin-bottom: var(--space-2);
+}
+
+.highlight-box {
+    background: var(--warning-light);
+    border: 1px solid var(--warning);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin: var(--space-6) 0;
+}
+
+.highlight-box h4 {
+    color: var(--warning);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-3);
+}
+
+.contact-info {
+    background: var(--neutral-50);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-top: var(--space-8);
+}
+
+.legal-footer {
+    background: var(--neutral-100);
+    padding: var(--space-6);
+    text-align: center;
+    border-top: 1px solid var(--neutral-200);
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    background: var(--growth-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    width: 48px;
+    height: 48px;
+    font-size: var(--text-lg);
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-base);
+    z-index: var(--z-fixed);
+}
+
+.back-to-top:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+.last-updated {
+    font-size: var(--text-sm);
+    color: var(--neutral-500);
+    text-align: center;
+    margin-bottom: var(--space-6);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .legal-page {
+        padding: var(--space-4) var(--space-4);
+    }
+    
+    .legal-header {
+        padding: var(--space-6) var(--space-4);
+    }
+    
+    .legal-header h1 {
+        font-size: var(--text-2xl);
+    }
+    
+    .legal-content {
+        padding: var(--space-6) var(--space-4);
+    }
+    
+    .legal-section h2 {
+        font-size: var(--text-lg);
+    }
+    
+    .nav-breadcrumb {
+        flex-wrap: wrap;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="legal-page">
+    <div class="container">
+        <div class="legal-container">
+            <!-- Header -->
+            <div class="legal-header">
+                <h1>Terms & Conditions</h1>
+                <p>Please read these terms carefully before using our services</p>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="legal-nav">
+                <div class="nav-breadcrumb">
+                    <a href="{{ url_for('index') }}">Home</a>
+                    <span>></span>
+                    <span>Terms & Conditions</span>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="legal-content">
+                <div class="last-updated">
+                    <strong>Last Updated:</strong> December 29, 2024
+                </div>
+                
+                <div class="legal-section">
+                    <h2>1. Acceptance of Terms</h2>
+                    <p>By accessing and using the NYQE Wealth Management website, mobile application, or any services provided by NYQE Wealth Management Private Limited ("Company," "we," "us," or "our"), you ("User," "Client," or "you") acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions ("Terms").</p>
+                    
+                    <p>These Terms constitute a legally binding agreement between you and NYQE Wealth Management. If you do not agree to these Terms, please do not use our services or website.</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>2. Company Information & Registration</h2>
+                    <p><strong>NYQE Wealth Management Private Limited</strong></p>
+                    <ul>
+                        <li>CIN: U74999DL2020PTC365432</li>
+                        <li>SEBI Registration Number: INA000012345</li>
+                        <li>Registered Office: 123 Financial District, Connaught Place, New Delhi - 110001</li>
+                        <li>Contact: info@nyqewealthmanagement.com</li>
+                        <li>Phone: +91-11-4567-8900</li>
+                        <li>GST Number: 07AABCU9603R1ZX</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <h4>AMFI Registration</h4>
+                        <p>NYQE Wealth Management is registered with the Association of Mutual Funds in India (AMFI) as a Registered Mutual Fund Distributor under the AMFI regulations.</p>
+                    </div>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>3. Services Offered</h2>
+                    <h3>3.1 Investment Advisory Services</h3>
+                    <ul>
+                        <li>Portfolio analysis and recommendations</li>
+                        <li>Asset allocation strategies</li>
+                        <li>Investment planning and goal-based investing</li>
+                        <li>Retirement planning services</li>
+                        <li>Tax optimization strategies</li>
+                        <li>Financial planning consultations</li>
+                        <li>Risk assessment and profiling</li>
+                        <li>Estate planning guidance</li>
+                    </ul>
+                    
+                    <h3>3.2 Digital Tools and Calculators</h3>
+                    <ul>
+                        <li>SIP calculators and investment planning tools</li>
+                        <li>Retirement corpus calculators</li>
+                        <li>Risk assessment questionnaires</li>
+                        <li>Goal-based investment calculators</li>
+                        <li>Tax planning tools</li>
+                        <li>EMI and loan calculators</li>
+                        <li>Insurance need calculators</li>
+                    </ul>
+                    
+                    <h3>3.3 Educational Content</h3>
+                    <ul>
+                        <li>Investment research and market insights</li>
+                        <li>Financial education resources</li>
+                        <li>Webinars and educational content</li>
+                        <li>Market analysis and commentary</li>
+                        <li>Financial literacy programs</li>
+                        <li>Interactive learning modules</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>4. Investment Disclaimers & Risk Warnings</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>⚠️ Important Investment Disclaimer</h4>
+                        <p><strong>All investments are subject to market risks. Past performance does not guarantee future returns. Please read all scheme-related documents carefully before investing. Mutual fund investments are subject to market risks, read all scheme related documents carefully.</strong></p>
+                    </div>
+                    
+                    <h3>4.1 Nature of Investment Advice</h3>
+                    <ul>
+                        <li>All investment advice provided is general in nature and may not be suitable for all investors</li>
+                        <li>Recommendations are based on information available at the time of advice and market conditions</li>
+                        <li>Clients must make their own investment decisions based on their financial situation and risk tolerance</li>
+                        <li>We do not guarantee specific returns or profits from investments</li>
+                        <li>Investment values can go up or down, and you may receive back less than invested</li>
+                        <li>Currency fluctuations may affect international investments</li>
+                        <li>Liquidity risks may apply to certain investment products</li>
+                    </ul>
+                    
+                    <h3>4.2 Client Suitability & Due Diligence</h3>
+                    <p>It is the client's responsibility to:</p>
+                    <ul>
+                        <li>Provide accurate and complete financial information including income, assets, and liabilities</li>
+                        <li>Assess their own risk tolerance and investment capacity honestly</li>
+                        <li>Understand the risks associated with recommended investments before proceeding</li>
+                        <li>Seek independent advice if uncertain about any recommendations</li>
+                        <li>Monitor their investment portfolio regularly and stay informed about market developments</li>
+                        <li>Notify us of any material changes in financial circumstances</li>
+                        <li>Read and understand all investment-related documents before making decisions</li>
+                    </ul>
+                    
+                    <h3>4.3 Market Risk Factors</h3>
+                    <p>Investments are subject to various risks including but not limited to:</p>
+                    <ul>
+                        <li><strong>Market Risk:</strong> General market movements affecting investment values</li>
+                        <li><strong>Interest Rate Risk:</strong> Changes in interest rates affecting bond and equity valuations</li>
+                        <li><strong>Credit Risk:</strong> Risk of default by issuers of debt securities</li>
+                        <li><strong>Liquidity Risk:</strong> Difficulty in selling investments at fair value</li>
+                        <li><strong>Inflation Risk:</strong> Erosion of purchasing power over time</li>
+                        <li><strong>Political Risk:</strong> Government policy changes affecting markets</li>
+                        <li><strong>Currency Risk:</strong> Exchange rate fluctuations for foreign investments</li>
+                        <li><strong>Regulatory Risk:</strong> Changes in laws and regulations affecting investments</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>5. User Obligations & Restrictions</h2>
+                    <h3>5.1 Eligibility Criteria</h3>
+                    <ul>
+                        <li>Users must be at least 18 years of age and legally competent to enter contracts</li>
+                        <li>Users must be Indian residents for most services (NRI services available separately)</li>
+                        <li>Users must provide accurate personal and financial information</li>
+                        <li>Users must comply with all applicable Indian laws and regulations</li>
+                        <li>Users must have valid PAN and Aadhaar as required by KYC norms</li>
+                        <li>Users must not be listed in any regulatory debarment or sanctions lists</li>
+                    </ul>
+                    
+                    <h3>5.2 Prohibited Activities</h3>
+                    <p>Users are strictly prohibited from:</p>
+                    <ul>
+                        <li>Using the platform for illegal, fraudulent, or unauthorized purposes</li>
+                        <li>Attempting to gain unauthorized access to our systems or other users' accounts</li>
+                        <li>Transmitting viruses, malware, or malicious code</li>
+                        <li>Reproducing, distributing, or copying our proprietary content without written permission</li>
+                        <li>Creating false accounts or providing misleading information</li>
+                        <li>Using automated systems, bots, or scraping tools without explicit permission</li>
+                        <li>Engaging in market manipulation or insider trading based on our advice</li>
+                        <li>Reverse engineering our calculators, algorithms, or proprietary tools</li>
+                        <li>Sharing login credentials or allowing unauthorized access to accounts</li>
+                        <li>Using our services for money laundering or terrorist financing</li>
+                    </ul>
+                    
+                    <h3>5.3 Account Responsibilities</h3>
+                    <ul>
+                        <li>Maintain confidentiality of login credentials</li>
+                        <li>Notify us immediately of any unauthorized access or security breaches</li>
+                        <li>Keep contact information and financial details updated</li>
+                        <li>Use our services in accordance with their intended purpose</li>
+                        <li>Report any suspicious activities or system errors promptly</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>6. Fees & Payment Terms</h2>
+                    <h3>6.1 Advisory Fee Structure</h3>
+                    <p>Investment advisory fees are charged as per the agreed fee structure outlined in the Investment Advisory Agreement. Fees may include:</p>
+                    <ul>
+                        <li>Annual portfolio management fees (typically 1-3% of assets under management)</li>
+                        <li>One-time financial planning fees (₹5,000 - ₹50,000 based on complexity)</li>
+                        <li>Consultation fees for specific advisory services (₹2,000 - ₹10,000 per session)</li>
+                        <li>Performance-based fees (where applicable and SEBI compliant)</li>
+                        <li>Subscription fees for premium digital services</li>
+                        <li>Transaction-based fees for execution services</li>
+                    </ul>
+                    
+                    <h3>6.2 Payment Terms & Conditions</h3>
+                    <ul>
+                        <li>Fees are payable in advance or as specified in the individual service agreement</li>
+                        <li>All fees are inclusive of applicable GST unless stated otherwise</li>
+                        <li>Payment methods include bank transfer, UPI, debit/credit cards, and cheques</li>
+                        <li>Refunds are subject to the terms outlined in individual service agreements</li>
+                        <li>Non-payment may result in suspension or termination of services after due notice</li>
+                        <li>Late payment charges may apply as per the service agreement</li>
+                        <li>Fee revisions will be communicated with 30 days notice</li>
+                    </ul>
+                    
+                    <h3>6.3 Billing & Invoicing</h3>
+                    <ul>
+                        <li>Invoices will be generated monthly/quarterly as per the agreement</li>
+                        <li>Electronic invoices will be sent to registered email addresses</li>
+                        <li>GST will be charged as per applicable rates and regulations</li>
+                        <li>Billing disputes must be raised within 30 days of invoice date</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>7. Data Privacy & Confidentiality</h2>
+                    <h3>7.1 Information Collection & Usage</h3>
+                    <p>We collect and process the following categories of personal information:</p>
+                    <ul>
+                        <li><strong>Identity Information:</strong> Name, date of birth, gender, photographs</li>
+                        <li><strong>Contact Information:</strong> Address, phone numbers, email addresses</li>
+                        <li><strong>Financial Information:</strong> Income, assets, liabilities, investment history, bank details</li>
+                        <li><strong>Transaction Data:</strong> Investment transactions, portfolio performance, payment history</li>
+                        <li><strong>Risk Profile:</strong> Risk tolerance questionnaire responses, investment preferences</li>
+                        <li><strong>Technical Data:</strong> IP addresses, browser information, device identifiers</li>
+                        <li><strong>Usage Data:</strong> Website navigation patterns, feature usage, interaction data</li>
+                        <li><strong>Communications:</strong> Email correspondence, chat logs, call recordings</li>
+                    </ul>
+                    
+                    <h3>7.2 Confidentiality Commitment</h3>
+                    <p>We maintain strict confidentiality of all client information and will not share personal data except:</p>
+                    <ul>
+                        <li>With client's explicit written consent</li>
+                        <li>As required by law, court orders, or regulatory authorities (SEBI, RBI, IT Department, etc.)</li>
+                        <li>With authorized service providers under strict confidentiality agreements (fund houses, brokers, etc.)</li>
+                        <li>In anonymized and aggregated form for research, analytics, and service improvement</li>
+                        <li>For fraud prevention and legal compliance purposes</li>
+                        <li>With auditors and compliance officers under professional confidentiality</li>
+                    </ul>
+                    
+                    <h3>7.3 Data Security Measures</h3>
+                    <ul>
+                        <li>256-bit SSL encryption for all data transmission</li>
+                        <li>Multi-factor authentication for account access</li>
+                        <li>Regular security audits and vulnerability assessments</li>
+                        <li>Restricted access to personal data on need-to-know basis</li>
+                        <li>Secure data centers with physical and logical access controls</li>
+                        <li>Regular backup and disaster recovery procedures</li>
+                        <li>Employee training on data privacy and security protocols</li>
+                    </ul>
+                    
+                    <h3>7.4 Data Retention Policy</h3>
+                    <ul>
+                        <li>Client data retained for minimum 5 years as per SEBI regulations</li>
+                        <li>Financial records maintained for 8 years as per Income Tax Act</li>
+                        <li>Communication records stored for 3 years for service quality</li>
+                        <li>Website analytics data retained for 2 years</li>
+                        <li>Secure deletion of data after retention period unless required by law</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>8. Intellectual Property Rights</h2>
+                    <p>All content on this website, including but not limited to text, graphics, logos, icons, images, audio clips, calculators, research reports, investment models, and software, is the exclusive property of NYQE Wealth Management and is protected by Indian and international copyright, trademark, and intellectual property laws.</p>
+                    
+                    <h3>8.1 Permitted Use</h3>
+                    <ul>
+                        <li>Personal, non-commercial use of website content for investment decision-making</li>
+                        <li>Downloading and printing content for personal reference and record-keeping</li>
+                        <li>Sharing links to our content with proper attribution and source citation</li>
+                        <li>Using calculators and tools for personal financial planning</li>
+                        <li>Quoting brief excerpts in academic or educational contexts with proper citation</li>
+                    </ul>
+                    
+                    <h3>8.2 Restrictions & Prohibitions</h3>
+                    <ul>
+                        <li>Commercial use, distribution, or sale of content without written permission</li>
+                        <li>Reproduction or redistribution of proprietary research and investment models</li>
+                        <li>Reverse engineering of calculators, algorithms, or proprietary tools</li>
+                        <li>Use of our trademarks, branding, or logos without authorization</li>
+                        <li>Creating derivative works based on our proprietary content</li>
+                        <li>Modifying, adapting, or translating content without permission</li>
+                        <li>Removing copyright notices or proprietary markings</li>
+                    </ul>
+                    
+                    <h3>8.3 Trademark Policy</h3>
+                    <p>NYQE Wealth Management, our logo, and related marks are trademarks of NYQE Wealth Management Private Limited. Use of these trademarks without prior written consent is prohibited and may constitute trademark infringement.</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>9. Limitation of Liability</h2>
+                    <p>To the maximum extent permitted by Indian law:</p>
+                    
+                    <h3>9.1 Disclaimer of Warranties</h3>
+                    <ul>
+                        <li>Services are provided "as is" and "as available" without warranties of any kind</li>
+                        <li>We do not warrant uninterrupted, timely, secure, or error-free service</li>
+                        <li>Information accuracy is not guaranteed, though we strive for reliability and currency</li>
+                        <li>Third-party content, links, and external services are not under our control</li>
+                        <li>Investment performance projections are estimates based on historical data and assumptions</li>
+                        <li>Technology platforms may experience downtime or technical issues</li>
+                    </ul>
+                    
+                    <h3>9.2 Limitation of Damages</h3>
+                    <p>NYQE Wealth Management shall not be liable for:</p>
+                    <ul>
+                        <li>Investment losses resulting from market volatility, economic conditions, or force majeure events</li>
+                        <li>Indirect, consequential, punitive, or special damages</li>
+                        <li>Loss of profits, data, business opportunities, or goodwill</li>
+                        <li>Damages exceeding the total fees paid for our services in the preceding 12 months</li>
+                        <li>Technical failures, system downtime, or cybersecurity incidents beyond our control</li>
+                        <li>Delays in executing transactions due to market conditions or third-party failures</li>
+                        <li>Tax implications or changes in tax laws affecting investments</li>
+                        <li>Actions or inactions of third-party service providers (brokers, fund houses, etc.)</li>
+                    </ul>
+                    
+                    <h3>9.3 Force Majeure</h3>
+                    <p>We shall not be liable for any failure or delay in performance due to circumstances beyond our reasonable control, including natural disasters, war, terrorism, government actions, pandemics, or technological failures.</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>10. Regulatory Compliance</h2>
+                    <h3>10.1 SEBI Compliance Framework</h3>
+                    <p>Our operations comply with:</p>
+                    <ul>
+                        <li>SEBI (Investment Advisers) Regulations, 2013 and subsequent amendments</li>
+                        <li>SEBI (Investment Advisers) (Amendment) Regulations, 2020</li>
+                        <li>SEBI Code of Conduct for Investment Advisers</li>
+                        <li>SEBI (Prohibition of Fraudulent and Unfair Trade Practices) Regulations, 2003</li>
+                        <li>SEBI guidelines on advertising and investor protection</li>
+                        <li>SEBI regulations on client asset protection and segregation</li>
+                    </ul>
+                    
+                    <h3>10.2 Anti-Money Laundering (AML) Compliance</h3>
+                    <ul>
+                        <li>Prevention of Money Laundering Act (PMLA), 2002</li>
+                        <li>Know Your Customer (KYC) guidelines issued by SEBI</li>
+                        <li>Customer Due Diligence (CDD) procedures</li>
+                        <li>Suspicious Transaction Reporting (STR) to Financial Intelligence Unit (FIU-IND)</li>
+                        <li>Maintenance of records as per PMLA requirements</li>
+                    </ul>
+                    
+                    <h3>10.3 Other Applicable Laws & Regulations</h3>
+                    <ul>
+                        <li>Information Technology Act, 2000 and IT (Reasonable Security Practices) Rules, 2011</li>
+                        <li>Indian Contract Act, 1872</li>
+                        <li>Consumer Protection Act, 2019</li>
+                        <li>Foreign Exchange Management Act (FEMA), 1999</li>
+                        <li>Income Tax Act, 1961 and related tax laws</li>
+                        <li>Companies Act, 2013</li>
+                        <li>Reserve Bank of India (RBI) guidelines</li>
+                        <li>Insurance Regulatory and Development Authority (IRDAI) regulations</li>
+                    </ul>
+                    
+                    <h3>10.4 Professional Standards</h3>
+                    <ul>
+                        <li>Adherence to fiduciary duties toward clients</li>
+                        <li>Maintenance of professional competence through continuous education</li>
+                        <li>Ethical business practices and conflict of interest management</li>
+                        <li>Fair and transparent fee disclosure</li>
+                        <li>Appropriate risk management and internal controls</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>11. Termination</h2>
+                    <h3>11.1 Termination by Client</h3>
+                    <p>Clients may terminate the advisory relationship by providing 30 days written notice. Upon termination:</p>
+                    <ul>
+                        <li>Advisory relationship ends effective from the termination date</li>
+                        <li>Access to digital platforms and proprietary tools may be suspended</li>
+                        <li>Final fees and charges for services rendered become payable</li>
+                        <li>Confidentiality obligations continue indefinitely</li>
+                        <li>Client may request transfer of investment portfolio to another advisor</li>
+                        <li>Final reporting and account statements will be provided</li>
+                        <li>Refund of prepaid fees may be available as per terms</li>
+                    </ul>
+                    
+                    <h3>11.2 Termination by Company</h3>
+                    <p>We reserve the right to terminate services immediately in cases of:</p>
+                    <ul>
+                        <li>Material breach of terms and conditions</li>
+                        <li>Non-payment of fees after due notice and opportunity to cure</li>
+                        <li>Fraudulent, illegal, or unethical activities by the client</li>
+                        <li>Providing false information or documentation</li>
+                        <li>Regulatory requirements or compliance concerns</li>
+                        <li>Inappropriate behavior toward our staff or representatives</li>
+                        <li>Circumstances making it impractical to continue the relationship</li>
+                    </ul>
+                    
+                    <h3>11.3 Effect of Termination</h3>
+                    <ul>
+                        <li>All outstanding obligations remain enforceable</li>
+                        <li>Intellectual property rights continue to be protected</li>
+                        <li>Data retention policies remain applicable</li>
+                        <li>Dispute resolution mechanisms continue to apply</li>
+                        <li>Professional obligations under law continue</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>12. Grievance Redressal Mechanism</h2>
+                    <h3>12.1 Internal Grievance Resolution</h3>
+                    <p><strong>Grievance Officer:</strong> Mr. Rajesh Kumar<br>
+                    <strong>Designation:</strong> Chief Compliance Officer<br>
+                    <strong>Email:</strong> grievances@nyqewealthmanagement.com<br>
+                    <strong>Phone:</strong> +91-11-4567-8901<br>
+                    <strong>Address:</strong> 123 Financial District, Connaught Place, New Delhi - 110001<br>
+                    <strong>Response Time:</strong> Acknowledgment within 7 working days, resolution within 30 working days</p>
+                    
+                    <h3>12.2 Grievance Resolution Process</h3>
+                    <ol>
+                        <li><strong>Complaint Registration:</strong> Submit written complaint with details and supporting documents</li>
+                        <li><strong>Acknowledgment:</strong> Receipt confirmation within 7 working days</li>
+                        <li><strong>Investigation:</strong> Thorough review of complaint and circumstances</li>
+                        <li><strong>Resolution:</strong> Appropriate action and communication to complainant</li>
+                        <li><strong>Appeal:</strong> Option to escalate to senior management if unsatisfied</li>
+                    </ol>
+                    
+                    <h3>12.3 External Redressal Mechanisms</h3>
+                    <p>If not satisfied with our internal resolution, clients may approach:</p>
+                    <ul>
+                        <li><strong>SEBI SCORES Portal:</strong> https://scores.sebi.gov.in (Online complaint registration)</li>
+                        <li><strong>SEBI Office:</strong> Securities and Exchange Board of India, Plot No. C4-A, 'G' Block, Bandra-Kurla Complex, Mumbai - 400051</li>
+                        <li><strong>Consumer Forums:</strong> District, State, or National Consumer Dispute Redressal Commissions as per Consumer Protection Act, 2019</li>
+                        <li><strong>Financial Services Ombudsman:</strong> Reserve Bank of India Ombudsman for financial services</li>
+                        <li><strong>Investor Helpline:</strong> SEBI Toll-free number 1800-22-7575</li>
+                        <li><strong>Legal Remedies:</strong> Civil courts as per jurisdiction and applicable laws</li>
+                    </ul>
+                    
+                    <h3>12.4 Record Maintenance</h3>
+                    <p>We maintain detailed records of all complaints received, actions taken, and resolution outcomes as required by SEBI regulations. Annual compliance reports are submitted to regulatory authorities.</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>13. Governing Law & Jurisdiction</h2>
+                    <p>These Terms and Conditions shall be governed by and construed in accordance with the laws of India. Any disputes, claims, or legal proceedings arising out of or in connection with these Terms, the services provided, or the client relationship shall be subject to the exclusive jurisdiction of the courts in New Delhi, India.</p>
+                    
+                    <h3>13.1 Alternative Dispute Resolution</h3>
+                    <p>Before resorting to litigation, parties agree to attempt resolution through:</p>
+                    <ul>
+                        <li><strong>Direct Negotiation:</strong> Good faith discussions between authorized representatives</li>
+                        <li><strong>Mediation:</strong> Through recognized mediation centers such as Delhi International Arbitration Centre (DIAC)</li>
+                        <li><strong>Arbitration:</strong> As per Indian Arbitration and Conciliation Act, 2015, with seat in New Delhi</li>
+                        <li><strong>SEBI Conciliation:</strong> Through SEBI's alternative dispute resolution mechanisms where applicable</li>
+                    </ul>
+                    
+                    <h3>13.2 Language & Interpretation</h3>
+                    <ul>
+                        <li>These Terms are written in English, which shall be the governing language</li>
+                        <li>Any translations are for convenience only and the English version shall prevail</li>
+                        <li>Headings are for reference only and do not affect interpretation</li>
+                        <li>Severability clause: Invalid provisions do not affect the validity of remaining terms</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>14. Amendments & Updates</h2>
+                    <p>NYQE Wealth Management reserves the right to modify, amend, or update these Terms and Conditions at any time to reflect changes in our services, regulatory requirements, or business practices. Material changes will be communicated through multiple channels:</p>
+                    
+                    <h3>14.1 Communication Methods</h3>
+                    <ul>
+                        <li>Email notifications to all registered users at least 30 days in advance</li>
+                        <li>Prominent notices on our website homepage and legal pages</li>
+                        <li>In-app notifications for mobile application users</li>
+                        <li>Physical communication for significant changes affecting fees or services</li>
+                        <li>SMS alerts for critical changes affecting client relationships</li>
+                        <li>Publication in leading financial newspapers for major policy changes</li>
+                    </ul>
+                    
+                    <h3>14.2 Effective Date & Acceptance</h3>
+                    <ul>
+                        <li>Amendments become effective 30 days after notification unless otherwise specified</li>
+                        <li>Continued use of services after the effective date constitutes acceptance of revised Terms</li>
+                        <li>Clients who disagree with amendments may terminate services before the effective date</li>
+                        <li>Some changes may require explicit consent or re-acceptance of terms</li>
+                    </ul>
+                    
+                    <h3>14.3 Version Control</h3>
+                    <ul>
+                        <li>Each version of Terms will be dated and archived for reference</li>
+                        <li>Previous versions remain accessible for historical reference</li>
+                        <li>Change logs will be maintained to track modifications</li>
+                        <li>Clients may request specific version information if needed</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p><strong>NYQE Wealth Management Private Limited</strong></p>
+                    <p><strong>Corporate Office:</strong><br>
+                    123 Financial District, Connaught Place<br>
+                    New Delhi - 110001, India</p>
+                    
+                    <p><strong>Communication Channels:</strong><br>
+                    Email: legal@nyqewealthmanagement.com<br>
+                    Phone: +91-11-4567-8900<br>
+                    Fax: +91-11-4567-8901<br>
+                    Website: www.nyqewealthmanagement.com</p>
+                    
+                    <p><strong>Business Hours:</strong> Monday to Friday, 9:00 AM to 6:00 PM IST<br>
+                    <strong>Emergency Contact:</strong> +91-98765-43210 (For urgent compliance matters)<br>
+                    <strong>Grievance Helpline:</strong> +91-11-4567-8901 (9:00 AM to 7:00 PM)</p>
+                    
+                    <p><strong>Regulatory Information:</strong><br>
+                    SEBI Registration: INA000012345<br>
+                    CIN: U74999DL2020PTC365432<br>
+                    GST: 07AABCU9603R1ZX</p>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="legal-footer">
+                <p>© 2024 NYQE Wealth Management Private Limited. All rights reserved.</p>
+                <p><strong>SEBI Registration:</strong> INA000012345 | <strong>Valid until:</strong> March 31, 2026</p>
+                <p><small>This document is electronically generated and does not require physical signature.</small></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()" style="display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</div>
+
+<script>
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Show/hide back to top button
+window.addEventListener('scroll', function() {
+    const button = document.querySelector('.back-to-top');
+    if (window.pageYOffset > 300) {
+        button.style.display = 'block';
+    } else {
+        button.style.display = 'none';
+    }
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Print functionality
+function printTerms() {
+    window.print();
+}
+
+// Generate PDF (placeholder function)
+function downloadPDF() {
+    alert('PDF download functionality will be implemented with server-side generation.');
+}
+</script>
+{% endblock %}

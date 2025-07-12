@@ -1,0 +1,797 @@
+{% extends "base.html" %}
+
+{% block title %}Tax Optimization Services - NYQE Wealth Management{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1>Tax Optimization</h1>
+                <p class="lead">Intelligent tax planning strategies to minimize your tax liability while maximizing investment efficiency and after-tax returns.</p>
+                <div class="hero-highlights mt-4">
+                    <div class="highlight-item">
+                        <i class="fas fa-percentage text-warning"></i>
+                        <span>Up to 30% Tax Savings</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-shield-alt text-success"></i>
+                        <span>100% Compliance Assured</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-chart-line text-primary"></i>
+                        <span>Enhanced Returns</span>
+                    </div>
+                </div>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg mt-4">
+                    <i class="fas fa-calendar-alt"></i> Book Tax Consultation
+                </a>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="tax-visual">
+                    <div class="tax-comparison">
+                        <div class="comparison-item without-planning">
+                            <h6>Without Tax Planning</h6>
+                            <div class="tax-breakdown">
+                                <div class="tax-item">
+                                    <span>Gross Income</span>
+                                    <span>₹15,00,000</span>
+                                </div>
+                                <div class="tax-item tax-paid">
+                                    <span>Tax Paid</span>
+                                    <span>₹2,25,000</span>
+                                </div>
+                                <div class="tax-item net-income">
+                                    <span>Net Income</span>
+                                    <span>₹12,75,000</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comparison-item with-planning">
+                            <h6>With NYQE Tax Planning</h6>
+                            <div class="tax-breakdown">
+                                <div class="tax-item">
+                                    <span>Gross Income</span>
+                                    <span>₹15,00,000</span>
+                                </div>
+                                <div class="tax-item tax-saved">
+                                    <span>Tax Paid</span>
+                                    <span>₹1,50,000</span>
+                                </div>
+                                <div class="tax-item net-income-improved">
+                                    <span>Net Income</span>
+                                    <span>₹13,50,000</span>
+                                </div>
+                            </div>
+                            <div class="savings-highlight">
+                                <i class="fas fa-star"></i>
+                                <span>₹75,000 Annual Savings!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tax Sections Overview -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Tax Saving Opportunities</h2>
+            <p class="lead">Comprehensive tax optimization across all sections of the Income Tax Act</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="tax-section-card">
+                    <div class="section-header">
+                        <h5>Section 80C</h5>
+                        <span class="limit">Up to ₹1.5 Lakhs</span>
+                    </div>
+                    <div class="section-body">
+                        <ul class="tax-options">
+                            <li><i class="fas fa-check"></i> ELSS Mutual Funds</li>
+                            <li><i class="fas fa-check"></i> PPF Contributions</li>
+                            <li><i class="fas fa-check"></i> Life Insurance Premium</li>
+                            <li><i class="fas fa-check"></i> ULIP Investments</li>
+                            <li><i class="fas fa-check"></i> NSC & Tax Saver FD</li>
+                        </ul>
+                        <div class="section-strategy">
+                            <strong>Our Strategy:</strong> Optimize with ELSS for dual benefit of tax saving and wealth creation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="tax-section-card">
+                    <div class="section-header">
+                        <h5>Section 80D</h5>
+                        <span class="limit">Up to ₹75,000</span>
+                    </div>
+                    <div class="section-body">
+                        <ul class="tax-options">
+                            <li><i class="fas fa-check"></i> Health Insurance Premium</li>
+                            <li><i class="fas fa-check"></i> Parents' Health Insurance</li>
+                            <li><i class="fas fa-check"></i> Preventive Health Checkup</li>
+                            <li><i class="fas fa-check"></i> Senior Citizen Benefits</li>
+                        </ul>
+                        <div class="section-strategy">
+                            <strong>Our Strategy:</strong> Comprehensive health insurance planning for entire family coverage.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="tax-section-card">
+                    <div class="section-header">
+                        <h5>NPS - 80CCD(1B)</h5>
+                        <span class="limit">Additional ₹50,000</span>
+                    </div>
+                    <div class="section-body">
+                        <ul class="tax-options">
+                            <li><i class="fas fa-check"></i> National Pension System</li>
+                            <li><i class="fas fa-check"></i> Employer Contribution</li>
+                            <li><i class="fas fa-check"></i> Additional Voluntary</li>
+                            <li><i class="fas fa-check"></i> Long-term Wealth</li>
+                        </ul>
+                        <div class="section-strategy">
+                            <strong>Our Strategy:</strong> Maximize NPS for retirement planning with additional tax benefits.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Capital Gains Tax Planning -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Capital Gains Tax Optimization</h2>
+            <p class="lead">Strategic planning to minimize LTCG and STCG tax burden</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card capital-gains-card">
+                    <div class="card-header bg-success text-white">
+                        <h5><i class="fas fa-hourglass-end me-2"></i>Long Term Capital Gains (LTCG)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="gains-info">
+                            <div class="info-item">
+                                <span class="label">Holding Period:</span>
+                                <span class="value">More than 1 year</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Tax Rate:</span>
+                                <span class="value">10% above ₹1 lakh</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Exemption:</span>
+                                <span class="value">₹1 lakh per year</span>
+                            </div>
+                        </div>
+                        
+                        <h6 class="mt-3">Our Optimization Strategies:</h6>
+                        <ul class="strategy-list">
+                            <li>Annual ₹1 lakh exemption utilization</li>
+                            <li>Strategic profit booking timing</li>
+                            <li>Tax loss harvesting opportunities</li>
+                            <li>Reinvestment in growth assets</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card capital-gains-card">
+                    <div class="card-header bg-warning text-white">
+                        <h5><i class="fas fa-hourglass-start me-2"></i>Short Term Capital Gains (STCG)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="gains-info">
+                            <div class="info-item">
+                                <span class="label">Holding Period:</span>
+                                <span class="value">Less than 1 year</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Tax Rate:</span>
+                                <span class="value">15% on all gains</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Exemption:</span>
+                                <span class="value">Nil</span>
+                            </div>
+                        </div>
+                        
+                        <h6 class="mt-3">Our Optimization Strategies:</h6>
+                        <ul class="strategy-list">
+                            <li>Extend holding period to qualify for LTCG</li>
+                            <li>Offset gains with short-term losses</li>
+                            <li>Time entries and exits strategically</li>
+                            <li>Focus on dividend-paying stocks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tax Planning Process -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Tax Planning Process</h2>
+            <p class="lead">Systematic approach to maximize your tax efficiency</p>
+        </div>
+        
+        <div class="process-flow">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="process-step">
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h6>Income Analysis</h6>
+                        <p>Comprehensive review of all income sources and current tax liability</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="process-step">
+                        <div class="step-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h6>Strategy Development</h6>
+                        <p>Create customized tax optimization strategy based on your financial profile</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="process-step">
+                        <div class="step-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h6>Implementation</h6>
+                        <p>Execute tax-saving investments and restructure existing portfolio</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="process-step">
+                        <div class="step-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h6>Annual Review</h6>
+                        <p>Regular monitoring and adjustments to maintain optimal tax efficiency</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tax-Efficient Investment Options -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Tax-Efficient Investment Options</h2>
+            <p class="lead">Smart investments that offer both growth and tax benefits</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="investment-card">
+                    <div class="investment-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h5>ELSS Mutual Funds</h5>
+                    <div class="investment-details">
+                        <div class="detail-item">
+                            <span>Lock-in Period:</span>
+                            <span>3 Years</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Tax Benefit:</span>
+                            <span>Section 80C</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Expected Return:</span>
+                            <span>12-15% p.a.</span>
+                        </div>
+                    </div>
+                    <p>Best combination of tax savings and wealth creation with shortest lock-in among 80C options.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="investment-card">
+                    <div class="investment-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5>National Pension System</h5>
+                    <div class="investment-details">
+                        <div class="detail-item">
+                            <span>Lock-in Period:</span>
+                            <span>Till 60 Years</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Tax Benefit:</span>
+                            <span>80CCD(1B)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Expected Return:</span>
+                            <span>10-12% p.a.</span>
+                        </div>
+                    </div>
+                    <p>Additional ₹50,000 tax deduction over 80C limit with retirement corpus building.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="investment-card">
+                    <div class="investment-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h5>Health Insurance</h5>
+                    <div class="investment-details">
+                        <div class="detail-item">
+                            <span>Coverage:</span>
+                            <span>Family + Parents</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Tax Benefit:</span>
+                            <span>Section 80D</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Max Deduction:</span>
+                            <span>₹75,000</span>
+                        </div>
+                    </div>
+                    <p>Essential protection with tax benefits for comprehensive healthcare coverage.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tax Calendar -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Important Tax Dates & Deadlines</h2>
+            <p class="lead">Stay compliant with key tax filing and payment deadlines</p>
+        </div>
+        
+        <div class="tax-calendar">
+            <div class="row">
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="calendar-section">
+                        <h5><i class="fas fa-calendar-alt text-primary"></i> Key Deadlines</h5>
+                        <div class="deadline-item">
+                            <div class="deadline-date">31st March</div>
+                            <div class="deadline-desc">
+                                <h6>Financial Year End</h6>
+                                <p>Complete tax-saving investments</p>
+                            </div>
+                        </div>
+                        <div class="deadline-item">
+                            <div class="deadline-date">31st July</div>
+                            <div class="deadline-desc">
+                                <h6>ITR Filing Deadline</h6>
+                                <p>File income tax returns</p>
+                            </div>
+                        </div>
+                        <div class="deadline-item">
+                            <div class="deadline-date">31st December</div>
+                            <div class="deadline-desc">
+                                <h6>Tax Planning Review</h6>
+                                <p>Mid-year strategy adjustment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="calendar-section">
+                        <h5><i class="fas fa-bell text-warning"></i> Our Reminders</h5>
+                        <div class="reminder-item">
+                            <div class="reminder-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="reminder-desc">
+                                <h6>Quarterly Alerts</h6>
+                                <p>Investment opportunities and deadline reminders</p>
+                            </div>
+                        </div>
+                        <div class="reminder-item">
+                            <div class="reminder-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="reminder-desc">
+                                <h6>Personal Consultation</h6>
+                                <p>Annual tax planning review meetings</p>
+                            </div>
+                        </div>
+                        <div class="reminder-item">
+                            <div class="reminder-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="reminder-desc">
+                                <h6>Documentation Support</h6>
+                                <p>ITR filing assistance and compliance support</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div data-aos="fade-up">
+            <h2>Start Saving Tax Today</h2>
+            <p class="lead">Don't let another financial year pass without optimizing your taxes</p>
+            
+            <div class="cta-stats mt-4 mb-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>₹75,000</h3>
+                        <p>Average Annual Tax Savings</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>30%</h3>
+                        <p>Reduction in Tax Liability</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>100%</h3>
+                        <p>Compliance Guarantee</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary btn-lg me-3">
+                    <i class="fas fa-calendar-check"></i> Book Tax Consultation
+                </a>
+                <a href="{{ url_for('calculators') }}" class="btn btn-outline btn-lg">
+                    <i class="fas fa-calculator"></i> Tax Calculator
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.highlight-item i {
+    font-size: 1.2rem;
+}
+
+.tax-visual {
+    padding: 2rem;
+}
+
+.tax-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.comparison-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.comparison-item h6 {
+    text-align: center;
+    color: white;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.tax-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tax-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.tax-item.tax-paid {
+    color: #f87171;
+}
+
+.tax-item.tax-saved {
+    color: #34d399;
+}
+
+.tax-item.net-income-improved {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.savings-highlight {
+    background: var(--accent-color);
+    color: var(--primary-dark);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.tax-section-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.tax-section-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.section-header {
+    background: linear-gradient(135deg, #d97706, #fbbf24);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.section-header h5 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.limit {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.section-body {
+    padding: 2rem 1.5rem;
+}
+
+.tax-options {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.tax-options li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tax-options i {
+    color: var(--success-color);
+}
+
+.section-strategy {
+    background: var(--bg-light);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+}
+
+.capital-gains-card {
+    border: none;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+}
+
+.capital-gains-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.gains-info {
+    background: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.strategy-list {
+    list-style: none;
+    padding: 0;
+}
+
+.strategy-list li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.strategy-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.process-step {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.step-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    margin: 0 auto 1rem;
+}
+
+.investment-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.investment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.investment-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    margin: 0 auto 1.5rem;
+}
+
+.investment-details {
+    background: var(--bg-light);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin: 1.5rem 0;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.calendar-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-light);
+    height: 100%;
+}
+
+.deadline-item, .reminder-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.deadline-item:last-child, .reminder-item:last-child {
+    border-bottom: none;
+}
+
+.deadline-date {
+    min-width: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.reminder-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.deadline-desc h6, .reminder-desc h6 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.deadline-desc p, .reminder-desc p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.cta-stats h3 {
+    color: var(--accent-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .tax-comparison {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .comparison-item {
+        padding: 1.5rem;
+    }
+    
+    .deadline-item, .reminder-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .cta-stats h3 {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock %}

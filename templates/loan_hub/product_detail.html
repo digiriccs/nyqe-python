@@ -1,0 +1,370 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - Loan Hub{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loan-hub.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="loan-hub-container" style="margin-top: 40px;">
+    <!-- Breadcrumb -->
+    <nav style="margin-bottom: 30px;">
+        <a href="{{ url_for('loan_hub.index') }}" style="color: var(--primary-blue); text-decoration: none;">
+            ← Back to Loan Hub
+        </a>
+    </nav>
+    
+    <!-- Product Header -->
+    <div class="product-detail-header" style="background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-bottom: 30px;">
+        <div class="product-header-flex">
+            <div class="product-header-content">
+                <h1 class="product-detail-title">
+                    {{ product.name }}
+                </h1>
+                <div class="product-badges">
+                    <span class="product-category">{{ product.category.replace('_', ' ').title() }}</span>
+                    <span class="status-badge status-active">{{ product.loan_type.title() }}</span>
+                    {% if product.amfi_registered %}
+                    <span class="amfi-badge">AMFI Registered</span>
+                    {% endif %}
+                    {% if product.is_featured %}
+                    <span class="featured-badge">Featured</span>
+                    {% endif %}
+                </div>
+                
+                {% if product.description %}
+                <p class="product-description">
+                    {{ product.description }}
+                </p>
+                {% endif %}
+            </div>
+            
+            <div class="product-rate-card">
+                <div class="rate-card-content">
+                    <div class="rate-label">Interest Rate</div>
+                    <div class="rate-value">
+                        {{ "%.2f"|format(product.interest_rate_min) }}% - {{ "%.2f"|format(product.interest_rate_max) }}%
+                    </div>
+                </div>
+                
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('loan_hub.apply_loan', product_id=product.id) }}" 
+                   class="btn-primary apply-btn">
+                    Apply Now
+                </a>
+                {% else %}
+                <a href="{{ url_for('auth.login') }}" 
+                   class="btn-primary apply-btn">
+                    Login to Apply
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Details Grid -->
+    <div class="product-details-grid">
+        <!-- Main Details -->
+        <div>
+            <!-- Loan Details -->
+            <div style="background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-bottom: 30px;">
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 24px;">
+                    Loan Details
+                </h2>
+                
+                <div class="product-details-list">
+                    <div class="detail-row">
+                        <span class="detail-label">Loan Amount Range</span>
+                        <span class="detail-value loan-amount">
+                            ₹{{ "{:,.0f}".format(product.min_amount) }} - ₹{{ "{:,.0f}".format(product.max_amount) }}
+                        </span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Tenure</span>
+                        <span class="detail-value">{{ product.tenure_display }}</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Processing Fee</span>
+                        <span class="detail-value">
+                            {% if product.processing_fee %}
+                                {{ "%.2f"|format(product.processing_fee) }}%
+                            {% endif %}
+                            {% if product.processing_fee_flat %}
+                                {% if product.processing_fee %} + {% endif %}
+                                ₹{{ "{:,.0f}".format(product.processing_fee_flat) }}
+                            {% endif %}
+                            {% if not product.processing_fee and not product.processing_fee_flat %}
+                                Contact for details
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Risk Category</span>
+                        <span class="risk-indicator risk-{{ product.risk_category }}">
+                            {{ product.risk_category.title() }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Eligibility Criteria -->
+            <div style="background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-bottom: 30px;">
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 24px;">
+                    Eligibility Criteria
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div class="detail-row">
+                        <span class="detail-label">Age Limit</span>
+                        <span class="detail-value">{{ product.min_age }} - {{ product.max_age }} years</span>
+                    </div>
+                    
+                    {% if product.min_income %}
+                    <div class="detail-row">
+                        <span class="detail-label">Minimum Income</span>
+                        <span class="detail-value">₹{{ "{:,.0f}".format(product.min_income) }} per month</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.credit_score_min %}
+                    <div class="detail-row">
+                        <span class="detail-label">Minimum Credit Score</span>
+                        <span class="detail-value">{{ product.credit_score_min }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.employment_types %}
+                    <div class="detail-row">
+                        <span class="detail-label">Employment Types</span>
+                        <span class="detail-value">
+                            {% for emp_type in product.employment_types %}
+                                {{ emp_type.replace('_', ' ').title() }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Features and Benefits -->
+            {% if product.features or product.benefits %}
+            <div style="background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-bottom: 30px;">
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 24px;">
+                    Features & Benefits
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    {% if product.features %}
+                    <div>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 16px;">
+                            Key Features
+                        </h3>
+                        <ul style="list-style: none; padding: 0;">
+                            {% for feature in product.features %}
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--gray-100); color: var(--gray-700);">
+                                ✓ {{ feature }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.benefits %}
+                    <div>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 16px;">
+                            Benefits
+                        </h3>
+                        <ul style="list-style: none; padding: 0;">
+                            {% for benefit in product.benefits %}
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--gray-100); color: var(--gray-700);">
+                                ★ {{ benefit }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Terms and Conditions -->
+            {% if product.terms_conditions %}
+            <div style="background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 24px;">
+                    Terms & Conditions
+                </h2>
+                <div style="color: var(--gray-700); line-height: 1.6;">
+                    {{ product.terms_conditions|nl2br|safe }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Sidebar -->
+        <div>
+            <!-- EMI Calculator -->
+            <div class="emi-calculator" style="margin-bottom: 30px;">
+                <h3 class="calculator-title">EMI Calculator</h3>
+                <div class="calculator-inputs">
+                    <div class="input-group">
+                        <label class="input-label">Loan Amount (₹)</label>
+                        <input type="number" id="loanAmount" class="input-field" 
+                               value="{{ product.min_amount }}" 
+                               min="{{ product.min_amount }}" 
+                               max="{{ product.max_amount }}">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Interest Rate (%)</label>
+                        <input type="number" id="interestRate" class="input-field" 
+                               value="{{ "%.2f"|format(product.average_interest_rate) }}" 
+                               min="{{ product.interest_rate_min }}" 
+                               max="{{ product.interest_rate_max }}" 
+                               step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Tenure (Months)</label>
+                        <input type="number" id="tenure" class="input-field" 
+                               value="{{ product.min_tenure_months }}" 
+                               min="{{ product.min_tenure_months }}" 
+                               max="{{ product.max_tenure_months }}">
+                    </div>
+                </div>
+                
+                <div class="calculator-result" id="emiResult">
+                    <div class="result-emi">₹<span id="emiAmount">0</span></div>
+                    <div style="color: var(--gray-600); margin-bottom: 16px;">Monthly EMI</div>
+                    
+                    <div class="result-details">
+                        <div class="result-item">
+                            <div class="result-value">₹<span id="totalAmount">0</span></div>
+                            <div class="result-label">Total Amount</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">₹<span id="totalInterest">0</span></div>
+                            <div class="result-label">Total Interest</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AMFI Compliance -->
+            {% if product.amfi_registered %}
+            <div style="background: var(--white); padding: 24px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-bottom: 30px;">
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--gray-900); margin-bottom: 16px;">
+                    AMFI Compliance
+                </h3>
+                <div class="amfi-badge" style="margin-bottom: 16px;">AMFI Registered</div>
+                {% if product.regulatory_info %}
+                <p style="color: var(--gray-600); font-size: 0.875rem; line-height: 1.5;">
+                    {{ product.regulatory_info }}
+                </p>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <!-- Quick Actions -->
+            <div style="background: var(--gray-50); padding: 24px; border-radius: var(--border-radius); border: 1px solid var(--gray-200);">
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--gray-900); margin-bottom: 20px;">
+                    Quick Actions
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('loan_hub.apply_loan', product_id=product.id) }}" 
+                       class="btn-primary" style="text-align: center;">
+                        Apply for Loan
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('auth.login') }}" 
+                       class="btn-primary" style="text-align: center;">
+                        Login to Apply
+                    </a>
+                    {% endif %}
+                    <a href="{{ url_for('submit_query') }}" 
+                       class="btn-secondary" style="text-align: center;">
+                        Ask Questions
+                    </a>
+                    <a href="{{ url_for('loan_hub.index') }}" 
+                       class="btn-outline" style="text-align: center;">
+                        Compare Products
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Related Products -->
+    {% if related_products %}
+    <div style="margin-top: 60px;">
+        <h2 style="font-size: 2rem; font-weight: 700; color: var(--gray-900); margin-bottom: 30px; text-align: center;">
+            Related Products
+        </h2>
+        <div class="product-grid">
+            {% for product in related_products %}
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-title">{{ product.name }}</h3>
+                    <span class="product-category">{{ product.category.replace('_', ' ').title() }}</span>
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Interest Rate</span>
+                        <span class="detail-value interest-rate">
+                            {{ "%.2f"|format(product.interest_rate_min) }}% - {{ "%.2f"|format(product.interest_rate_max) }}%
+                        </span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Loan Amount</span>
+                        <span class="detail-value loan-amount">
+                            ₹{{ "{:,.0f}".format(product.min_amount) }} - ₹{{ "{:,.0f}".format(product.max_amount) }}
+                        </span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <a href="{{ url_for('loan_hub.product_detail', product_id=product.id) }}" 
+                       class="btn-primary" style="width: 100%; text-align: center;">
+                        View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// EMI Calculator
+function calculateEMI() {
+    const amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+    const rate = parseFloat(document.getElementById('interestRate').value) || 0;
+    const tenure = parseInt(document.getElementById('tenure').value) || 0;
+    
+    if (amount && rate && tenure) {
+        const monthlyRate = rate / (12 * 100);
+        const emi = amount * monthlyRate * Math.pow(1 + monthlyRate, tenure) / (Math.pow(1 + monthlyRate, tenure) - 1);
+        const totalAmount = emi * tenure;
+        const totalInterest = totalAmount - amount;
+        
+        document.getElementById('emiAmount').textContent = Math.round(emi).toLocaleString();
+        document.getElementById('totalAmount').textContent = Math.round(totalAmount).toLocaleString();
+        document.getElementById('totalInterest').textContent = Math.round(totalInterest).toLocaleString();
+    }
+}
+
+// Event listeners
+document.getElementById('loanAmount').addEventListener('input', calculateEMI);
+document.getElementById('interestRate').addEventListener('input', calculateEMI);
+document.getElementById('tenure').addEventListener('input', calculateEMI);
+
+// Initial calculation
+calculateEMI();
+</script>
+{% endblock %}

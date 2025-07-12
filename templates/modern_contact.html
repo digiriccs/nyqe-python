@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Consultation - NYQE Wealth Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-contact.css') }}">
+</head>
+<body>
+    <div class="page-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ url_for('index') }}">
+                    <span class="brand-text">NYQE</span>
+                    <span class="brand-sub">Wealth Management</span>
+                </a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="form-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>Book Your Free Consultation</h1>
+                    <p class="form-subtitle">Let our experts help you build a personalized investment strategy</p>
+                </div>
+
+                <form class="consultation-form" method="POST" id="consultationForm">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name</label>
+                            {{ form.name(class="form-input", placeholder="Enter your full name", id="name") }}
+                            {% if form.name.errors %}
+                                <div class="error-message">{{ form.name.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            {{ form.email(class="form-input", placeholder="your.email@example.com", id="email") }}
+                            {% if form.email.errors %}
+                                <div class="error-message">{{ form.email.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            {{ form.phone(class="form-input", placeholder="+91 98765 43210", id="phone") }}
+                            {% if form.phone.errors %}
+                                <div class="error-message">{{ form.phone.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service_interest" class="form-label">Service Interest</label>
+                            {{ form.service_interest(class="form-select", id="service_interest") }}
+                            {% if form.service_interest.errors %}
+                                <div class="error-message">{{ form.service_interest.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="investment_amount" class="form-label">Investment Amount (₹)</label>
+                            {{ form.investment_amount(class="form-input", placeholder="100000", id="investment_amount") }}
+                            {% if form.investment_amount.errors %}
+                                <div class="error-message">{{ form.investment_amount.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="investment_timeline" class="form-label">Investment Timeline</label>
+                            {{ form.investment_timeline(class="form-select", id="investment_timeline") }}
+                            {% if form.investment_timeline.errors %}
+                                <div class="error-message">{{ form.investment_timeline.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="risk_tolerance" class="form-label">Risk Tolerance</label>
+                            {{ form.risk_tolerance(class="form-select", id="risk_tolerance") }}
+                            {% if form.risk_tolerance.errors %}
+                                <div class="error-message">{{ form.risk_tolerance.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="message" class="form-label">Message (Optional)</label>
+                        {{ form.message(class="form-textarea", placeholder="Tell us about your financial goals, concerns, or any specific questions you have...", id="message") }}
+                        {% if form.message.errors %}
+                            <div class="error-message">{{ form.message.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <span class="btn-text">Book Free Consultation</span>
+                            <span class="btn-icon">📅</span>
+                        </button>
+                    </div>
+                </form>
+
+                {% if get_flashed_messages() %}
+                <div class="result-container" id="resultContainer">
+                    <div class="result-box success">
+                        {% for message in get_flashed_messages() %}
+                            <div class="result-message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <aside class="info-section">
+            <div class="info-card">
+                <div class="info-header">
+                    <h3>Why Choose NYQE?</h3>
+                </div>
+                <div class="info-content">
+                    <div class="info-item">
+                        <div class="info-icon">🎯</div>
+                        <div class="info-text">
+                            <h4>Personalized Strategy</h4>
+                            <p>Tailored investment plans based on your unique financial goals</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📈</div>
+                        <div class="info-text">
+                            <h4>Expert Guidance</h4>
+                            <p>Professional advisors with proven track records</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🔒</div>
+                        <div class="info-text">
+                            <h4>Secure & Transparent</h4>
+                            <p>Complete transparency with no hidden fees</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/modern-contact.js') }}"></script>
+</body>
+</html>

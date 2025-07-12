@@ -1,0 +1,827 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy - NYQE Wealth Management{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced-design-system.css') }}">
+<style>
+.legal-page {
+    background: var(--neutral-50);
+    min-height: 100vh;
+    padding: var(--space-8) 0;
+}
+
+.legal-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.legal-header {
+    background: var(--growth-gradient);
+    color: white;
+    padding: var(--space-8);
+    text-align: center;
+}
+
+.legal-header h1 {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-2);
+    color: white;
+}
+
+.legal-header p {
+    font-size: var(--text-lg);
+    opacity: 0.9;
+    margin: 0;
+}
+
+.legal-nav {
+    background: var(--neutral-100);
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.nav-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--neutral-600);
+}
+
+.nav-breadcrumb a {
+    color: var(--growth-primary);
+    text-decoration: none;
+    font-weight: var(--font-medium);
+}
+
+.nav-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.legal-content {
+    padding: var(--space-8);
+    line-height: var(--leading-relaxed);
+}
+
+.legal-section {
+    margin-bottom: var(--space-8);
+}
+
+.legal-section h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--growth-primary);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--neutral-200);
+}
+
+.legal-section h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-800);
+    margin: var(--space-6) 0 var(--space-3);
+}
+
+.legal-section p {
+    margin-bottom: var(--space-4);
+    color: var(--neutral-700);
+    text-align: justify;
+}
+
+.legal-section ul, .legal-section ol {
+    margin: var(--space-4) 0;
+    padding-left: var(--space-6);
+    color: var(--neutral-700);
+}
+
+.legal-section li {
+    margin-bottom: var(--space-2);
+}
+
+.highlight-box {
+    background: var(--info-light);
+    border: 1px solid var(--info);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin: var(--space-6) 0;
+}
+
+.highlight-box h4 {
+    color: var(--info);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-3);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-4) 0;
+    background: var(--neutral-50);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.data-table th,
+.data-table td {
+    padding: var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.data-table th {
+    background: var(--growth-primary);
+    color: white;
+    font-weight: var(--font-semibold);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.contact-info {
+    background: var(--neutral-50);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-top: var(--space-8);
+}
+
+.legal-footer {
+    background: var(--neutral-100);
+    padding: var(--space-6);
+    text-align: center;
+    border-top: 1px solid var(--neutral-200);
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    background: var(--growth-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    width: 48px;
+    height: 48px;
+    font-size: var(--text-lg);
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-base);
+    z-index: var(--z-fixed);
+}
+
+.back-to-top:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+.last-updated {
+    font-size: var(--text-sm);
+    color: var(--neutral-500);
+    text-align: center;
+    margin-bottom: var(--space-6);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .legal-page {
+        padding: var(--space-4) var(--space-4);
+    }
+    
+    .legal-header {
+        padding: var(--space-6) var(--space-4);
+    }
+    
+    .legal-header h1 {
+        font-size: var(--text-2xl);
+    }
+    
+    .legal-content {
+        padding: var(--space-6) var(--space-4);
+    }
+    
+    .legal-section h2 {
+        font-size: var(--text-lg);
+    }
+    
+    .nav-breadcrumb {
+        flex-wrap: wrap;
+    }
+    
+    .data-table {
+        font-size: var(--text-sm);
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: var(--space-2);
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="legal-page">
+    <div class="container">
+        <div class="legal-container">
+            <!-- Header -->
+            <div class="legal-header">
+                <h1>Privacy Policy</h1>
+                <p>Your privacy and data security are our top priorities</p>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="legal-nav">
+                <div class="nav-breadcrumb">
+                    <a href="{{ url_for('index') }}">Home</a>
+                    <span>></span>
+                    <span>Privacy Policy</span>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="legal-content">
+                <div class="last-updated">
+                    <strong>Last Updated:</strong> December 29, 2024
+                </div>
+                
+                <div class="legal-section">
+                    <h2>1. Introduction & Commitment</h2>
+                    <p>NYQE Wealth Management Private Limited ("Company," "we," "us," or "our") is committed to protecting and respecting your privacy. This Privacy Policy explains how we collect, use, store, share, and protect your personal information when you use our website, mobile applications, or avail our investment advisory services.</p>
+                    
+                    <p>This Privacy Policy applies to all personal information collected by NYQE Wealth Management through our digital platforms, physical offices, and during the provision of our services. By using our services or providing your personal information, you consent to the collection and use of information in accordance with this policy.</p>
+                    
+                    <div class="highlight-box">
+                        <h4>🔒 Our Privacy Commitment</h4>
+                        <p>We adhere to the highest standards of data protection as mandated by Indian laws including the Information Technology Act, 2000, and the Personal Data Protection Bill. Your trust is paramount to our business.</p>
+                    </div>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>2. Information We Collect</h2>
+                    <h3>2.1 Personal Identification Information</h3>
+                    <ul>
+                        <li><strong>Identity Details:</strong> Full name, father's/spouse's name, date of birth, gender</li>
+                        <li><strong>Contact Information:</strong> Residential and office addresses, mobile numbers, email addresses</li>
+                        <li><strong>Government IDs:</strong> PAN card, Aadhaar number, passport details, voter ID, driving license</li>
+                        <li><strong>Professional Details:</strong> Occupation, employer information, designation, office address</li>
+                        <li><strong>Photographs:</strong> Profile pictures and identity verification photos</li>
+                        <li><strong>Signature:</strong> Digital signatures and scanned signature specimens</li>
+                    </ul>
+                    
+                    <h3>2.2 Financial Information</h3>
+                    <ul>
+                        <li><strong>Income Details:</strong> Annual income, sources of income, salary slips, ITR documents</li>
+                        <li><strong>Assets & Liabilities:</strong> Bank account details, investment portfolios, property holdings, loans and debts</li>
+                        <li><strong>Transaction Data:</strong> Investment transactions, portfolio performance, cash flows</li>
+                        <li><strong>Banking Information:</strong> Account numbers, IFSC codes, bank statements</li>
+                        <li><strong>Investment History:</strong> Previous investments, mutual fund folios, demat account details</li>
+                        <li><strong>Tax Information:</strong> PAN details, tax filing status, tax liabilities</li>
+                    </ul>
+                    
+                    <h3>2.3 Investment Profile Information</h3>
+                    <ul>
+                        <li><strong>Risk Tolerance:</strong> Risk assessment questionnaire responses</li>
+                        <li><strong>Investment Objectives:</strong> Financial goals, investment preferences, time horizons</li>
+                        <li><strong>Knowledge & Experience:</strong> Investment experience, educational background</li>
+                        <li><strong>Family Details:</strong> Dependents, nominee information, family financial commitments</li>
+                        <li><strong>Life Insurance:</strong> Existing coverage, beneficiary details</li>
+                    </ul>
+                    
+                    <h3>2.4 Technical & Usage Information</h3>
+                    <ul>
+                        <li><strong>Device Information:</strong> IP addresses, device IDs, browser type and version, operating system</li>
+                        <li><strong>Usage Analytics:</strong> Pages visited, time spent, click patterns, feature usage</li>
+                        <li><strong>Location Data:</strong> Approximate location based on IP address</li>
+                        <li><strong>Cookies & Tracking:</strong> Session data, preferences, login information</li>
+                        <li><strong>Communication Records:</strong> Email correspondence, chat logs, call recordings</li>
+                    </ul>
+                    
+                    <h3>2.5 Methods of Information Collection</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Collection Method</th>
+                                <th>Information Type</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Online Registration Forms</td>
+                                <td>Basic personal and contact details</td>
+                                <td>Account creation and initial profiling</td>
+                            </tr>
+                            <tr>
+                                <td>KYC Documentation</td>
+                                <td>Identity and address verification</td>
+                                <td>Regulatory compliance and fraud prevention</td>
+                            </tr>
+                            <tr>
+                                <td>Financial Questionnaires</td>
+                                <td>Income, assets, investment experience</td>
+                                <td>Suitability assessment and advisory services</td>
+                            </tr>
+                            <tr>
+                                <td>Website & App Analytics</td>
+                                <td>Usage patterns and technical data</td>
+                                <td>Service improvement and user experience</td>
+                            </tr>
+                            <tr>
+                                <td>Customer Communications</td>
+                                <td>Support queries and feedback</td>
+                                <td>Service delivery and relationship management</td>
+                            </tr>
+                            <tr>
+                                <td>Third-party Data Providers</td>
+                                <td>Credit scores, market data, compliance checks</td>
+                                <td>Risk assessment and regulatory compliance</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>3. How We Use Your Information</h2>
+                    <h3>3.1 Primary Service Delivery</h3>
+                    <ul>
+                        <li><strong>Investment Advisory:</strong> Providing personalized investment recommendations based on your financial profile</li>
+                        <li><strong>Portfolio Management:</strong> Managing and monitoring your investment portfolio performance</li>
+                        <li><strong>Financial Planning:</strong> Creating comprehensive financial plans for retirement, education, and other goals</li>
+                        <li><strong>Risk Assessment:</strong> Evaluating your risk tolerance and investment suitability</li>
+                        <li><strong>Goal Tracking:</strong> Monitoring progress toward your financial objectives</li>
+                        <li><strong>Tax Planning:</strong> Providing tax-efficient investment strategies</li>
+                    </ul>
+                    
+                    <h3>3.2 Regulatory Compliance & Legal Obligations</h3>
+                    <ul>
+                        <li><strong>KYC Compliance:</strong> Meeting Know Your Customer requirements as mandated by SEBI</li>
+                        <li><strong>AML Compliance:</strong> Anti-Money Laundering checks and suspicious transaction reporting</li>
+                        <li><strong>Tax Reporting:</strong> Compliance with Income Tax Act requirements and TDS provisions</li>
+                        <li><strong>SEBI Reporting:</strong> Regulatory reporting to Securities and Exchange Board of India</li>
+                        <li><strong>Audit Requirements:</strong> Maintaining records for internal and external audits</li>
+                        <li><strong>Legal Proceedings:</strong> Responding to court orders, regulatory inquiries, and legal processes</li>
+                    </ul>
+                    
+                    <h3>3.3 Service Enhancement & Communication</h3>
+                    <ul>
+                        <li><strong>Customer Support:</strong> Responding to queries, resolving issues, and providing assistance</li>
+                        <li><strong>Service Improvement:</strong> Analyzing usage patterns to enhance our platforms and services</li>
+                        <li><strong>Educational Content:</strong> Providing relevant financial education and market insights</li>
+                        <li><strong>Market Updates:</strong> Sharing market commentary and investment opportunities</li>
+                        <li><strong>Service Notifications:</strong> Important updates about your account, investments, and policy changes</li>
+                        <li><strong>Feedback Collection:</strong> Gathering customer feedback to improve service quality</li>
+                    </ul>
+                    
+                    <h3>3.4 Security & Fraud Prevention</h3>
+                    <ul>
+                        <li><strong>Account Security:</strong> Implementing multi-factor authentication and access controls</li>
+                        <li><strong>Fraud Detection:</strong> Monitoring for suspicious activities and unauthorized access</li>
+                        <li><strong>Identity Verification:</strong> Confirming user identity for high-value transactions</li>
+                        <li><strong>System Security:</strong> Protecting our infrastructure and preventing cyber attacks</li>
+                        <li><strong>Risk Monitoring:</strong> Continuous monitoring for potential security threats</li>
+                    </ul>
+                    
+                    <h3>3.5 Analytics & Research</h3>
+                    <ul>
+                        <li><strong>Performance Analytics:</strong> Analyzing investment performance and strategy effectiveness</li>
+                        <li><strong>Market Research:</strong> Understanding investor behavior and market trends</li>
+                        <li><strong>Product Development:</strong> Developing new services and improving existing offerings</li>
+                        <li><strong>Risk Modeling:</strong> Creating and refining risk assessment models</li>
+                        <li><strong>Benchmarking:</strong> Comparing performance against market benchmarks</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>4. Information Sharing & Disclosure</h2>
+                    <h3>4.1 Authorized Sharing</h3>
+                    <p>We may share your personal information in the following circumstances:</p>
+                    
+                    <h3>4.2 Service Providers & Business Partners</h3>
+                    <ul>
+                        <li><strong>Fund Houses:</strong> Mutual fund companies for investment execution and maintenance</li>
+                        <li><strong>Brokers & Depositories:</strong> For securities trading and custody services</li>
+                        <li><strong>Banks:</strong> For payment processing and account management</li>
+                        <li><strong>Technology Partners:</strong> Cloud service providers, analytics platforms, and software vendors</li>
+                        <li><strong>KYC Agencies:</strong> Third-party verification services for identity and document validation</li>
+                        <li><strong>Credit Bureaus:</strong> For credit assessment and risk evaluation</li>
+                        <li><strong>Auditors:</strong> External auditors and compliance consultants under professional confidentiality</li>
+                    </ul>
+                    
+                    <h3>4.3 Regulatory & Legal Disclosures</h3>
+                    <ul>
+                        <li><strong>SEBI:</strong> Regulatory reporting and compliance requirements</li>
+                        <li><strong>Income Tax Department:</strong> Tax reporting and TDS compliance</li>
+                        <li><strong>Financial Intelligence Unit (FIU):</strong> Suspicious transaction reports</li>
+                        <li><strong>Reserve Bank of India (RBI):</strong> Banking and financial sector reporting</li>
+                        <li><strong>Court Orders:</strong> Compliance with judicial orders and legal proceedings</li>
+                        <li><strong>Law Enforcement:</strong> Cooperation with authorized investigations</li>
+                        <li><strong>Other Regulators:</strong> As required by applicable laws and regulations</li>
+                    </ul>
+                    
+                    <h3>4.4 Data Protection Measures for Third Parties</h3>
+                    <ul>
+                        <li>All third parties sign comprehensive data protection agreements</li>
+                        <li>Regular audits and compliance checks of service providers</li>
+                        <li>Minimum necessary information principle applied</li>
+                        <li>Purpose limitation and retention period restrictions</li>
+                        <li>Technical and organizational security measures required</li>
+                        <li>Incident reporting and breach notification protocols</li>
+                    </ul>
+                    
+                    <h3>4.5 International Data Transfers</h3>
+                    <p>We may transfer your data outside India for:</p>
+                    <ul>
+                        <li>Cloud storage and backup services with global providers</li>
+                        <li>Software analytics and customer support platforms</li>
+                        <li>International fund management and custody services</li>
+                        <li>Cybersecurity and fraud prevention services</li>
+                    </ul>
+                    <p>All international transfers comply with applicable data protection laws and include appropriate safeguards such as Standard Contractual Clauses or adequacy decisions.</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>5. Data Security Measures</h2>
+                    <h3>5.1 Technical Security Controls</h3>
+                    <ul>
+                        <li><strong>Encryption:</strong> 256-bit SSL/TLS encryption for data transmission and AES-256 encryption for data at rest</li>
+                        <li><strong>Access Controls:</strong> Role-based access control (RBAC) with least privilege principle</li>
+                        <li><strong>Authentication:</strong> Multi-factor authentication (MFA) for all user accounts and administrative access</li>
+                        <li><strong>Network Security:</strong> Firewalls, intrusion detection systems, and network segmentation</li>
+                        <li><strong>Database Security:</strong> Database encryption, activity monitoring, and access logging</li>
+                        <li><strong>Application Security:</strong> Secure coding practices, regular security testing, and vulnerability assessments</li>
+                        <li><strong>Endpoint Protection:</strong> Anti-malware, device encryption, and remote wipe capabilities</li>
+                    </ul>
+                    
+                    <h3>5.2 Physical Security Measures</h3>
+                    <ul>
+                        <li><strong>Data Centers:</strong> Tier III certified data centers with 24/7 physical security</li>
+                        <li><strong>Office Security:</strong> Biometric access controls, CCTV surveillance, and visitor management</li>
+                        <li><strong>Document Security:</strong> Secure storage of physical documents in locked filing systems</li>
+                        <li><strong>Equipment Security:</strong> Asset tracking, secure disposal, and clean desk policies</li>
+                        <li><strong>Environmental Controls:</strong> Temperature, humidity, and fire suppression systems</li>
+                    </ul>
+                    
+                    <h3>5.3 Organizational Security Measures</h3>
+                    <ul>
+                        <li><strong>Employee Training:</strong> Regular cybersecurity awareness and data protection training</li>
+                        <li><strong>Background Checks:</strong> Comprehensive screening of all employees and contractors</li>
+                        <li><strong>Confidentiality Agreements:</strong> All staff sign strict confidentiality and data protection agreements</li>
+                        <li><strong>Incident Response:</strong> 24/7 security operations center and incident response team</li>
+                        <li><strong>Business Continuity:</strong> Disaster recovery and business continuity planning</li>
+                        <li><strong>Third-party Management:</strong> Vendor risk assessment and ongoing monitoring</li>
+                    </ul>
+                    
+                    <h3>5.4 Monitoring & Auditing</h3>
+                    <ul>
+                        <li><strong>Real-time Monitoring:</strong> 24/7 security monitoring and threat detection</li>
+                        <li><strong>Audit Logging:</strong> Comprehensive logging of all system access and data operations</li>
+                        <li><strong>Regular Audits:</strong> Annual information security audits by certified professionals</li>
+                        <li><strong>Vulnerability Management:</strong> Regular security assessments and penetration testing</li>
+                        <li><strong>Compliance Monitoring:</strong> Continuous monitoring for regulatory compliance</li>
+                        <li><strong>Security Metrics:</strong> Key performance indicators for security effectiveness</li>
+                    </ul>
+                    
+                    <h3>5.5 Data Breach Response</h3>
+                    <p>In the event of a data breach, we have established procedures to:</p>
+                    <ul>
+                        <li>Detect and contain the breach within 24 hours</li>
+                        <li>Assess the scope and impact of the incident</li>
+                        <li>Notify affected individuals within 72 hours where required</li>
+                        <li>Report to relevant authorities as mandated by law</li>
+                        <li>Implement corrective measures to prevent recurrence</li>
+                        <li>Provide support and assistance to affected individuals</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>6. Data Retention Policy</h2>
+                    <h3>6.1 Retention Periods by Data Category</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data Category</th>
+                                <th>Retention Period</th>
+                                <th>Legal Basis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Investment Advisory Records</td>
+                                <td>5 years after relationship termination</td>
+                                <td>SEBI (Investment Advisers) Regulations</td>
+                            </tr>
+                            <tr>
+                                <td>Financial Transactions</td>
+                                <td>8 years from transaction date</td>
+                                <td>Income Tax Act, 1961</td>
+                            </tr>
+                            <tr>
+                                <td>KYC Documents</td>
+                                <td>8 years after account closure</td>
+                                <td>Prevention of Money Laundering Act</td>
+                            </tr>
+                            <tr>
+                                <td>Communication Records</td>
+                                <td>3 years from creation</td>
+                                <td>Business requirements</td>
+                            </tr>
+                            <tr>
+                                <td>Website Analytics</td>
+                                <td>2 years from collection</td>
+                                <td>Business analytics purposes</td>
+                            </tr>
+                            <tr>
+                                <td>Marketing Preferences</td>
+                                <td>Until consent is withdrawn</td>
+                                <td>Consent-based processing</td>
+                            </tr>
+                            <tr>
+                                <td>Support Tickets</td>
+                                <td>3 years from resolution</td>
+                                <td>Customer service improvement</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>6.2 Data Disposal Procedures</h3>
+                    <ul>
+                        <li><strong>Secure Deletion:</strong> Cryptographic erasure and multi-pass overwriting for digital data</li>
+                        <li><strong>Physical Destruction:</strong> Certified destruction of hard drives and physical documents</li>
+                        <li><strong>Verification:</strong> Certificate of destruction provided by authorized vendors</li>
+                        <li><strong>Audit Trail:</strong> Complete documentation of data disposal activities</li>
+                        <li><strong>Legal Compliance:</strong> Retention of disposal records as required by law</li>
+                    </ul>
+                    
+                    <h3>6.3 Extended Retention Circumstances</h3>
+                    <p>Data may be retained beyond standard periods in cases of:</p>
+                    <ul>
+                        <li>Ongoing legal proceedings or disputes</li>
+                        <li>Regulatory investigations or audits</li>
+                        <li>Pending insurance claims or settlements</li>
+                        <li>Client requests for historical data access</li>
+                        <li>Statutory requirements for specific data types</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>7. Your Privacy Rights</h2>
+                    <h3>7.1 Access Rights</h3>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li><strong>Access Your Data:</strong> Request a copy of all personal information we hold about you</li>
+                        <li><strong>Data Portability:</strong> Receive your data in a structured, machine-readable format</li>
+                        <li><strong>Processing Information:</strong> Understand how your data is being processed and for what purposes</li>
+                        <li><strong>Third-party Sharing:</strong> Know which third parties have access to your information</li>
+                        <li><strong>Data Sources:</strong> Information about where we obtained your data</li>
+                    </ul>
+                    
+                    <h3>7.2 Control Rights</h3>
+                    <ul>
+                        <li><strong>Rectification:</strong> Correct inaccurate or incomplete personal information</li>
+                        <li><strong>Restriction:</strong> Limit the processing of your data in certain circumstances</li>
+                        <li><strong>Objection:</strong> Object to processing based on legitimate interests or direct marketing</li>
+                        <li><strong>Withdrawal of Consent:</strong> Withdraw consent for data processing where applicable</li>
+                        <li><strong>Marketing Opt-out:</strong> Unsubscribe from marketing communications at any time</li>
+                    </ul>
+                    
+                    <h3>7.3 Erasure Rights</h3>
+                    <p>You may request deletion of your personal data when:</p>
+                    <ul>
+                        <li>The data is no longer necessary for the original purpose</li>
+                        <li>You withdraw consent and there's no other legal basis for processing</li>
+                        <li>The data has been unlawfully processed</li>
+                        <li>Erasure is required for compliance with legal obligations</li>
+                    </ul>
+                    <p><strong>Note:</strong> Some data cannot be deleted due to legal and regulatory requirements.</p>
+                    
+                    <h3>7.4 How to Exercise Your Rights</h3>
+                    <p>To exercise any of these rights, please contact us at:</p>
+                    <ul>
+                        <li><strong>Email:</strong> privacy@nyqewealthmanagement.com</li>
+                        <li><strong>Phone:</strong> +91-11-4567-8902</li>
+                        <li><strong>Written Request:</strong> Data Protection Officer, NYQE Wealth Management, 123 Financial District, New Delhi - 110001</li>
+                        <li><strong>Online Portal:</strong> Submit requests through your client portal</li>
+                    </ul>
+                    
+                    <h3>7.5 Response Timeline & Process</h3>
+                    <ul>
+                        <li><strong>Acknowledgment:</strong> Within 5 working days of receiving your request</li>
+                        <li><strong>Identity Verification:</strong> We may require additional verification for security purposes</li>
+                        <li><strong>Response Time:</strong> Complete response within 30 days (may be extended to 60 days for complex requests)</li>
+                        <li><strong>Free of Charge:</strong> Most requests are processed free of charge</li>
+                        <li><strong>Format:</strong> Data provided in commonly used electronic formats</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>8. Cookies & Tracking Technologies</h2>
+                    <h3>8.1 Types of Cookies We Use</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Cookie Type</th>
+                                <th>Purpose</th>
+                                <th>Duration</th>
+                                <th>Consent Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Essential Cookies</td>
+                                <td>Website functionality and security</td>
+                                <td>Session or 1 year</td>
+                                <td>No (legally required)</td>
+                            </tr>
+                            <tr>
+                                <td>Performance Cookies</td>
+                                <td>Website analytics and optimization</td>
+                                <td>2 years</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Functional Cookies</td>
+                                <td>User preferences and personalization</td>
+                                <td>1 year</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Marketing Cookies</td>
+                                <td>Targeted advertising and marketing</td>
+                                <td>13 months</td>
+                                <td>Yes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>8.2 Third-Party Cookies & Tracking</h3>
+                    <ul>
+                        <li><strong>Google Analytics:</strong> Website usage analytics and user behavior tracking</li>
+                        <li><strong>Google Ads:</strong> Advertising performance and conversion tracking</li>
+                        <li><strong>Facebook Pixel:</strong> Social media advertising and remarketing</li>
+                        <li><strong>LinkedIn Insight Tag:</strong> Professional network advertising</li>
+                        <li><strong>Hotjar:</strong> User experience analysis and heatmaps</li>
+                        <li><strong>Zendesk:</strong> Customer support chat functionality</li>
+                    </ul>
+                    
+                    <h3>8.3 Managing Cookie Preferences</h3>
+                    <ul>
+                        <li><strong>Cookie Banner:</strong> Configure preferences when first visiting our website</li>
+                        <li><strong>Browser Settings:</strong> Disable cookies through your browser preferences</li>
+                        <li><strong>Opt-out Tools:</strong> Use industry opt-out tools for advertising cookies</li>
+                        <li><strong>Account Settings:</strong> Manage preferences through your user account</li>
+                        <li><strong>Contact Us:</strong> Request cookie disabling through our support team</li>
+                    </ul>
+                    
+                    <h3>8.4 Other Tracking Technologies</h3>
+                    <ul>
+                        <li><strong>Web Beacons:</strong> Transparent images for email tracking and website analytics</li>
+                        <li><strong>Local Storage:</strong> Browser storage for application preferences and performance</li>
+                        <li><strong>Session Storage:</strong> Temporary storage for current browsing session</li>
+                        <li><strong>Device Fingerprinting:</strong> Security and fraud prevention purposes</li>
+                        <li><strong>Server Logs:</strong> Automatic logging of IP addresses and access patterns</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>9. Children's Privacy</h2>
+                    <p>Our services are not intended for individuals under the age of 18. We do not knowingly collect personal information from children under 18. If we become aware that we have collected personal information from a child under 18, we will take immediate steps to delete such information.</p>
+                    
+                    <h3>9.1 Parental Consent Requirements</h3>
+                    <ul>
+                        <li>Minor accounts require explicit parental or guardian consent</li>
+                        <li>Legal guardians must verify their identity and relationship</li>
+                        <li>Special protection measures apply to minor account data</li>
+                        <li>Regular review of minor account activities and permissions</li>
+                        <li>Automatic conversion to adult accounts upon reaching majority</li>
+                    </ul>
+                    
+                    <h3>9.2 Educational Content Access</h3>
+                    <p>While our financial education content may be accessed by minors for educational purposes, we do not collect personal information from such users without appropriate consent mechanisms.</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>10. Cross-Border Data Transfers</h2>
+                    <h3>10.1 International Transfer Safeguards</h3>
+                    <p>When transferring your data internationally, we ensure adequate protection through:</p>
+                    <ul>
+                        <li><strong>Adequacy Decisions:</strong> Transfers to countries with adequate data protection laws</li>
+                        <li><strong>Standard Contractual Clauses:</strong> EU-approved contract terms for data protection</li>
+                        <li><strong>Binding Corporate Rules:</strong> Internal policies for multinational organizations</li>
+                        <li><strong>Certification Schemes:</strong> Industry-recognized privacy certification programs</li>
+                        <li><strong>Specific Safeguards:</strong> Additional technical and organizational measures</li>
+                    </ul>
+                    
+                    <h3>10.2 Data Localization Compliance</h3>
+                    <ul>
+                        <li>Sensitive personal data primarily stored within India</li>
+                        <li>Compliance with Reserve Bank of India data localization requirements</li>
+                        <li>Regular audit of data storage locations and transfer mechanisms</li>
+                        <li>Contingency plans for regulatory changes in data localization</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>11. Updates to Privacy Policy</h2>
+                    <h3>11.1 Notification Methods</h3>
+                    <p>We will notify you of material changes to this Privacy Policy through:</p>
+                    <ul>
+                        <li><strong>Email Notification:</strong> Sent to your registered email address at least 30 days in advance</li>
+                        <li><strong>Website Notice:</strong> Prominent banner on our homepage and key pages</li>
+                        <li><strong>App Notifications:</strong> Push notifications for mobile app users</li>
+                        <li><strong>Account Dashboard:</strong> Notifications in your client portal</li>
+                        <li><strong>Physical Mail:</strong> For significant changes affecting your rights</li>
+                    </ul>
+                    
+                    <h3>11.2 Your Options</h3>
+                    <ul>
+                        <li><strong>Review Period:</strong> 30 days to review changes before they take effect</li>
+                        <li><strong>Opt-out Rights:</strong> Right to object to new processing purposes</li>
+                        <li><strong>Service Termination:</strong> Option to close your account if you disagree with changes</li>
+                        <li><strong>Data Export:</strong> Request your data before policy changes take effect</li>
+                    </ul>
+                    
+                    <h3>11.3 Version Control</h3>
+                    <ul>
+                        <li>All versions archived with dates and change summaries</li>
+                        <li>Previous versions available upon request</li>
+                        <li>Change log maintained for transparency</li>
+                        <li>Regular review cycle every 12 months minimum</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Data Protection Contact Information</h3>
+                    <p><strong>Data Protection Officer</strong><br>
+                    Ms. Priya Sharma<br>
+                    Email: privacy@nyqewealthmanagement.com<br>
+                    Phone: +91-11-4567-8902<br>
+                    Address: NYQE Wealth Management Private Limited<br>
+                    123 Financial District, Connaught Place<br>
+                    New Delhi - 110001, India</p>
+                    
+                    <p><strong>Privacy Inquiry Response Time:</strong> 5-10 working days<br>
+                    <strong>Data Subject Request Processing:</strong> 30 days (extendable to 60 days)<br>
+                    <strong>Emergency Privacy Concerns:</strong> +91-98765-43211</p>
+                    
+                    <p><strong>Regulatory Authorities:</strong><br>
+                    For complaints about our data handling, you may also contact:<br>
+                    - Ministry of Electronics and Information Technology (MeitY)<br>
+                    - Data Protection Authority (when established)<br>
+                    - Cyber Crime Reporting Portal: cybercrime.gov.in</p>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="legal-footer">
+                <p>© 2024 NYQE Wealth Management Private Limited. All rights reserved.</p>
+                <p>This Privacy Policy is governed by Indian laws and regulations.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()" style="display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</div>
+
+<script>
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Show/hide back to top button
+window.addEventListener('scroll', function() {
+    const button = document.querySelector('.back-to-top');
+    if (window.pageYOffset > 300) {
+        button.style.display = 'block';
+    } else {
+        button.style.display = 'none';
+    }
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

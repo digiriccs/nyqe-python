@@ -1,0 +1,79 @@
+You are a full-stack web developer. Build a **modern, mobile-responsive web application** that includes:
+
+1. A clean, user-friendly **form interface** for capturing queries or inputs
+2. A secure, password-protected **admin panel (CMS)** that allows editing of **all sections of the application**
+
+---
+
+## 🎯 OBJECTIVES:
+
+### USER-FACING FORM
+
+- Clean and centered UI layout
+- Form includes:
+  - Page heading and subtitle
+  - One or more dropdowns (select)
+  - Textarea with preset template or hint
+  - Submit button
+- Fully responsive (mobile/tablet/desktop)
+- Loads all UI text and dropdown values dynamically from CMS-configured data
+
+---
+
+### ADMIN PANEL (/admin)
+
+A password-protected admin dashboard that allows the admin to **modify every editable element of the application**.
+
+#### ✅ Editable Sections Must Include:
+- **Form Page Title and Subtitle**
+- **Dropdown Field**
+  - Field label
+  - List of dropdown options (add/edit/delete)
+- **Textarea**
+  - Field label
+  - Placeholder text
+  - Default template text
+- **Submit Button Text**
+- **Success message after submission**
+- **Footer or instructions if any**
+
+#### Admin Panel Features:
+- Login screen (basic password stored via `.env`)
+- Tabbed or sectioned UI for managing each part of the form
+- Realtime or "Save" button for each section
+- Show toasts/modals on successful updates
+- Optional: Versioned autosave or reset-to-default
+
+---
+
+## 🔐 AUTHENTICATION
+- Secure admin login (username/password or password only)
+- Session stored in `localStorage` or cookie
+- Admin password securely stored in `.env` file
+- Protect `/admin` and all CMS API endpoints
+
+---
+
+## 🗄️ DATA STORAGE OPTIONS
+
+Choose one:
+
+### Option A: JSON-based (Replit-friendly)
+- File: `cms-data.json`
+- Example structure:
+```json
+{
+  "title": "Quick Query Portal",
+  "subtitle": "Submit your request here",
+  "dropdown": {
+    "label": "Select Category",
+    "options": ["Support", "Billing", "Feedback"]
+  },
+  "textarea": {
+    "label": "Describe your query",
+    "placeholder": "Start typing...",
+    "default": "Hi team, I would like to..."
+  },
+  "buttonText": "Submit",
+  "successMessage": "Thank you! Your query has been received."
+}

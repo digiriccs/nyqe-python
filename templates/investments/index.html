@@ -1,0 +1,905 @@
+{% extends "base.html" %}
+
+{% block title %}Investment Solutions - NYQE Wealth Management{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1>Investment Solutions</h1>
+                <p class="lead">Diversified investment options across asset classes designed to help you achieve your financial goals with optimal risk-adjusted returns.</p>
+                <div class="hero-highlights mt-4">
+                    <div class="highlight-item">
+                        <i class="fas fa-chart-pie text-primary"></i>
+                        <span>Multi-Asset Approach</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-shield-alt text-success"></i>
+                        <span>Risk-Optimized Portfolios</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-trending-up text-warning"></i>
+                        <span>Superior Long-term Returns</span>
+                    </div>
+                </div>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg mt-4">
+                    <i class="fas fa-rocket"></i> Start Investing
+                </a>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="investment-pyramid">
+                    <div class="pyramid-level level-1">
+                        <div class="level-content">
+                            <h6>Emergency Fund & Insurance</h6>
+                            <p>Foundation - 6-12 months expenses</p>
+                        </div>
+                    </div>
+                    <div class="pyramid-level level-2">
+                        <div class="level-content">
+                            <h6>Fixed Income & Debt</h6>
+                            <p>Stability - 6-9% returns</p>
+                        </div>
+                    </div>
+                    <div class="pyramid-level level-3">
+                        <div class="level-content">
+                            <h6>Equity & Growth Assets</h6>
+                            <p>Growth - 12-18% returns</p>
+                        </div>
+                    </div>
+                    <div class="pyramid-level level-4">
+                        <div class="level-content">
+                            <h6>Alternative Investments</h6>
+                            <p>Diversification - 10-15% returns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Investment Categories -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Investment Universe</h2>
+            <p class="lead">Comprehensive range of investment options for every risk appetite and financial goal</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="investment-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>Mutual Funds</h4>
+                            <span class="category-tag">Diversified Growth</span>
+                        </div>
+                    </div>
+                    <div class="category-body">
+                        <p>Professionally managed diversified portfolios across equity, debt, and hybrid categories.</p>
+                        <div class="category-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Professional Management</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Instant Diversification</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>High Liquidity</span>
+                            </div>
+                        </div>
+                        <div class="category-stats">
+                            <div class="stat">
+                                <span class="stat-value">8-15%</span>
+                                <span class="stat-label">Expected Returns</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">₹500</span>
+                                <span class="stat-label">Minimum Investment</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-footer">
+                        <a href="{{ url_for('investment_detail', slug='mutual-funds') }}" class="btn btn-outline-primary">
+                            Explore Mutual Funds <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="investment-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>Fixed Income</h4>
+                            <span class="category-tag">Stable Returns</span>
+                        </div>
+                    </div>
+                    <div class="category-body">
+                        <p>Government bonds, corporate bonds, and fixed deposits for steady income and capital preservation.</p>
+                        <div class="category-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Predictable Returns</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Capital Protection</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Regular Income</span>
+                            </div>
+                        </div>
+                        <div class="category-stats">
+                            <div class="stat">
+                                <span class="stat-value">6-9%</span>
+                                <span class="stat-label">Expected Returns</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">₹1,000</span>
+                                <span class="stat-label">Minimum Investment</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-footer">
+                        <a href="{{ url_for('investment_detail', slug='fixed-income') }}" class="btn btn-outline-primary">
+                            Explore Fixed Income <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="investment-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>Direct Equity</h4>
+                            <span class="category-tag">High Growth</span>
+                        </div>
+                    </div>
+                    <div class="category-body">
+                        <p>Carefully selected individual stocks and equity portfolios for maximum wealth creation potential.</p>
+                        <div class="category-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>High Growth Potential</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Ownership Rights</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Dividend Income</span>
+                            </div>
+                        </div>
+                        <div class="category-stats">
+                            <div class="stat">
+                                <span class="stat-value">12-20%</span>
+                                <span class="stat-label">Expected Returns</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">₹5,000</span>
+                                <span class="stat-label">Minimum Investment</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-footer">
+                        <a href="{{ url_for('investment_detail', slug='equity') }}" class="btn btn-outline-primary">
+                            Explore Equity <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="investment-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>Alternative Investments</h4>
+                            <span class="category-tag">Portfolio Diversification</span>
+                        </div>
+                    </div>
+                    <div class="category-body">
+                        <p>REITs, gold, commodities, and other alternative assets for enhanced portfolio diversification.</p>
+                        <div class="category-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Low Correlation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Inflation Hedge</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Risk Diversification</span>
+                            </div>
+                        </div>
+                        <div class="category-stats">
+                            <div class="stat">
+                                <span class="stat-value">10-18%</span>
+                                <span class="stat-label">Expected Returns</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">₹2,000</span>
+                                <span class="stat-label">Minimum Investment</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-footer">
+                        <a href="{{ url_for('investment_detail', slug='alternatives') }}" class="btn btn-outline-primary">
+                            Explore Alternatives <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Investment Strategy -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Investment Philosophy</h2>
+            <p class="lead">Time-tested principles that drive our investment decisions</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="philosophy-card">
+                    <div class="philosophy-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h5>Long-term Focus</h5>
+                    <p>We believe in the power of compounding and long-term wealth creation rather than short-term speculation.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="philosophy-card">
+                    <div class="philosophy-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h5>Risk Management</h5>
+                    <p>Diversification across asset classes and systematic risk assessment to protect and grow your wealth.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="philosophy-card">
+                    <div class="philosophy-icon">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <h5>Research Driven</h5>
+                    <p>Every investment decision is backed by thorough research, analysis, and due diligence.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Asset Allocation Models -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Strategic Asset Allocation Models</h2>
+            <p class="lead">Customized allocation strategies based on your risk profile and investment horizon</p>
+        </div>
+        
+        <div class="allocation-models">
+            <div class="row">
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="allocation-card conservative">
+                        <div class="allocation-header">
+                            <h5>Conservative Model</h5>
+                            <span class="risk-label">Low Risk</span>
+                        </div>
+                        <div class="allocation-chart">
+                            <div class="chart-container">
+                                <canvas id="conservative-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="allocation-details">
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #1a365d;"></span>
+                                <span>Equity: 30%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #00d4aa;"></span>
+                                <span>Fixed Income: 60%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #ffd700;"></span>
+                                <span>Alternatives: 10%</span>
+                            </div>
+                        </div>
+                        <div class="model-metrics">
+                            <div class="metric">
+                                <span>Expected Return: 8-12%</span>
+                            </div>
+                            <div class="metric">
+                                <span>Ideal for: Risk-averse investors</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="allocation-card moderate">
+                        <div class="allocation-header">
+                            <h5>Moderate Model</h5>
+                            <span class="risk-label">Medium Risk</span>
+                        </div>
+                        <div class="allocation-chart">
+                            <div class="chart-container">
+                                <canvas id="moderate-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="allocation-details">
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #1a365d;"></span>
+                                <span>Equity: 60%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #00d4aa;"></span>
+                                <span>Fixed Income: 30%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #ffd700;"></span>
+                                <span>Alternatives: 10%</span>
+                            </div>
+                        </div>
+                        <div class="model-metrics">
+                            <div class="metric">
+                                <span>Expected Return: 12-15%</span>
+                            </div>
+                            <div class="metric">
+                                <span>Ideal for: Balanced approach</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="allocation-card aggressive">
+                        <div class="allocation-header">
+                            <h5>Aggressive Model</h5>
+                            <span class="risk-label">High Risk</span>
+                        </div>
+                        <div class="allocation-chart">
+                            <div class="chart-container">
+                                <canvas id="aggressive-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="allocation-details">
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #1a365d;"></span>
+                                <span>Equity: 80%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #00d4aa;"></span>
+                                <span>Fixed Income: 10%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-color" style="background: #ffd700;"></span>
+                                <span>Alternatives: 10%</span>
+                            </div>
+                        </div>
+                        <div class="model-metrics">
+                            <div class="metric">
+                                <span>Expected Return: 15-20%</span>
+                            </div>
+                            <div class="metric">
+                                <span>Ideal for: Growth seekers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Investment Tools -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Investment Tools & Resources</h2>
+            <p class="lead">Make informed investment decisions with our comprehensive tools</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h5>Investment Comparison</h5>
+                    <p>Compare different investment options side-by-side to make the best choice for your portfolio.</p>
+                    <a href="{{ url_for('comparison_tool') }}" class="btn btn-primary">
+                        Compare Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h5>Investment Calculators</h5>
+                    <p>Plan your investments with our comprehensive suite of financial calculators and planning tools.</p>
+                    <a href="{{ url_for('calculators') }}" class="btn btn-primary">
+                        Calculate <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h5>Portfolio Tracker</h5>
+                    <p>Monitor your investment performance with real-time tracking and detailed analytics.</p>
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
+                        Get Access <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div data-aos="fade-up">
+            <h2>Ready to Start Your Investment Journey?</h2>
+            <p class="lead">Let our experts help you build a diversified portfolio aligned with your financial goals</p>
+            
+            <div class="cta-features mt-4 mb-4">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <i class="fas fa-users fa-2x mb-2"></i>
+                        <p>Expert Guidance</p>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <i class="fas fa-chart-pie fa-2x mb-2"></i>
+                        <p>Diversified Portfolio</p>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                        <p>Risk Management</p>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <i class="fas fa-trending-up fa-2x mb-2"></i>
+                        <p>Optimal Returns</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary btn-lg me-3">
+                    <i class="fas fa-rocket"></i> Start Investing
+                </a>
+                <a href="{{ url_for('calculators') }}" class="btn btn-outline btn-lg">
+                    <i class="fas fa-calculator"></i> Plan Investment
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.highlight-item i {
+    font-size: 1.2rem;
+}
+
+.investment-pyramid {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.pyramid-level {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.pyramid-level:hover {
+    transform: translateX(10px);
+}
+
+.level-1 { 
+    background: rgba(255, 215, 0, 0.2);
+    border-left: 4px solid var(--accent-color);
+}
+.level-2 { 
+    background: rgba(0, 212, 170, 0.2);
+    border-left: 4px solid var(--secondary-color);
+}
+.level-3 { 
+    background: rgba(26, 54, 93, 0.2);
+    border-left: 4px solid var(--primary-color);
+}
+.level-4 { 
+    background: rgba(220, 38, 38, 0.2);
+    border-left: 4px solid #dc2626;
+}
+
+.level-content h6 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.level-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.investment-category-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.investment-category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-large);
+}
+
+.category-header {
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.category-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.category-tag {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    display: inline-block;
+}
+
+.category-body {
+    padding: 2rem;
+    flex: 1;
+}
+
+.category-features {
+    margin: 1.5rem 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-item i {
+    color: var(--success-color);
+}
+
+.category-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+.category-footer {
+    padding: 1.5rem 2rem;
+    background: var(--bg-light);
+    border-top: 1px solid var(--border-color);
+}
+
+.philosophy-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.philosophy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.philosophy-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    margin: 0 auto 1.5rem;
+}
+
+.allocation-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.allocation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.allocation-header {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.risk-label {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.allocation-chart {
+    padding: 2rem;
+    text-align: center;
+}
+
+.chart-container {
+    height: 200px;
+    position: relative;
+}
+
+.allocation-details {
+    padding: 0 2rem 1rem;
+}
+
+.allocation-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.allocation-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.model-metrics {
+    padding: 1.5rem 2rem;
+    background: var(--bg-light);
+    border-top: 1px solid var(--border-color);
+}
+
+.model-metrics .metric {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.tool-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.tool-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin: 0 auto 1.5rem;
+}
+
+.cta-features {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cta-features i {
+    color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    .category-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .category-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .allocation-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .chart-container {
+        height: 150px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Conservative Allocation Chart
+    const conservativeCtx = document.getElementById('conservative-chart');
+    if (conservativeCtx) {
+        new Chart(conservativeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Equity', 'Fixed Income', 'Alternatives'],
+                datasets: [{
+                    data: [30, 60, 10],
+                    backgroundColor: ['#1a365d', '#00d4aa', '#ffd700'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+    
+    // Moderate Allocation Chart
+    const moderateCtx = document.getElementById('moderate-chart');
+    if (moderateCtx) {
+        new Chart(moderateCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Equity', 'Fixed Income', 'Alternatives'],
+                datasets: [{
+                    data: [60, 30, 10],
+                    backgroundColor: ['#1a365d', '#00d4aa', '#ffd700'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+    
+    // Aggressive Allocation Chart
+    const aggressiveCtx = document.getElementById('aggressive-chart');
+    if (aggressiveCtx) {
+        new Chart(aggressiveCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Equity', 'Fixed Income', 'Alternatives'],
+                datasets: [{
+                    data: [80, 10, 10],
+                    backgroundColor: ['#1a365d', '#00d4aa', '#ffd700'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

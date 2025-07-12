@@ -1,0 +1,550 @@
+{% extends "base.html" %}
+
+{% block title %}Loan Selection Guide - NYQE Wealth Management{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loan-hub.css') }}">
+<style>
+    .guide-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+    
+    .guide-step {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+    
+    .guide-step.active {
+        display: block;
+    }
+    
+    .step-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .step-number {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background: var(--primary-blue);
+        color: white;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 50px;
+        margin-bottom: 20px;
+    }
+    
+    .step-title {
+        font-size: 1.8rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
+    .step-subtitle {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .option-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .option-card {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+    
+    .option-card:hover {
+        border-color: var(--primary-blue);
+        background: #f0f7ff;
+    }
+    
+    .option-card.selected {
+        border-color: var(--primary-blue);
+        background: #e8f4ff;
+    }
+    
+    .option-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .option-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    
+    .option-desc {
+        font-size: 0.9rem;
+        color: #666;
+    }
+    
+    .input-group {
+        margin-bottom: 20px;
+    }
+    
+    .guide-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+    
+    .progress-bar-container {
+        background: #e0e0e0;
+        height: 8px;
+        border-radius: 4px;
+        margin-bottom: 40px;
+        overflow: hidden;
+    }
+    
+    .progress-bar-fill {
+        background: var(--primary-blue);
+        height: 100%;
+        transition: width 0.3s ease;
+    }
+    
+    .recommendations {
+        display: none;
+    }
+    
+    .recommendation-card {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .recommendation-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .bank-name {
+        font-weight: 600;
+        color: var(--primary-blue);
+    }
+    
+    .interest-rate {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #28a745;
+    }
+    
+    .recommendation-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .detail-item {
+        padding: 5px 0;
+    }
+    
+    .detail-label {
+        color: #666;
+    }
+    
+    .detail-value {
+        font-weight: 600;
+        color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="guide-container">
+    <h1 class="text-center mb-4" style="color: var(--primary-blue);">Find Your Perfect Loan</h1>
+    
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBar" style="width: 20%;"></div>
+    </div>
+    
+    <!-- Step 1: Purpose -->
+    <div class="guide-step active" id="step1">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <h2 class="step-title">What do you need the loan for?</h2>
+            <p class="step-subtitle">Select your primary purpose</p>
+        </div>
+        
+        <div class="option-grid">
+            <div class="option-card" data-purpose="home_purchase">
+                <div class="option-icon">🏠</div>
+                <div class="option-label">Buy a Home</div>
+                <div class="option-desc">Purchase your dream home</div>
+            </div>
+            
+            <div class="option-card" data-purpose="home_renovation">
+                <div class="option-icon">🔨</div>
+                <div class="option-label">Home Renovation</div>
+                <div class="option-desc">Upgrade or repair your home</div>
+            </div>
+            
+            <div class="option-card" data-purpose="personal_expenses">
+                <div class="option-icon">💳</div>
+                <div class="option-label">Personal Needs</div>
+                <div class="option-desc">Medical, travel, or other</div>
+            </div>
+            
+            <div class="option-card" data-purpose="wedding">
+                <div class="option-icon">💍</div>
+                <div class="option-label">Wedding</div>
+                <div class="option-desc">Finance your special day</div>
+            </div>
+            
+            <div class="option-card" data-purpose="business_expansion">
+                <div class="option-icon">📈</div>
+                <div class="option-label">Business Growth</div>
+                <div class="option-desc">Expand your business</div>
+            </div>
+            
+            <div class="option-card" data-purpose="education">
+                <div class="option-icon">🎓</div>
+                <div class="option-label">Education</div>
+                <div class="option-desc">Higher studies funding</div>
+            </div>
+            
+            <div class="option-card" data-purpose="car_purchase">
+                <div class="option-icon">🚗</div>
+                <div class="option-label">Buy a Vehicle</div>
+                <div class="option-desc">Car or two-wheeler loan</div>
+            </div>
+            
+            <div class="option-card" data-purpose="gold_loan">
+                <div class="option-icon">🏆</div>
+                <div class="option-label">Against Gold</div>
+                <div class="option-desc">Loan against gold jewelry</div>
+            </div>
+        </div>
+        
+        <div class="guide-navigation">
+            <button class="btn btn-secondary" disabled>Previous</button>
+            <button class="btn btn-primary" onclick="nextStep()" disabled id="step1Next">Next</button>
+        </div>
+    </div>
+    
+    <!-- Step 2: Amount -->
+    <div class="guide-step" id="step2">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <h2 class="step-title">How much do you need?</h2>
+            <p class="step-subtitle">Enter the loan amount</p>
+        </div>
+        
+        <div class="input-group">
+            <label class="form-label">Loan Amount (₹)</label>
+            <input type="number" class="form-control form-control-lg" id="loanAmount" 
+                   placeholder="Enter amount" min="50000" step="50000">
+            <small class="text-muted">Minimum: ₹50,000</small>
+        </div>
+        
+        <div class="guide-navigation">
+            <button class="btn btn-secondary" onclick="previousStep()">Previous</button>
+            <button class="btn btn-primary" onclick="nextStep()" disabled id="step2Next">Next</button>
+        </div>
+    </div>
+    
+    <!-- Step 3: Income -->
+    <div class="guide-step" id="step3">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <h2 class="step-title">What's your monthly income?</h2>
+            <p class="step-subtitle">This helps us find eligible loans</p>
+        </div>
+        
+        <div class="input-group">
+            <label class="form-label">Monthly Income (₹)</label>
+            <input type="number" class="form-control form-control-lg" id="monthlyIncome" 
+                   placeholder="Enter income" min="10000" step="5000">
+            <small class="text-muted">Include all sources of income</small>
+        </div>
+        
+        <div class="guide-navigation">
+            <button class="btn btn-secondary" onclick="previousStep()">Previous</button>
+            <button class="btn btn-primary" onclick="nextStep()" disabled id="step3Next">Next</button>
+        </div>
+    </div>
+    
+    <!-- Step 4: Employment -->
+    <div class="guide-step" id="step4">
+        <div class="step-header">
+            <div class="step-number">4</div>
+            <h2 class="step-title">What's your employment type?</h2>
+            <p class="step-subtitle">Select your employment status</p>
+        </div>
+        
+        <div class="option-grid">
+            <div class="option-card" data-employment="salaried">
+                <div class="option-icon">💼</div>
+                <div class="option-label">Salaried</div>
+                <div class="option-desc">Regular employment</div>
+            </div>
+            
+            <div class="option-card" data-employment="self_employed">
+                <div class="option-icon">👔</div>
+                <div class="option-label">Self Employed</div>
+                <div class="option-desc">Professional or freelancer</div>
+            </div>
+            
+            <div class="option-card" data-employment="business">
+                <div class="option-icon">🏢</div>
+                <div class="option-label">Business Owner</div>
+                <div class="option-desc">Own a business</div>
+            </div>
+        </div>
+        
+        <div class="guide-navigation">
+            <button class="btn btn-secondary" onclick="previousStep()">Previous</button>
+            <button class="btn btn-primary" onclick="nextStep()" disabled id="step4Next">Next</button>
+        </div>
+    </div>
+    
+    <!-- Step 5: Tenure -->
+    <div class="guide-step" id="step5">
+        <div class="step-header">
+            <div class="step-number">5</div>
+            <h2 class="step-title">Preferred loan tenure?</h2>
+            <p class="step-subtitle">How long do you need to repay?</p>
+        </div>
+        
+        <div class="input-group">
+            <label class="form-label">Tenure (Months)</label>
+            <input type="range" class="form-range" id="loanTenure" 
+                   min="12" max="360" step="12" value="60">
+            <div class="d-flex justify-content-between">
+                <span>1 Year</span>
+                <span id="tenureDisplay" class="fw-bold">5 Years</span>
+                <span>30 Years</span>
+            </div>
+        </div>
+        
+        <div class="guide-navigation">
+            <button class="btn btn-secondary" onclick="previousStep()">Previous</button>
+            <button class="btn btn-primary" onclick="getRecommendations()">Get Recommendations</button>
+        </div>
+    </div>
+    
+    <!-- Recommendations -->
+    <div class="recommendations" id="recommendations">
+        <h2 class="text-center mb-4" style="color: var(--primary-blue);">Your Personalized Loan Recommendations</h2>
+        <div id="recommendationsList"></div>
+        
+        <div class="text-center mt-4">
+            <button class="btn btn-secondary" onclick="startOver()">Start Over</button>
+            <a href="{{ url_for('loan_hub.index') }}" class="btn btn-primary">Browse All Loans</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentStep = 1;
+let totalSteps = 5;
+let userSelections = {
+    purpose: null,
+    amount: null,
+    income: null,
+    employment: null,
+    tenure: 60
+};
+
+// Handle option card selections
+document.querySelectorAll('.option-card').forEach(card => {
+    card.addEventListener('click', function() {
+        // Remove previous selection in same step
+        this.parentElement.querySelectorAll('.option-card').forEach(c => {
+            c.classList.remove('selected');
+        });
+        
+        // Add selection
+        this.classList.add('selected');
+        
+        // Store selection
+        if (this.dataset.purpose) {
+            userSelections.purpose = this.dataset.purpose;
+            document.getElementById('step1Next').disabled = false;
+        } else if (this.dataset.employment) {
+            userSelections.employment = this.dataset.employment;
+            document.getElementById('step4Next').disabled = false;
+        }
+    });
+});
+
+// Handle input changes
+document.getElementById('loanAmount')?.addEventListener('input', function() {
+    userSelections.amount = parseInt(this.value);
+    document.getElementById('step2Next').disabled = !this.value || this.value < 50000;
+});
+
+document.getElementById('monthlyIncome')?.addEventListener('input', function() {
+    userSelections.income = parseInt(this.value);
+    document.getElementById('step3Next').disabled = !this.value || this.value < 10000;
+});
+
+document.getElementById('loanTenure')?.addEventListener('input', function() {
+    userSelections.tenure = parseInt(this.value);
+    const years = Math.floor(this.value / 12);
+    const months = this.value % 12;
+    let display = years + ' Year' + (years > 1 ? 's' : '');
+    if (months > 0) {
+        display += ' ' + months + ' Month' + (months > 1 ? 's' : '');
+    }
+    document.getElementById('tenureDisplay').textContent = display;
+});
+
+function nextStep() {
+    if (currentStep < totalSteps) {
+        document.getElementById('step' + currentStep).classList.remove('active');
+        currentStep++;
+        document.getElementById('step' + currentStep).classList.add('active');
+        updateProgressBar();
+    }
+}
+
+function previousStep() {
+    if (currentStep > 1) {
+        document.getElementById('step' + currentStep).classList.remove('active');
+        currentStep--;
+        document.getElementById('step' + currentStep).classList.add('active');
+        updateProgressBar();
+    }
+}
+
+function updateProgressBar() {
+    const progress = (currentStep / totalSteps) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+}
+
+function getRecommendations() {
+    // Hide current step
+    document.getElementById('step' + currentStep).style.display = 'none';
+    
+    // Show loading
+    const recommendationsDiv = document.getElementById('recommendations');
+    recommendationsDiv.style.display = 'block';
+    document.getElementById('recommendationsList').innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-3">Finding best loans for you...</p></div>';
+    
+    // Make API call
+    fetch('{{ url_for("loan_hub.recommend_loan") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userSelections)
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayRecommendations(data.recommendations);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('recommendationsList').innerHTML = '<div class="alert alert-danger">Failed to get recommendations. Please try again.</div>';
+    });
+}
+
+function displayRecommendations(recommendations) {
+    let html = '';
+    
+    if (recommendations.length === 0) {
+        html = '<div class="alert alert-warning">No loans found matching your criteria. Try adjusting your requirements.</div>';
+    } else {
+        recommendations.forEach((loan, index) => {
+            html += `
+                <div class="recommendation-card">
+                    <div class="recommendation-header">
+                        <div>
+                            <div class="bank-name">${loan.bank}</div>
+                            <div>${loan.name}</div>
+                        </div>
+                        <div class="interest-rate">${loan.interest_rate}</div>
+                    </div>
+                    <div class="recommendation-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Loan Amount:</span>
+                            <span class="detail-value">${loan.amount_range}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tenure:</span>
+                            <span class="detail-value">${loan.tenure}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Processing Fee:</span>
+                            <span class="detail-value">${loan.processing_fee}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Rank:</span>
+                            <span class="detail-value">#${index + 1} Best Match</span>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="/loans/product/${loan.id}" class="btn btn-primary btn-sm">View Details</a>
+                        <a href="/loans/apply/${loan.id}" class="btn btn-success btn-sm">Apply Now</a>
+                    </div>
+                </div>
+            `;
+        });
+    }
+    
+    document.getElementById('recommendationsList').innerHTML = html;
+}
+
+function startOver() {
+    currentStep = 1;
+    userSelections = {
+        purpose: null,
+        amount: null,
+        income: null,
+        employment: null,
+        tenure: 60
+    };
+    
+    // Reset all selections
+    document.querySelectorAll('.option-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    
+    // Reset inputs
+    document.getElementById('loanAmount').value = '';
+    document.getElementById('monthlyIncome').value = '';
+    document.getElementById('loanTenure').value = 60;
+    
+    // Reset buttons
+    document.getElementById('step1Next').disabled = true;
+    document.getElementById('step2Next').disabled = true;
+    document.getElementById('step3Next').disabled = true;
+    document.getElementById('step4Next').disabled = true;
+    
+    // Show first step
+    document.getElementById('recommendations').style.display = 'none';
+    document.querySelectorAll('.guide-step').forEach(step => {
+        step.classList.remove('active');
+        step.style.display = 'block';
+    });
+    document.getElementById('step1').classList.add('active');
+    
+    updateProgressBar();
+}
+</script>
+{% endblock %}

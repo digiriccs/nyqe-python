@@ -1,0 +1,538 @@
+{% extends "base.html" %}
+
+{% block title %}Investment Advisory Services - NYQE Wealth Management{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1>Investment Advisory</h1>
+                <p class="lead">Strategic investment planning and portfolio optimization to maximize your returns while managing risk effectively.</p>
+                <div class="hero-badges mt-3">
+                    <span class="badge bg-success me-2">SEBI Registered</span>
+                    <span class="badge bg-primary me-2">15+ Years Experience</span>
+                    <span class="badge bg-warning">12%+ Average Returns</span>
+                </div>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg mt-4">
+                    <i class="fas fa-calendar-alt"></i> Book Free Consultation
+                </a>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="advisory-visual">
+                    <div class="chart-container">
+                        <canvas id="growth-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Overview -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2>Why Choose Our Investment Advisory?</h2>
+                <p class="lead">Our investment advisory service combines deep market expertise with personalized strategies to help you achieve your financial goals faster and more efficiently.</p>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h5>Expert Advisors</h5>
+                    <p>Certified financial planners with proven track record in wealth management and investment advisory.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h5>Data-Driven Approach</h5>
+                    <p>Investment decisions based on thorough market research, quantitative analysis, and risk assessment.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5>Risk Management</h5>
+                    <p>Comprehensive risk management strategies to protect your capital while maximizing growth potential.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Features -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Investment Advisory Services</h2>
+            <p class="lead">Comprehensive investment solutions tailored to your needs</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card service-feature-card h-100">
+                    <div class="card-body">
+                        <div class="feature-header d-flex align-items-center mb-3">
+                            <div class="feature-icon-small me-3">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h5 class="mb-0">Goal-Based Investment Planning</h5>
+                        </div>
+                        <p>Create investment strategies aligned with your specific financial goals like home purchase, child's education, or retirement.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success"></i> Short-term goal planning (1-3 years)</li>
+                            <li><i class="fas fa-check text-success"></i> Medium-term goal planning (3-7 years)</li>
+                            <li><i class="fas fa-check text-success"></i> Long-term wealth creation (7+ years)</li>
+                            <li><i class="fas fa-check text-success"></i> Emergency fund optimization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card service-feature-card h-100">
+                    <div class="card-body">
+                        <div class="feature-header d-flex align-items-center mb-3">
+                            <div class="feature-icon-small me-3">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <h5 class="mb-0">Portfolio Diversification</h5>
+                        </div>
+                        <p>Optimize your portfolio across different asset classes, sectors, and geographies to minimize risk and maximize returns.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success"></i> Equity and debt allocation</li>
+                            <li><i class="fas fa-check text-success"></i> Sector-wise diversification</li>
+                            <li><i class="fas fa-check text-success"></i> International exposure</li>
+                            <li><i class="fas fa-check text-success"></i> Alternative investments</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card service-feature-card h-100">
+                    <div class="card-body">
+                        <div class="feature-header d-flex align-items-center mb-3">
+                            <div class="feature-icon-small me-3">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h5 class="mb-0">Regular Portfolio Review</h5>
+                        </div>
+                        <p>Continuous monitoring and periodic rebalancing to ensure your portfolio stays aligned with your goals and market conditions.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success"></i> Quarterly portfolio review</li>
+                            <li><i class="fas fa-check text-success"></i> Rebalancing recommendations</li>
+                            <li><i class="fas fa-check text-success"></i> Performance tracking</li>
+                            <li><i class="fas fa-check text-success"></i> Market update calls</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="card service-feature-card h-100">
+                    <div class="card-body">
+                        <div class="feature-header d-flex align-items-center mb-3">
+                            <div class="feature-icon-small me-3">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h5 class="mb-0">Tax-Efficient Investing</h5>
+                        </div>
+                        <p>Maximize your after-tax returns through strategic tax planning and tax-efficient investment structures.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success"></i> ELSS for tax saving</li>
+                            <li><i class="fas fa-check text-success"></i> LTCG optimization</li>
+                            <li><i class="fas fa-check text-success"></i> Tax loss harvesting</li>
+                            <li><i class="fas fa-check text-success"></i> Section 80C planning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Investment Process -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Investment Advisory Process</h2>
+            <p class="lead">A systematic approach to building and managing your investment portfolio</p>
+        </div>
+        
+        <div class="process-timeline">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h5>Financial Assessment</h5>
+                        <p>Comprehensive analysis of your current financial situation, goals, and risk tolerance.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h5>Strategy Development</h5>
+                        <p>Creation of personalized investment strategy based on your profile and market analysis.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h5>Portfolio Construction</h5>
+                        <p>Selection and allocation of investments across various asset classes and instruments.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h5>Ongoing Management</h5>
+                        <p>Regular monitoring, rebalancing, and optimization of your investment portfolio.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Investment Options -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Investment Options We Recommend</h2>
+            <p class="lead">Diversified investment solutions across asset classes</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="investment-option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h5>Mutual Funds</h5>
+                    <p>Diversified equity and debt mutual funds</p>
+                    <div class="returns-badge">8-15% Returns</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="investment-option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h5>Direct Equity</h5>
+                    <p>Carefully selected stocks and equity portfolios</p>
+                    <div class="returns-badge">12-20% Returns</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="investment-option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h5>Fixed Income</h5>
+                    <p>Government bonds, corporate bonds, and FDs</p>
+                    <div class="returns-badge">6-9% Returns</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="investment-option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h5>Alternatives</h5>
+                    <p>REITs, gold, and other alternative investments</p>
+                    <div class="returns-badge">10-18% Returns</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Performance Track Record -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2>Our Track Record</h2>
+            <p class="lead">Proven results in wealth creation and client satisfaction</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="performance-metric text-center">
+                    <div class="metric-number">12.5%</div>
+                    <div class="metric-label">Average Annual Returns</div>
+                    <small class="text-muted">Over last 5 years</small>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="performance-metric text-center">
+                    <div class="metric-number">₹500Cr+</div>
+                    <div class="metric-label">Assets Under Management</div>
+                    <small class="text-muted">Across 1000+ clients</small>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="performance-metric text-center">
+                    <div class="metric-number">95%</div>
+                    <div class="metric-label">Client Satisfaction</div>
+                    <small class="text-muted">Based on annual survey</small>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="performance-metric text-center">
+                    <div class="metric-number">15+</div>
+                    <div class="metric-label">Years of Experience</div>
+                    <small class="text-muted">In wealth management</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div data-aos="fade-up">
+            <h2>Ready to Optimize Your Investments?</h2>
+            <p class="lead">Start your journey towards financial success with our expert investment advisory services</p>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary btn-lg me-3">
+                    <i class="fas fa-calendar-check"></i> Book Free Consultation
+                </a>
+                <a href="{{ url_for('calculators') }}" class="btn btn-outline btn-lg">
+                    <i class="fas fa-calculator"></i> Try Our Calculators
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.advisory-visual {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(10px);
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+.feature-card {
+    padding: 2rem 1rem;
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    margin: 0 auto 1rem;
+}
+
+.feature-icon-small {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.service-feature-card {
+    border: none;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+}
+
+.service-feature-card:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-5px);
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.feature-list i {
+    margin-right: 0.5rem;
+}
+
+.process-step {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 auto 1rem;
+}
+
+.investment-option-card {
+    background: var(--card-bg);
+    padding: 2rem 1rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.investment-option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.option-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin: 0 auto 1rem;
+}
+
+.returns-badge {
+    background: linear-gradient(135deg, var(--success-color), #34d399);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.performance-metric {
+    padding: 2rem 1rem;
+}
+
+.metric-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.hero-badges .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+</style>
+
+<script>
+// Growth Chart
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('growth-chart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Portfolio Value (₹ Lakhs)',
+                    data: [10, 12, 15, 18, 22],
+                    borderColor: '#00d4aa',
+                    backgroundColor: 'rgba(0, 212, 170, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + value + 'L';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
